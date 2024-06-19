@@ -95,6 +95,7 @@
                 "AqueousFist": "Aqueous Fist",
                 "Beak": "Beak",
                 "Beard": "Beard",
+                "BigClaw": "Big Claw",
                 "Bite": "Bite",
                 "Blade": "Blade",
                 "Body": "Body",
@@ -108,12 +109,14 @@
                 "CubeFace": "Cube Face",
                 "Fangs": "Fangs",
                 "FireMote": "Fire Mote",
+                "Fist": "Fist",
                 "Foot": "Foot",
                 "Foreleg": "Foreleg",
                 "Gust": "Gust",
                 "HolyMace": "Holy Mace",
                 "Hoof": "Hoof",
                 "Horn": "Horn",
+                "Horns": "Horns",
                 "Jaws": "Jaws",
                 "LavaFist": "Lava Fist",
                 "Leaf": "Leaf",
@@ -123,6 +126,7 @@
                 "Mandibles": "Mandibles",
                 "MetalShard": "Metal Shard",
                 "Moonbeam": "Moonbeam",
+                "Nectar": "Nectar",
                 "PiercingHymn": "Piercing Hymn",
                 "Pincer": "Pincer",
                 "Pseudopod": "Pseudopod",
@@ -307,16 +311,16 @@
             },
             "GhostCharge": {
                 "Greater": {
-                    "success": "<strong>Effect</strong> The bomb also deals [[/r (3[splash])[vitality]]]{3 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 2} until the start of my next turn."
+                    "success": "<strong>Effect</strong> The bomb also deals [[/r (3[splash])[vitality]]]{3 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 2} until the start of your next turn."
                 },
                 "Lesser": {
-                    "success": "<strong>Effect</strong> The bomb also deals [[/r (1[splash])[vitality]]]{1 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1} until the start of my next turn."
+                    "success": "<strong>Effect</strong> The bomb also deals [[/r (1[splash])[vitality]]]{1 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1} until the start of your next turn."
                 },
                 "Major": {
-                    "success": "<strong>Effect</strong> The bomb also deals [[/r (4[splash])[vitality]]]{4 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 2} until the start of my next turn."
+                    "success": "<strong>Effect</strong> The bomb also deals [[/r (4[splash])[vitality]]]{4 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 2} until the start of your next turn."
                 },
                 "Moderate": {
-                    "success": "<strong>Effect</strong> The bomb also deals [[/r (2[splash])[vitality]]]{2 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1} until the start of my next turn."
+                    "success": "<strong>Effect</strong> The bomb also deals [[/r (2[splash])[vitality]]]{2 vitality splash damage} and the target that takes damage becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1} until the start of your next turn."
                 }
             },
             "GooGrenade": {
@@ -435,19 +439,19 @@
             },
             "RedpitchBomb": {
                 "Greater": {
-                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*3d4)[persistent,fire]]] and [[/r (3[splash])[fire]]]{3 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 2} until the start of my next turn.",
+                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*3d4)[persistent,fire]]] and [[/r (3[splash])[fire]]]{3 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 2} until the start of your next turn.",
                     "success": "<strong>Effect</strong> The bomb also deals [[/r 3d4[persistent,fire]]] and [[/r (3[splash])[fire]]]{3 fire splash damage}."
                 },
                 "Lesser": {
-                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*1d4)[persistent,fire]]] and [[/r (1[splash])[fire]]]{1 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 1} until the start of my next turn.",
+                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*1d4)[persistent,fire]]] and [[/r (1[splash])[fire]]]{1 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 1} until the start of your next turn.",
                     "success": "<strong>Effect</strong> The bomb also deals [[/r 1d4[persistent,fire]]] and [[/r (1[splash])[fire]]]{1 fire splash damage}."
                 },
                 "Major": {
-                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*4d4)[persistent,fire]]] and [[/r (4[splash])[fire]]]{4 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 3} until the start of my next turn.",
+                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*4d4)[persistent,fire]]] and [[/r (4[splash])[fire]]]{4 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 3} until the start of your next turn.",
                     "success": "<strong>Effect</strong> The bomb also deals [[/r 4d4[persistent,fire]]] and [[/r (4[splash])[fire]]]{4 fire splash damage}."
                 },
                 "Moderate": {
-                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*2d4)[persistent,fire]]] and [[/r (2[splash])[fire]]]{2 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 1} until the start of my next turn.",
+                    "criticalSuccess": "<strong>Effect</strong> The bomb also deals [[/r (2*2d4)[persistent,fire]]] and [[/r (2[splash])[fire]]]{2 fire splash damage}. On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.i3OJZU2nk64Df3xm]{Clumsy 1} until the start of your next turn.",
                     "success": "<strong>Effect</strong> The bomb also deals [[/r 2d4[persistent,fire]]] and [[/r (2[splash])[fire]]]{2 fire splash damage}."
                 }
             },
@@ -586,8 +590,10 @@
         },
         "IWR": {
             "Custom": {
+                "AcidAndSpellsThatCauseRust": "acid and spells that cause rust",
                 "AdamantineBludgeoning": "adamantine bludgeoning",
                 "AllDamageFromArcaneSpells": "all damage from arcane spells",
+                "AllDamageFromFungus": "all damage from fungus",
                 "AllDamageFromSpells": "all damage from spells",
                 "AllDamageFromUndead": "all damage from undead",
                 "AllMagicalDamage": "all magical damage",
@@ -626,6 +632,14 @@
             "AncientWisp": {
                 "PinpointLight": "Pinpoint Light"
             },
+            "AsoBerang": {
+                "PhantomFlames": {
+                    "Fire": "Fire",
+                    "None": "None",
+                    "Spirit": "Spirit"
+                },
+                "SpectralFlame": "Spectral Flame"
+            },
             "BarghestFeed": "How many times has the Barghest fed?",
             "BladeMagus": {
                 "ArcaneCascade": {
@@ -660,12 +674,15 @@
                     "AnimalMedium": "Medium Animal",
                     "AnimalSmall": "Small Animal",
                     "AnimalTiny": "Tiny Animal",
+                    "Ape": "Ape",
                     "Azuretzi": "Azuretzi",
                     "Bat": "Bat",
                     "BatGiant": "Giant Bat",
                     "Barghest": "Barghest",
+                    "Boar": "Boar",
                     "Cacodaemon": "Cacodaemon",
                     "Cassisian": "Cassisian",
+                    "Cobra": "Cobra",
                     "Dog": "Dog",
                     "Dove": "Dove",
                     "Dragon": "Dragon",
@@ -699,7 +716,7 @@
                             "Medium": "Medium Water Elemental",
                             "Small": "Small Water Elemental"
                         },
-                         "Wood": {
+                        "Wood": {
                             "Elemental": "Wood Elemental",
                             "Medium": "Medium Wood Elemental",
                             "Small": "Small Wood Elemental"
@@ -725,21 +742,29 @@
                     "Keketar": "Keketar",
                     "LamiaMatriarch": "Lamia Matriarch",
                     "Leshy": "Leshy",
+                    "LeshyMob": "Leshy Mob",
                     "Lizard": "Lizard",
+                    "Mantis": "Mantis",
+                    "Moose": "Moose",
                     "Morrigna": "Morrigna",
                     "Mushroom": "Mushroom",
                     "NaiadQueen": "Naiad Queen",
+                    "Nymph": "Nymph",
                     "ObjectTiny": "Tiny Inanimate Object",
                     "Octopus": "Octopus",
                     "Oni": "Oni",
+                    "Owlbear": "Owlbear",
+                    "Plant": "Plant",
                     "PorcupineGiant": "Giant Porcupine",
                     "Pukwudgie": "Pukwudgie",
                     "Raktavarna": "Raktavarna",
                     "RajaKrodha": "Raja-Krodha",
                     "Rat": "Rat",
                     "Scorpion": "Scorpion",
+                    "Shark": "Shark",
                     "Succubus": "Succubus",
                     "Tree": "Tree",
+                    "Unicorn": "Unicorn",
                     "Vampire": "Vampire",
                     "Voidworm": "Voidworm",
                     "Vidileth": "Vidileth",
@@ -768,6 +793,9 @@
             },
             "ChyzaeduAlienVestment": "Shattered Alien Vestment",
             "ClockworkLostPlates": "How many plates are lost?",
+            "ClockworkSerpent": {
+                "Coils": "Coils"
+            },
             "ClockworkWindUp": "Standby Mode",
             "ConstructArmor": {
                 "BrokenArmor": "Broken Construct Armor",
@@ -814,10 +842,38 @@
             "Falrok": {
                 "LazuriteTerrainSwitch": "In lazurite infused terrain"
             },
+            "FiveColorOrchidMantis": {
+                "ColorShift": {
+                    "Black": "Black - Water",
+                    "Green": "Green - Wood",
+                    "None": "No Color Selected",
+                    "Red": "Red - Fire",
+                    "White": "White - Metal",
+                    "Yellow": "Yellow - Earth"
+                }
+            },
             "GangUp": {
                 "TwoAllies": "Two allies are within reach of the target"
             },
+            "GauChoRong": {
+                "SubsumedTrait": {
+                    "Animal": "Animal",
+                    "Aquatic": "Aquatic",
+                    "Amphibious": "Amphibious",
+                    "Humanoid": "Humanoid",
+                    "NoneOrOther": "Manually Select Resistance, if applicable"
+                }
+            },
             "GiantAnimatedStatueBrazier": "Brazier is alight",
+            "GiantTardigrade": {
+                "TunState": {
+                    "Dry": "Dry",
+                    "Rehydrating": "Rehydrating"
+                }
+            },
+            "GrimReaper": {
+                "InfuseWeapon": "If the Grim Reaper Strikes a creature with a weakness to any specific type of damage, the scythe's damage counts as that type of damage, in addition to slashing."
+            },
             "Hadrinnex": {
                 "RapidEvolution": {
                     "EnergyGland": "Rapid Evolution - Energy Gland",
@@ -833,7 +889,13 @@
             "HellboundAttorney": {
                 "OpeningStatementCriticalSuccess": "Opening Statement (Critical Success)"
             },
+            "Herexen": {
+                "HereticSmite": "Wielding the favored weapon of their former deity"
+            },
             "HobgoblinFormationArea": "Formation vs. Area Effects",
+            "Hryngar": {
+                "AlchemicalGrenade": "Damage Type of Alchemical Grenade"
+            },
             "IoseffXarwin": {
                 "FulviasRing": {
                     "SavePossess": "Save against Target possessing Fulvia's Ring",
@@ -907,6 +969,16 @@
                 "TargetMurderedPaleStranger": "Target Murdered Pale Stranger",
                 "TargetNeverKilled": "Target has Never Killed"
             },
+            "PlanarScion": {
+                "Duskwalker": {
+                    "HuntPrey": {
+                        "AC": "Designated Prey attacks the Duskwalker",
+                        "Checks": "Duskwalker rolls checks against his Designated Prey"
+                    },
+                    "Immunity": "effects that would transform their body or soul to an undead",
+                    "SpiritHunter": "Target is Designated by Spirit Hunter"
+                }
+            },
             "PoltergeistTelekineticStorm": {
                 "MultiAttackLabel": "Telekinetic Storm - Multiple Targets",
                 "MultipleTargets": "Multiple Targets",
@@ -919,6 +991,9 @@
             },
             "RaptorGuardWight": {
                 "TerrorMaster": "The Raptor Guard is wearing their dinosaur-skull helm."
+            },
+            "RebornDevotee":{
+                "RebornDevoteeFocusedAssault": "Number of Stalks"
             },
             "RuneGiant": {
                 "InvokeRune": {
@@ -936,8 +1011,17 @@
                     }
                 }
             },
+            "Scroungefeather": {
+                "GrabDebris": {
+                    "BrokenBlade": "Broken Blade",
+                    "MagicBolt": "Magic Bolt"
+                }
+            },
             "Seugathi": {
                 "MindfogSuppression": "Suppress Mindfog Aura"
+            },
+            "Silene": {
+                "LumberjacksBane": "Target is wielding an axe"
             },
             "Shell": {
                 "BrokenShell": "Broken Shell",
@@ -967,13 +1051,61 @@
                 "InspireEnvoyEffectChoice": "Granted Effect",
                 "InspireEnvoyEffectPercWillCha": "Bonus to Will, Perception and Charisma-based skill checks"
             },
+            "StargutHydra": {
+                "SkymetalMetamorphosis": {
+                    "Djezet": {
+                        "Label": "Skymetal Metamorphosis (Djezet)"
+                    },
+                    "Noqual": {
+                        "Label": "Skymetal Metamorphosis (Noqual)"
+                    },
+                    "Siccatite": {
+                        "Chilled": "Chilled",
+                        "Label": "Skymetal Metamorphosis (Siccatite)",
+                        "Superheated": "Superheated"
+                    }
+                }
+            },
             "StoneSpider": {
                 "StoneFangs": "Stone Fangs"
             },
             "Surgeon": {
                 "MedicalMalpracticeCriticalSuccess": "Medical Malpractice (Critical Success)"
             },
+            "Target": {
+                "GrabbedByNPC": "You have the target grabbed."
+            },
+            "TheGreatFlood": {
+                "LeadingHead": "Leading Head",
+                "LeadingHeadDescription": {
+                    "NoHeadSelected": "During each of the Great Flood's appearances, one head takes the lead once combat begins, chosen by the GM when initiative is rolled. Whichever head is in the lead grants a different action the Great Flood can use during its first turn each round (see Coordinated Actions).",
+                    "Aloof": "The aloof head casts a 5th-rank @UUID[Compendium.pf2e.spells-srd.Item.aIHY2DArKFweIrpf]{Command} (@Check[type:will|dc:42]).",
+                    "Ambitious": "The ambitious head declares a divine position above its station. It gains 100 temporary Hit Points for 1 minute. It also gains a weakness 20 to spirit damage and can't Claim Position again for 1 minute.",
+                    "Assertive": "The Great Flood Swims, then makes a melee Strike.",
+                    "Capricious": "The capricious head counteracts each mental effect on themself as a 10th-rank effect with a [[/r 1d20+32 #Counteract]]{+32} counteract modifier.",
+                    "PeoplePleaser": "The heads discuss and audibly agree on a creature to target. Until they Build Consensus again, their Strikes deal an additional 20 precision damage to that creature.",
+                    "Perfectionist": "The perfectionist head criticizes a creature within their aura. The creature must succeed at a @Check[type:will|dc:42] save or take @Damage[9d6[persistent,mental]] damage.",
+                    "Playful": "The playful head makes an ill-timed quip about the impermanence of life. They attempt to @UUID[Compendium.pf2e.actionspf2e.Item.2u915NdUyQan6uKF]{Demoralize} each creature within their aura.",
+                    "Secretive": "The Great Flood is @UUID[Compendium.pf2e.conditionitems.Item.zJxUflt9np0q4yML]{Invisible} until the end of their turn and teleports to an open space within their aura.",
+                    "Suspicious": "The Great Flood peers at their surroundings. Until they move, they see through illusions in their aura and the reach of their jaws is increased to 25 feet."
+                },
+                "LeadingHeadName": {
+                    "NoHeadSelected": "None Selected",
+                    "Aloof": "Aloof",
+                    "Ambitious": "Ambitious",
+                    "Assertive": "Assertive",
+                    "Capricious": "Capricious",
+                    "PeoplePleaser": "People Pleaser",
+                    "Perfectionist": "Perfectionist",
+                    "Playful": "Playful",
+                    "Secretive": "Secretive",
+                    "Suspicious": "Suspicious"
+                }
+            },
             "TreerazerPlantAttack": "Attack a Plant",
+            "Tyrafdir": {
+                "DeceptiveJaws": "Deceptive Jaws"
+            },
             "Vampire": {
                 "JiangShi": {
                     "StanceOfDeath": {
@@ -988,6 +1120,18 @@
                             "Note": "The target becomes @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1}"
                         }
                     }
+                }
+            },
+            "Vordine": {
+                "TridentOfDis": {
+                    "NoAlly": "No Ally",
+                    "UnholyAlly": "Unholy Ally"
+                }
+            },
+            "Warsworn": {
+                "AnimatedWeapon": {
+                    "DieSize": "Animated Weapon - Die Size",
+                    "DamageType": "Animated Weapon - Damage Type"
                 }
             },
             "YetiNightmareGuardianRage": "Nightmare Guardian Rage",
@@ -1372,7 +1516,7 @@
                 "Opacity": "Opacity",
                 "Predicate": "Predicate",
                 "Primitive": "Primitive",
-                "PriorityHint": "Priority determines the order in which rule elements are executed. Rule elements with lower priority values are executed first.",
+                "PriorityHint": "Priority determines the order in which rule elements are executed within the same phase. Rule elements with lower priority values are executed first.",
                 "Range": "Range",
                 "Remove": "Remove",
                 "Selector": "Selector",
@@ -1445,6 +1589,7 @@
             "AgainstDemons": "Against Demons",
             "Aid": "To Aid",
             "AttemptToFascinateOutdoorsInBrightSun": "Using Fascinating Performance Outdoors in Bright Sun",
+            "Balance": "To Balance",
             "Blacksmithing": "For Blacksmithing",
             "BloodOrWater": "In Blood or Water",
             "BoundHome": "Within Bound Home",
@@ -1484,6 +1629,7 @@
             "Escape": "To Escape",
             "EscapeForceOpenOrLift": "To Escape, Force Open, or Lift Heavy Objects",
             "Feint": "To Feint",
+            "Fly": "To Fly",
             "ForceOpenGrappleShoveOrTrip": "To Force Open, Grapple, Shove, or Trip",
             "Forests": "In Forests",
             "ForestsOrGrasslands": "In Forests or Grasslands",
@@ -1547,6 +1693,7 @@
             "RecallKnowledge": "To Recall Knowledge",
             "RecallKnowledgeDeadSubject": "To Recall Knowledge about a deceased subject",
             "Rocky": "In Rocky Terrain",
+            "RockyOrBarren": "In Rocky or Barren Terrain",
             "Ruins": "In Ruins",
             "RunningWater": "In Running Water",
             "RustyTerrain": "In Areas of Rusty Objects",
@@ -1679,8 +1826,12 @@
                 "Canine": "Canine",
                 "Cat": "Cat",
                 "Centipede": "Centipede",
+                "Crab": "Crab",
+                "Crocodile": "Crocodile",
                 "Deer": "Deer",
                 "Frog": "Frog",
+                "Orca": "Orca",
+                "Seal": "Seal",
                 "Shark": "Shark",
                 "Snake": "Snake",
                 "Toad": "Toad",
@@ -1694,6 +1845,15 @@
             "AquaticCombat": {
                 "FireNote": "You can't cast fire spells or use actions with the fire trait underwater.",
                 "RangedNote": "Ranged attacks that deal bludgeoning or slashing damage automatically miss if the attacker or target is underwater, and piercing ranged attacks made by an underwater creature or against an underwater target have their range increments halved."
+            },
+            "Ardande": {
+                "CausticNectar": {
+                    "Note": "On a critical hit, the target is @UUID[Compendium.pf2e.conditionitems.Item.fesd1n5eVhpCSS18]{Sickened 1}."
+                },
+                "PotentNectar": {
+                    "PersistentDamage": "Persistent Acid Damage",
+                    "SplashDamage": "Acid Splash Damage"
+                }
             },
             "ArtokussFire": {
                 "Note": "Your Alchemist's Fire deals an additional 1d4 persistent fire damage, and creatures must make two succesful flat checks to end the condition (or one check, if they had assisted recovery that reduces the flat check to DC 10). Your enhanced fire burns underwater, and water does not help to end the persistent damage."
@@ -1749,29 +1909,58 @@
                     "Prompt": "Select a type of energy damage."
                 }
             },
+            "AwakenedAnimal": {
+                "LateAwakener": {
+                    "Prompt": "Choose an awakened animal heritage"
+                },
+                "NaturalSenses": {
+                    "Prompt": "Choose a sense appropriate to your kind of animal"
+                },
+                "SwimmingAnimal": {
+                    "Prompt": "Choose if you are an aquatic or water-dwelling animal",
+                    "WaterDwelling": "Water-dwelling"
+                }
+            },
             "Azarketi": {
                 "PhosphorescentSpots": "Phosphorescent Spots"
             },
             "Barbarian": {
                 "Animal": {
+                    "Ankylosaurus": "Ankylosaurus",
+                    "Ant": "Ant",
                     "Ape": "Ape",
+                    "Bat": "Bat",
                     "Bear": "Bear",
+                    "Bird": "Bird",
+                    "Brontosaurus": "Brontosaurus",
                     "Bull": "Bull",
                     "Cat": "Cat",
+                    "Crab": "Crab",
+                    "Crocodile": "Crocodile",
                     "Deer": "Deer",
                     "Frog": "Frog",
+                    "Orca": "Orca",
                     "Prompt": "Select an animal.",
+                    "Scorpion": "Scorpion",
+                    "Seal": "Seal",
                     "Shark": "Shark",
                     "Snake": "Snake",
+                    "Spider": "Spider",
+                    "Tyrannosaurus": "Tyrannosaurus",
+                    "Wasp": "Wasp",
+                    "WebNote": "<p>The spider's web attack deals no damage, but the target takes a –10-foot circumstance penalty to its Speeds for 1 round on a hit.</p><p>@UUID[Compendium.pf2e.feat-effects.Item.tCMVyxQhzYCjBQtK]</p><p>If a target is hit a second time by the same character's web attack while they have this penalty, they're instead @UUID[Compendium.pf2e.conditionitems.Item.eIcWbB5o3pP6OIMe]{Immobilized} until they succeed at a check to @UUID[Compendium.pf2e.actionspf2e.Item.SkZAQRkLLkmBQNB9]{Escape} against your class DC.</p>",
                     "Wolf": "Wolf"
                 },
-                "Elemental": {
-                    "ElementalEvolutionLabel": "Elemental Rage Damage"
+                "Decay": {
+                    "ToggleLabel": "Rotting Rage"
                 },
                 "Dragon": {
                     "NormalRageDamage": "Deal normal rage damage",
                     "ToggleLabel": "Draconic Rage",
                     "Prompt": "Select a dragon."
+                },
+                "Elemental": {
+                    "ElementalEvolutionLabel": "Elemental Rage Damage"
                 },
                 "Giant": {
                     "Prompt": "Select an energy type for Raging Resistance."
@@ -1785,6 +1974,9 @@
                     "CriticalSuccessVirulent": "Each critical success reduces the stage by 2 for a virulent alchemical poison, drug, or addiction.",
                     "Success": "Each of your successful saving throws against an alchemical poison, a drug, or an addiction reduces the stage by 2",
                     "SuccessVirulent": "Each of your successful saving throws against a virulent alchemical poison, a drug, or an addiction reduces the stage by 1"
+                },
+                "Ligneous": {
+                    "ToggleLabel": "Wooden Rage"
                 },
                 "Spirit": {
                     "NegativeDamage": "Void Damage",
@@ -1951,6 +2143,15 @@
                     "AllowedDrops": "1st-level cleric class feature",
                     "Prompt": "Select a doctrine."
                 },
+                "EmblazonAntimagic": {
+                    "WeaponNote": "If you critically hit with the weapon, you can attempt to counteract a spell on your target, using half your level, rounded up, as the counteract level. If you attempt to do so, the emblazoned symbol immediately disappears."
+                },
+                "EmblazonEnergy": {
+                    "MatchingDomainPrompt": "Matching domain?"
+                },
+                "Martyr": {
+                    "Note": "You lose @Damage[(@item.rank)d8] Hit Points, which can't be reduced or mitigated in any way, and your ally regains an equal number of Hit Points."
+                },
                 "RaiseSymbol": {
                     "RollOptionLabel": "Wielding shield as a religious symbol"
                 },
@@ -1969,6 +2170,13 @@
                 },
                 "SharedReplenishment": {
                     "Note": "You can grant the temporary Hit Points from Replenishment of War to an ally within 10 feet instead of gaining them yourself."
+                }
+            },
+            "ConcertFrog": {
+                "Conduct": {
+                    "Blue": "Blue",
+                    "Red": "Red",
+                    "Yellow": "Yellow"
                 }
             },
             "Conditions": {
@@ -2035,6 +2243,10 @@
                     "BoneSpikesReach": "Bone Spikes: Reach",
                     "ConsumeEnergyRange": "Consume Energy: Enhance Range",
                     "ConsumeEnergyStrikes": "Consume Energy: Enhance Strikes",
+                    "DefensiveGrowthExplodingShield": "Defensive Growth: Exploding Shield",
+                    "DefensiveGrowthStrongerShield": "Defensive Growth: Stronger Shield",
+                    "DisperseIntoPetalsBlossomVortex": "Disperse Into Petals: Blossom Vortex",
+                    "DisperseIntoPetalsExtendedFlight": "Disperse Into Petals: Extended Flight",
                     "DistantWanderingFly": "Distant Wandering: Flight",
                     "DistantWanderingQuick": "Distant Wandering: Quickened",
                     "EerieFlickerCompress": "Eerie Flicker: Compress Flicker",
@@ -2045,15 +2257,27 @@
                     "GhostlyGraspPush": "Ghostly Grasp: Push",
                     "HighSpeedRegenerationRecovery": "High-Speed Regeneration: Emergency Regeneration",
                     "HighSpeedRegenerationSpeed": "High-Speed Regeneration: Speed Boost",
+                    "IrradiatePoison": "Irradiate: Poison Damage",
+                    "IrradiateRadiusIncrease": "Irradiate: Increase Radius",
                     "Prompt": "Select an awakening for a deviant feat.",
                     "PropulsiveLeapSpeed": "Propulsive Leap: Speed Increase",
                     "PropulsiveLeapWeapon": "Propulsive Leap: Makeshift Weapon",
+                    "ReleaseSporesSickening": "Release Spores: Sickening Smell",
+                    "ReleaseSporesToxic": "Release Spores: Toxic Spores",
+                    "RottenSlurrySplash": "Rotten Slurry: Splash",
+                    "RottenSlurryPersistent": "Rotten Slurry: Persistent",
+                    "SproutFruitPlentiful": "Sprout Fruit: Plentiful",
+                    "SproutFruitPotent": "Sprout Fruit: Potent",
                     "StormingBreathEscape": "Storming Breath: Speedy Escape",
                     "StormingBreathProne": "Storming Breath: Knock Prone",
                     "TectonicStompStone": "Tectonic Stomp: Stone Cover",
                     "TectonicStompStun": "Tectonic Stomp: Stun Foes",
                     "TitanSwingBleed": "Titan Swing: Bleed",
-                    "TitanSwingProne": "Titan Swing: Knockback"
+                    "TitanSwingProne": "Titan Swing: Knockback",
+                    "UnleashTheBlightDebilitating": "Unleash The Blight: Debilitating",
+                    "UnleashTheBlightInfectious": "Unleash The Blight: Infectious",
+                    "VineLashCone": "Vine Lash: 30-Foot Cone",
+                    "VineLashConstrict": "Vine Lash: Constrict"
                 },
                 "BoneSpikes": {
                     "ReachLabel": "Extend bone spikes",
@@ -2206,6 +2430,15 @@
                     "InsultedLabel": "The Boastful Hunter is Insulted",
                     "MisfireNote": "All attacks with an insulted <em>boastful hunter</em> incur a @Check[type:flat|dc:5] misfire chance until the weapon is appeased."
                 },
+                "Bomb": {
+                    "Choice": "Type of Bomb",
+                    "Type": {
+                        "Greater": "Greater",
+                        "Lesser": "Lesser",
+                        "Major": "Major",
+                        "Moderate": "Moderate"
+                    }
+                },
                 "BravosBrew": {
                     "Greater": {
                         "FearLabel": "Greater Bravo's Brew (Vs. Fear)"
@@ -2333,6 +2566,10 @@
                 "CharmingLiar": {
                     "Note": "When you get a critical success using the Lie action, the target's attitude toward you improves by one step, as though you'd succeeded at using Diplomacy to Make an Impression."
                 },
+                "ClawdancerDedication": {
+                    "FrenziedClaw": "Frenzied Claw",
+                    "SpinningTalon": "Spinning Talon"
+                },
                 "FeyInfluence": {
                     "Anteater": "Anteater",
                     "CatSith": "Cat Sith",
@@ -2351,6 +2588,9 @@
                 },
                 "RiskySurgery": {
                     "Note": "When you Treat Wounds, you can deal @Damage[1d8[slashing]] damage to your patient just before applying the effects of the Treat Wounds. If you do, gain a +2 circumstance bonus to your Medicine check to Treat Wounds, and if you roll a success, you get a critical success instead."
+                },
+                "ThlipitContestantDedication": {
+                    "Lash": "Lash"
                 }
             },
             "Fetchling": {
@@ -2403,6 +2643,9 @@
                     "spear": "Simple & Martial Spears",
                     "sword": "Simple & Martial Swords"
                 }
+            },
+            "FireShield": { 
+                "DefendingAgainstWaterLabel": "Defending against a water effect"
             },
             "Fleshwarp": {
                 "CoatingOfSlime": {
@@ -2522,6 +2765,9 @@
                     "GuidingLuck": "You can't use Guiding Luck's effect that applies to attack rolls and Perception checks to use Shared Luck to benefit an ally."
                 }
             },
+            "Harrowing": {
+                "RerollLabel": "Rerolling roll using the Harrowing result"
+            },
             "HarrowChosen": {
                 "Misaligned": "Misaligned",
                 "PartialMatch": "Partial Match",
@@ -2549,6 +2795,25 @@
                     "Stars": "Stars"
                 },
                 "Prompt": "Select a harrow suit."
+            },
+            "HeroPointDeck": {
+                "AncestralMight": {
+                    "FirstBoostPrompt": "Select one of your ancestry boosts, or pick any if it only had free boosts.",
+                    "SecondBoostPrompt": "Select another one of your ancestry boosts. Skip if it only had free boosts.",
+                    "SkipChoice": "Skip"
+                },
+                "AuraOfProtection": {
+                    "SpellRankPrompt": "Select the rank of the spell you just cast."
+                },
+                "CalledFoe": {
+                    "Note": "This effect lasts until the end of your next turn or until you critically hit the designated foe, whichever comes first."
+                },
+                "CriticalMoment": {
+                    "Note": "If you still fail this check, you become @UUID[Compendium.pf2e.conditionitems.Item.3uh1r86TzbQvosxv]{Doomed 1}."
+                },
+                "DesperateSwing": {
+                    "Note": "If the attack fails, you release your weapon, or drop @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone} if you were using an unarmed attack or otherwise can't release your weapon."
+                }
             },
             "Hobgoblin": {
                 "AgonizingRebuke": {
@@ -2655,7 +2920,7 @@
                         "Failure": "The innovation becomes incapable of being used for further unstable actions.",
                         "Label": "Unstable Check"
                     },
-                    "Note": "When you take an unstable action, attempt a @Check[flat|dc:17|options:unstable-check|name:PF2E.SpecificRule.Inventor.Unstable.FlatCheck.Label]{flat check} immediately after applying its effects.",
+                    "Note": "When you take an unstable action, attempt a @Check[flat|dc:15|options:unstable-check|name:PF2E.SpecificRule.Inventor.Unstable.FlatCheck.Label]{flat check} immediately after applying its effects.",
                     "Stable": "Stable"
                 }
             },
@@ -2755,6 +3020,9 @@
                     "StrongjawKobold": "Strongjaw Kobold",
                     "VenomtailKobold": "Venomtail Kobold"
                 },
+                "DragonsBreath": {
+                    "DescriptionAlteration": "You channel your draconic exemplar's power into a gout of energy that manifests as a @Template[type:line|distance:60] or a @Template[type:cone|distance:30], dealing @Damage[ceil(@actor.level/2)d8[@actor.flags.pf2e.draconicExemplar.damageType]|traits:area-damage] damage. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1 hour."
+                },
                 "DragonsPresence": {
                     "Note": "When you roll a success on a saving throw against a fear effect, you get a critical success instead. When you roll a failure against a fear effect, you get a critical failure instead."
                 }
@@ -2811,6 +3079,9 @@
                 },
                 "SparklingTarge": {
                     "DefendingLabel": "Defending against magic"
+                },
+                "Spellstrike": {
+                    "RechargeNote": "You recharge your Spellstrike when you cast a conflux spell that takes at least 1 action to cast."
                 }
             },
             "MantleOfTheUnwaveringHeart": {
@@ -2862,16 +3133,22 @@
                     "spear": "Advanced Spears",
                     "sword": "Advanced Swords"
                 },
+                "AdvancedAthamaruWeapons": "Advanced Athamaru Weapons",
                 "AdvancedHalflingWeapons": "Advanced Halfling Weapons",
                 "AdvancedHobgoblinWeapons": "Advanced Hobgoblin Weapons",
                 "AdvancedKoboldWeapons": "Advanced Kobold Weapons",
+                "AdvancedMerfolkWeapons": "Advanced Merfolk Weapons",
                 "AdvancedOrcWeapons": "Advanced Orc Weapons",
+                "AdvancedSurkiWeapons": "Advanced Surki Weapons",
                 "AdvancedTenguWeapons": "Advanced Tengu Weapons",
                 "AdvancedVanaraWeapons": "Advanced Vanara Weapons",
                 "AdvancedVishkanyaWeapons": "Advanced Vishkanya Weapons",
+                "BayonetsAndReinforcedStocks": "Bayonets and Reinforced Stocks",
+                "MartialAthamaruWeapons": "Martial Athamaru Weapons",
                 "MartialAzarketiWeapons": "Martial Azarketi Weapons",
                 "MartialBombsFirearms": "Martial Bombs & Firearms",
                 "MartialCatfolkWeapons": "Martial Catfolk Weapons",
+                "MartialCentaurWeapons": "Martial Centaur Weapons",
                 "MartialConrasuWeapons": "Martial Conrasu Weapons",
                 "MartialDwarfWeapons": "Martial Dwarven Weapons",
                 "MartialElfWeapons": "Martial Elven Weapons",
@@ -2903,20 +3180,39 @@
                 "MartialHalflingWeapons": "Martial Halfling Weapons",
                 "MartialHobgoblinWeapons": "Martial Hobgoblin Weapons",
                 "MartialKoboldWeapons": "Martial Kobold Weapons",
+                "MartialMerfolkWeapons": "Martial Merfolk Weapons",
                 "MartialOrcWeapons": "Martial Orc Weapons",
+                "MartialSurkiWeapons": "Martial Surki Weapons",
                 "MartialTenguWeapons": "Martial Tengu Weapons",
                 "MartialVanaraWeapons": "Martial Vanara Weapons",
                 "MartialVishkanyaWeapons": "Martial Vishkanya Weapons",
+                "MinotaurWeapons": "Minotaur Weapons",
                 "MonasticArchery": "Monastic Archery",
                 "SimpleBombsFirearms": "Simple Bombs & Firearms",
                 "SimpleFirearmsCrossbows": "Simple Firearms & Crossbows",
                 "SimpleMartialBows": "Simple & Martial Bows",
                 "SimpleMartialTwoHandedMeleeWeapons": "Simple & Martial Two-Handed Melee Weapons"
             },
+            "MechanicalSymbiosis": {
+                "FailureNote": "You become @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 1}",
+                "CriticalFailureNote": "You become @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 2}"
+            },
             "MechanicalTorch": {
                 "Label": "Mechanical Torch is lit",
                 "LitCone": "Cone",
                 "LitRadius": "Radius"
+            },
+            "Merfolk": {
+                "ReefMerfolk": {
+                    "SuccessNote": "You reduce the stage of the poison by 2.",
+                    "CriticalSuccessNote": "You reduce the stage of the poison by 3.",
+                    "VirulentSuccessNote": "You reduce the stage of the virulent poison by 1.",
+                    "VirulentCriticalSuccessNote": "You reduce the stage of the virulent poison by 2."
+                },
+                "ShieldingWave": {
+                    "Dry": "Dry",
+                    "Wet": "Wet"
+                }
             },
             "Mindmoppet": {
                 "BrokenShell": "Shell is Broken"
@@ -2966,6 +3262,15 @@
                     "HoodedNote": "The target is also @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} until the start of your next turn.",
                     "StrikeLabel": "Venomous Spit"
                 }
+            },
+            "Nephilim": {
+                "Pitborn": {
+                    "AllowedDrops": "1st level Athletics skill feat"
+                }
+            },
+            "Notes": {
+                "NoteLabel": "Note",
+                "RequirementsNotMet": "The creature does not currently meet the requirements to use this ability."
             },
             "Numbers": {
                 "Eight": "Eight",
@@ -3027,6 +3332,9 @@
             "PackAttack": {
                 "Label": "Target is Within Range of At Least Two Allies"
             },
+            "PathfinderAgentDedication": {
+                "ThoroughReports": "Thorough Reports"
+            },
             "Poppet": {
                 "WashOut": {
                     "Note": "Each time you succeed at a Fortitude save against an ongoing poison, you reduce its stage by 2, or by 1 against a virulent poison. Each critical success you achieve against an ongoing poison reduces its stage by 3, or by 2 against a virulent poison."
@@ -3042,6 +3350,7 @@
             "Prompt": {
                 "AdvancedMulticlassFeat": "Select a class feat up to half your character level.",
                 "Alignment": "Select an alignment.",
+                "Benefit": "Select a benefit.",
                 "CantripOrNonCantrip": "Select cantrip or non-cantrip spell.",
                 "ClassDCAbilityScore": "Select the class DC's key attribute.",
                 "Color": "Select a Color.",
@@ -3072,6 +3381,7 @@
                 "Sanctification": "Select a sanctification.",
                 "SecondImplement": "Select a second implement.",
                 "Shield": "Select a shield.",
+                "ShieldOrWeapon": "Select shield or weapon.",
                 "Shillelagh": "Select a club or staff.",
                 "Skill": "Select a skill.",
                 "SkillFeat": "Select a skill feat.",
@@ -3178,7 +3488,7 @@
                     },
                     "RemovePresence": "Choose one target of the spell or one creature in its area. If that enemy fails its save or the spell hits it, you become undetected by that creature, disappearing from its senses for 1 minute or until you use a hostile action. This is similar to being @UUID[Compendium.pf2e.conditionitems.Item.zJxUflt9np0q4yML]{Invisible}, but effects like see invisibility don't reveal you—you're affecting the target's mind, not its vision. True seeing can still see through this illusion if the counteract check succeeds.",
                     "ShatterMind": "You increase the area of the spell to your choice of a @Template[type:cone|distance:30] or @Template[type:cone|distance:60], and the damage dice for the spell change to d10s. Creatures that fail are @UUID[Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg]{Stupefied 1} until the start of your next turn (or @UUID[Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg]{Stupefied 2} on a critical failure).",
-                    "ShatterSpace": "You or one target of the spell are surrounded by a spiral of torn space. This is an aura, and you choose the radius of the emanation, up to 20 feet. A creature that starts its turn in the aura or enters the aura during its turn takes 1d6 slashing damage for every rank of the amped psi cantrip, with a basic Reflex save against your spell DC. If the creature critically fails, the torn space throws it off balance and it falls @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}. The aura lasts until the beginning of your next turn. You can choose whether the aura affects the creature emitting it.",
+                    "ShatterSpace": "You or one target of the spell are surrounded by a spiral of torn space. This is an aura, and you choose the radius of the emanation, up to 20 feet. A creature that starts its turn in the aura or enters the aura during its turn takes @Damage[(@item.level)d6[slashing]] damage, with a basic Reflex save against your spell DC. If the creature critically fails, the torn space throws it off balance and it falls @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}. The aura lasts until the beginning of your next turn. You can choose whether the aura affects the creature emitting it.",
                     "Shield": {
                         "Base": "You create a layered barrier of three shields to improve your defenses. The duration increases to sustained up to 1 minute. The shield still lowers at the start of each of your turns, but you can raise it again when you Sustain the Spell.",
                         "BaseTwo": "When you Shield Block with this spell, one of the three layers breaks and you cease to gain the bonus to AC, but the spell doesn't end. You can keep using the spell until the final layer breaks; once it does, the spell ends and you can't cast shield or amped shield again for 10 minutes. You can choose to break additional layers when you Shield Block with this spell to improve your defenses. If you break two layers instead of one, increase the Hardness to 1-1/2 × the normal amount (7 at 1st rank, 15 at 3rd rank, 22 at 5th rank, 30 at 7th rank, and 37 at 9th rank). If you break all three layers, increase the Hardness to double the normal amount."
@@ -3186,7 +3496,7 @@
                     "TargetOfPsychicIre": "Choose one target of the spell. Psychic phenomena turn themselves on the target—typically, objects fling themselves at the creature. At the beginning of each of the target's turns, it takes @Damage[(@item.level)d4[bludgeoning]] damage, with a basic Reflex save. The target remains marked by psychic ire for 3 rounds. The effect persists even if you fall @UUID[Compendium.pf2e.conditionitems.Item.fBnFDH2MTzgFijKf]{Unconscious} or leave the area.",
                     "TelekineticHand": {
                         "Base": "You create a multitude of telekinetic hands that grip onto a creature and move it about. Target a creature of Medium size or smaller with the amped spell instead of an object. You attempt to @UUID[Compendium.pf2e.actionspf2e.Item.7blmbDrQFNfdT731]{Shove} the target in a direction of your choice, rolling a spell attack roll against its Fortitude DC instead of an Athletics check. The creature takes a –10-foot circumstance penalty to its Speeds until the spell ends. Starting the round after you Cast the Spell, the first time each round you Sustain the Spell, you can attempt to Shove the creature again.",
-                        "Heightened": "You can attempt to @UUID[Compendium.pf2e.actionspf2e.Item.Dt6B1slsBy8ipJu9]{Disarm} the creature instead of attempting to @UUID[Compendium.pf2e.actionspf2e.Item.7blmbDrQFNfdT731]{Shove} it. If you knock an item out of the creature's grasp in this way, the mage hand immediately grabs it. Any effect of the mage hand on the creature ends, and the spell now carries the item, just like you had picked it up with an unamped mage hand."
+                        "Heightened": "You can attempt to @UUID[Compendium.pf2e.actionspf2e.Item.Dt6B1slsBy8ipJu9]{Disarm} the creature instead of attempting to @UUID[Compendium.pf2e.actionspf2e.Item.7blmbDrQFNfdT731]{Shove} it. If you knock an item out of the creature's grasp in this way, the Telekinetic Hand immediately grabs it. Any effect of the Telekinetic Hand on the creature ends, and the spell now carries the item, just like you had picked it up with an unamped Telekinetic Hand."
                     },
                     "TelekineticProjectile": {
                         "Base": "You fling objects with even more force, driving your opponents backwards in a hail of objects. On a success, you push the target 5 feet away from you, and on a critical success, you push the target 10 feet away from you in addition to dealing double damage.",
@@ -3442,7 +3752,7 @@
                         "Elemental": "Elemental energy surrounds you or a target. Either you gain a +1 status bonus to Intimidation checks for 1 round, or a target takes @Damage[@item.level[@actor.flags.pf2e.sorcerer.elementalBloodline.damageType]]. The damage is bludgeoning or fire, according to your elemental type (see below). If the spell already deals that type of damage, combine it with the spell's initial damage before determining weaknesses and resistances.",
                         "Fey": "Colorful fey glamours dance around you or one target, causing them to be @UUID[Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W]{Concealed} for 1 round. Such obvious concealment can't be used to Hide.",
                         "Genie": "Your spellcasting warps reality and distracts your foes. Either you gain a +1 status bonus to Deception checks for 1 round, or a target takes a -1 status penalty to Perception for 1 round.",
-                        "Hag": "Spiteful curses punish your foes. You deal @Damage[@item.level[mental]] (@Check[type:will|basic:true|dc:resolve(@actor.system.attributes.spellDC.value)] save) to the first creature that deals damage to you before the end of your next turn.",
+                        "Hag": "Spiteful curses punish your foes. You deal @Damage[@item.level[mental]] damage (@Check[type:will|basic:true|dc:resolve(@actor.system.attributes.spellDC.value)] save) to the first creature that deals damage to you before the end of your next turn.",
                         "Harrow": "You become enveloped in possibility, represented as multiple versions of yourself from your possible futures overlaid on each other. You gain @UUID[Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W]{Concealement} for 1 round, but can't use the concealment to @UUID[Compendium.pf2e.actionspf2e.Item.XMcnh4cSI32tljXa]{Hide}.",
                         "Imperial": "A surge of ancestral memories grants you or one target a +1 status bonus to skill checks for 1 round.",
                         "Title": "Blood Magic",
@@ -3564,89 +3874,91 @@
             "SpellTrickster": {
                 "AgileHand": {
                     "CriticalFailureNote": "If you critically fail, the spell ends and you can't use this modification again for 24 hours.",
-                    "Description": "When you cast telekinetic hand, you can modify its target to be a set of thieves' tools. When you Cast the Spell in this way, the tools move up to 20 feet towards a device or lock. After you Sustain the spell on future turns, you can use the tools to attempt Thievery checks to @UUID[Compendium.pf2e.actionspf2e.cYdz2grcOcRt4jk6]{Disable a Device} or @UUID[Compendium.pf2e.actionspf2e.2EE4aF4SZpYf0R6H]{Pick a Lock} within the spell's range, but you take a -2 penalty to your Thievery check. If you critically fail, the spell ends and you can't use this modification again for 24 hours.",
+                    "Description": "When you cast _telekinetic hand_, you can modify its target to be a set of thieves' tools. When you Cast the Spell in this way, the tools move up to 20 feet towards a device or lock. After you Sustain the spell on future turns, you can use the tools to attempt Thievery checks to @UUID[Compendium.pf2e.actionspf2e.cYdz2grcOcRt4jk6]{Disable a Device} or @UUID[Compendium.pf2e.actionspf2e.2EE4aF4SZpYf0R6H]{Pick a Lock} within the spell's range, but you take a -2 penalty to your Thievery check. If you critically fail, the spell ends and you can't use this modification again for 24 hours.",
                     "PenaltyLabel": "Thievery with Agile Hand"
                 },
                 "AnimateNet": {
-                    "Description": "When you cast animate rope, you can modify its target to be 1 @UUID[Compendium.pf2e.equipment-srd.Item.T8EopYZLT137CsdW]{Net}. If you do, replace the spell's standard effects with the following: You cause a net to animate and throw itself at a Medium or smaller creature within 20 feet of the net. Attempt a spell attack roll against the target's Reflex DC. On a success, the target is @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} and takes a -10-foot circumstance penalty to its Speeds until it Escapes; on a critical success, it's also @UUID[Compendium.pf2e.conditionitems.Item.eIcWbB5o3pP6OIMe]{Immobilized} until it Escapes. The Escape DC is equal to your spell DC as long as the spell lasts. Once the spell ends, the Escape DC returns to the normal DC for a net (usually 16), and a creature adjacent to the target can Interact to remove the net."
+                    "Description": "When you cast _animate rope_, you can modify its target to be 1 @UUID[Compendium.pf2e.equipment-srd.Item.T8EopYZLT137CsdW]{Net}. If you do, replace the spell's standard effects with the following: You cause a net to animate and throw itself at a Medium or smaller creature within 20 feet of the net. Attempt a spell attack roll against the target's Reflex DC. On a success, the target is @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} and takes a -10-foot circumstance penalty to its Speeds until it Escapes; on a critical success, it's also @UUID[Compendium.pf2e.conditionitems.Item.eIcWbB5o3pP6OIMe]{Immobilized} until it Escapes. The Escape DC is equal to your spell DC as long as the spell lasts. Once the spell ends, the Escape DC returns to the normal DC for a net (usually 16), and a creature adjacent to the target can Interact to remove the net."
                 },
                 "BarrierShield": {
-                    "Description": "When you cast shield, you can modify the spell to create a solid barrier you can use for @UUID[Compendium.pf2e.other-effects.Item.I9lfZUiCwMiGogVi]{Cover}, but not for blocking. You can't use the @UUID[Compendium.pf2e.feats-srd.Item.jM72TjJ965jocBV8]{Shield Block} reaction when the spell is modified in this way, but you (and only you) can spend an action to @UUID[Compendium.pf2e.actionspf2e.Item.ust1jJSCZQUhBZIz]{Take Cover} to gain standard cover from it."
+                    "Description": "When you cast _shield_, you can modify the spell to create a solid barrier you can use for @UUID[Compendium.pf2e.other-effects.Item.I9lfZUiCwMiGogVi]{Cover}, but not for blocking. You can't use the @UUID[Compendium.pf2e.feats-srd.Item.jM72TjJ965jocBV8]{Shield Block} reaction when the spell is modified in this way, but you (and only you) can spend an action to @UUID[Compendium.pf2e.actionspf2e.Item.ust1jJSCZQUhBZIz]{Take Cover} to gain standard cover from it."
                 },
                 "BeaconMark": {
-                    "Description": "When you cast sigil, you can modify the spell to add the following heightened entry.",
-                    "DescriptionHeightened": "You attune yourself to the marked target. While the spell lasts, you can spend a single action, which has the concentrate, detection, and divination traits, to attempt to locate the target, learning the direction to the target as long as you are within 1 mile of it. If the target is a creature or a creature is in possession of the target object, the creature can attempt a @Check[type:will] saving throw against your spell DC. If it succeeds, your attempt to locate the target fails and you can't attempt this again for 1 day. You can only have a single target marked with a sigil modified in this way. If you Cast this Spell again on a second target, the sigil spell on the first target ends, and your mark fades."
+                    "Description": "When you cast _sigil_, you can modify the spell to add the following heightened entry.",
+                    "DescriptionHeightened": "You attune yourself to the marked target. While the spell lasts, you can spend a single action, which has the concentrate, detection, and divination traits, to attempt to locate the target, learning the direction to the target as long as you are within 1 mile of it. If the target is a creature or a creature is in possession of the target object, the creature can attempt a @Check[type:will] saving throw against your spell DC. If it succeeds, your attempt to locate the target fails and you can't attempt this again for 1 day. You can only have a single target marked with a _sigil_ modified in this way. If you Cast this Spell again on a second target, the _sigil_ spell on the first target ends, and your mark fades."
                 },
                 "ChokingSmoke": {
-                    "Description": "When you cast fireball heightened to at least 6th level, you can modify the spell's standard effects as follows: Reduce the spell's damage by 6d6. Your fireball leaves behind a lingering cloud of toxic smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of @UUID[Compendium.pf2e.spells-srd.Item.GKpEcy9WId6NJvtx]{Stinking Cloud}."
+                    "Description": "When you cast _fireball_ heightened to at least 6th rank, you can modify the spell's standard effects as follows: Reduce the spell's damage by 6d6. Your _fireball_ leaves behind a lingering cloud of toxic smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of @UUID[Compendium.pf2e.spells-srd.Item.GKpEcy9WId6NJvtx]{Stinking Cloud}."
                 },
                 "ConfoundingImage": {
-                    "Description": "When you cast mirror image, you can modify its duration to be sustained up to 1 minute and modify its range to 30 feet. If you do, replace the spell's standard effects with the following: You create an illusory duplicate of yourself that appears in an unoccupied square within range. The image takes up space and has a reach of 5 feet, and your allies can flank with the image. It doesn't have any other attributes a creature would normally have other than an AC equal to your spell DC and saving throw modifiers equal to your spell DC - 10. If the image is hit by an attack or fails a save, or if you ever move more than 30 feet from it, the spell ends. Creatures can move through its space without hindrance. When you Sustain the Spell, you can move the image to an unoccupied square within range."
+                    "Description": "When you cast _mirror image_, you can modify its duration to be sustained up to 1 minute and modify its range to 30 feet. If you do, replace the spell's standard effects with the following: You create an illusory duplicate of yourself that appears in an unoccupied square within range. The image takes up space and has a reach of 5 feet, and your allies can flank with the image. It doesn't have any other attributes a creature would normally have other than an AC equal to your spell DC and saving throw modifiers equal to your spell DC - 10. If the image is hit by an attack or fails a save, or if you ever move more than 30 feet from it, the spell ends. Creatures can move through its space without hindrance. When you Sustain the Spell, you can move the image to an unoccupied square within range."
                 },
                 "DirectedPoison": {
-                    "Description": "When you cast toxic cloud, modify its duration to be sustained up to 1 minute, and modify its standard effect to include the following: The cloud doesn't move away from you each round. Once per round when you Sustain the Spell, you can move the cloud 10 feet in the direction of your choice."
+                    "Description": "When you cast _toxic cloud_, modify its duration to be sustained up to 1 minute, and modify its standard effect to include the following: The cloud doesn't move away from you each round. Once per round when you Sustain the Spell, you can move the cloud 10 feet in the direction of your choice."
                 },
                 "DiskRider": {
-                    "Description": "When you cast floating disk, you can modify its duration to be sustained, up to 10 minutes. If you do, add the following heightened entry to its effects.",
+                    "Description": "When you cast _floating disk_, you can modify its duration to be sustained, up to 10 minutes. If you do, add the following heightened entry to its effects.",
                     "DescriptionHeightened": "The disk can hold up to 10 Bulk. The spell no longer ends if you ride atop the disk (though it does if any other creature rides atop it, including if the creature is riding on you). If you are riding the disk, it changes its capacity to hold you, plus additional Bulk equal to the maximum you could carry without being encumbered. If you ride atop the disk, you can direct it to move along the ground up to 30 feet or your Speed, whichever is slower, each time you Sustain the Spell. While you ride atop it, the disk can move over liquids as long as it ends its movement on solid ground. If it ends its movement on a surface that can't support it, the spell ends."
                 },
                 "DrenchingMist": {
-                    "Description": "When you cast mist, you can modify it to add the following heightened entry to its effects.",
-                    "DescriptionHeightened": "Your mist is particularly laden with moisture. Non-magical fires within the area are automatically extinguished. Choose one magical fire or fire spell in the area and attempt to counteract it."
+                    "Description": "When you cast _mist_, you can modify it to add the following heightened entry to its effects.",
+                    "DescriptionHeightened": "Your _mist_ is particularly laden with moisture. Non-magical fires within the area are automatically extinguished. Choose one magical fire or fire spell in the area and attempt to counteract it."
                 },
                 "ForcefulPush": {
-                    "Description": "When you cast telekinetic hand, you can modify its target to be 1 creature. If you do, replace its standard effects with the following: You push your foe telekinetically. Make a spell attack roll against the target's Fortitude DC. On a success, you push the target 5 feet away from you. On a critical success, you push the target 10 feet away from you."
+                    "Description": "When you cast _telekinetic hand_, you can modify its target to be 1 creature. If you do, replace its standard effects with the following: You push your foe telekinetically. Make a spell attack roll against the target's Fortitude DC. On a success, you push the target 5 feet away from you. On a critical success, you push the target 10 feet away from you."
                 },
                 "Label": "Spell Trickster",
                 "ObscuredTerrain": {
-                    "Description": "When you cast mist, you can modify the spell to replace its standard effects with the following: You cause a cloud of thick fog to blanket the area, making it difficult to see the ground. The area within the fog is difficult terrain for creatures that can't see through fog or mist. You can @UUID[Compendium.pf2e.actionspf2e.Item.AjLSHZSWQ90exdLo]{Dismiss} the cloud."
+                    "Description": "When you cast _mist_, you can modify the spell to replace its standard effects with the following: You cause a cloud of thick fog to blanket the area, making it difficult to see the ground. The area within the fog is difficult terrain for creatures that can't see through fog or mist. You can Dismiss the cloud."
                 },
                 "LarcenousHand": {
-                    "Description": "When you cast telekinetic hand, you can remove its duration, modify its range to 20 feet, and modify its target to be an attended object within the spell's Bulk limit that wouldn't be time-consuming to remove. Add the following to the spell's standard effects: If the creature attending the object is willing to have you take the item, mage hand carries the item to you. If the creature is unwilling, you must attempt to @UUID[Compendium.pf2e.actionspf2e.Item.RDXXE7wMrSPCLv5k]{Steal} the target object with a [[/act thievery]] check. The usual restrictions on attempts to Steal an object apply, including the restrictions that you can't steal objects that would be extremely noticeable or time-consuming to remove (like worn shoes or armor or actively wielded objects) and you can't Steal from a creature in combat or otherwise on guard. On a successful Steal check, the mage hand carries the item to you, and on a critical failure, you can't use this modification again for 1 hour. If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard, though if you do so, the spell's casting time increases by 1 action."
+                    "Description": "When you cast _telekinetic hand_, you can remove its duration, modify its range to 20 feet, and modify its target to be an attended object within the spell's Bulk limit that wouldn't be time-consuming to remove. Add the following to the spell's standard effects: If the creature attending the object is willing to have you take the item, Telekinetic Hand carries the item to you. If the creature is unwilling, you must attempt to [[/act steal]] the target object with a Thievery check. The usual restrictions on attempts to Steal an object apply, including the restrictions that you can't steal objects that would be extremely noticeable or time-consuming to remove (like worn shoes or armor or actively wielded objects) and you can't Steal from a creature in combat or otherwise on guard. On a successful Steal check, the Telekinetic Hand carries the item to you, and on a critical failure, you can't use this modification again for 1 hour. If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard, though if you do so, the spell's casting time increases by 1 action."
                 },
                 "LingeringFlames": {
-                    "Description": "When you cast fireball, you can modify its effects, decreasing the base damage to 5d6 and causing it to deal 2 persistent fire damage to creatures that fail their save, doubled as normal on a critical failure. If you do, replace its heightened entry with the following.",
+                    "Description": "When you cast _fireball_, you can modify its effects, decreasing the base damage to 5d6 and causing it to deal @Damage[(2*(@item.level - 2))[fire,persistent]] damage to creatures that fail their save, doubled as normal on a critical failure. If you do, replace its heightened entry with the following.",
                     "DescriptionHeightened": "The damage is increased by 1d6 and the persistent fire damage is increased by 2."
                 },
                 "ScatteredFire": {
-                    "Description": "When you cast fireball, you can modify its area to be two non-overlapping @Template[type:burst|distance:10]{10-foot bursts}."
+                    "Description": "When you cast _fireball_, you can modify its area to be two non-overlapping @Template[type:burst|distance:10]{10-foot bursts}."
                 },
                 "ShiningArms": {
-                    "Description": "When you cast light, you can modify its target to be 1 melee weapon, either unattended or possessed by you or a willing ally, and modify its duration to be 1 minute. If you do, add the following to its effects: When a creature wielding the weapon critically hits a foe, you can @UUID[Compendium.pf2e.actionspf2e.Item.AjLSHZSWQ90exdLo]{Dismiss} the Spell as a reaction, causing the foe to be @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} for 1 round. After you use this reaction, you can't use this modification again for 10 minutes."
+                    "Description": "When you cast _light_, you can modify its target to be 1 melee weapon, either unattended or possessed by you or a willing ally, and modify its duration to be 1 minute. If you do, add the following to its effects: When a creature wielding the weapon critically hits a foe, you can Dismiss the Spell as a reaction, causing the foe to be @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} for 1 round. After you use this reaction, you can't use this modification again for 10 minutes.",
+                    "Label": "Shining Arms",
+                    "Note": "When a creature wielding the weapon critically hits a foe, you can Dismiss the spell as a reaction, causing the foe to be @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} for 1 round."
                 },
-                "SiphoningHand": {
-                    "Description": "When you cast vampiric feast, you can modify its standard effects as follows: Instead of gaining the temporary Hit Points yourself, you can grant the temporary Hit Points to an ally within 30 feet. After 1 minute, the ally loses any of these temporary Hit Points that remain."
+                "SiphoningTouch": {
+                    "Description": "When you cast _vampiric feast_, you can modify its standard effects as follows: Instead of gaining the temporary Hit Points yourself, you can grant the temporary Hit Points to an ally within 30 feet. After 1 minute, the ally loses any of these temporary Hit Points that remain."
                 },
                 "SmolderingExplosion": {
-                    "Description": "When you cast fireball heightened to at least 4th rank, you can modify the spell to add the following to its standard effects: Your fireball leaves behind a brief cloud of smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of @UUID[Compendium.pf2e.spells-srd.Item.9XHmC2JgTUIQ1CCm]{Mist}, except that it lasts only 1 round."
+                    "Description": "When you cast _fireball_ heightened to at least 4th rank, you can modify the spell to add the following to its standard effects: Your _fireball_ leaves behind a brief cloud of smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of @UUID[Compendium.pf2e.spells-srd.Item.9XHmC2JgTUIQ1CCm]{Mist}, except that it lasts only 1 round."
                 },
                 "SurroundingFlames": {
-                    "Description": "When you cast wall of fire, you can modify its standard effects as follows: Instead of a 5-foot-thick, 10-foot-radius ring of flame, you can form the wall into a @Template[type:burst|distance:10]{10-foot-radius} hemisphere of fire."
+                    "Description": "When you cast _wall of fire_, you can modify its standard effects as follows: Instead of a 5-foot-thick, 10-foot-radius ring of flame, you can form the wall into a @Template[type:burst|distance:10]{10-foot-radius} hemisphere of fire."
                 },
                 "StealVitality": {
-                    "Description": "When you cast vampiric feast, you can modify its standard effects as follows: Instead of gaining temporary Hit Points, if your target fails or critically fails its saving throw, you can attempt a counteract check to remove the clumsy or enfeebled conditions on yourself, using the source of that condition to determine the counteract rank and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn."
+                    "Description": "When you cast _vampiric feast_, you can modify its standard effects as follows: Instead of gaining temporary Hit Points, if your target fails or critically fails its saving throw, you can attempt a counteract check to remove the clumsy or enfeebled conditions on yourself, using the source of that condition to determine the counteract rank and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn."
                 },
                 "SummonEnsemble": {
-                    "Description": "When you cast summon instrument, you can modify its duration to be sustained, up to 1 minute. When you do, you summon a number of instruments equal to your spellcasting ability modifier that hover around you and play of their own accord. Once per turn when you Sustain the Spell, choose an opponent within 30 feet who can hear your performance. The target must attempt a @Check[type:will] save against the spell's DC; on a failure, it becomes distracted by your performance and becomes @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} for 1 round. The target is then temporarily immune for 24 hours."
+                    "Description": "When you cast _summon instrument_, you can modify its duration to be sustained, up to 1 minute. When you do, you summon a number of instruments equal to your spellcasting ability modifier that hover around you and play of their own accord. Once per turn when you Sustain the Spell, choose an opponent within 30 feet who can hear your performance. The target must attempt a @Check[type:will] save against the spell's DC; on a failure, it becomes distracted by your performance and becomes @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} for 1 round. The target is then temporarily immune for 24 hours."
                 },
                 "TopplingTentacles": {
-                    "Description": "When you cast black tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to @UUID[Compendium.pf2e.actionspf2e.Item.ge56Lu1xXVFYUnLP]{Trip} each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone} and takes @Damage[3d6[bludgeoning]] damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal @Damage[1d6[bludgeoning]] damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+                    "Description": "When you cast _black tentacles_, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to @UUID[Compendium.pf2e.actionspf2e.Item.ge56Lu1xXVFYUnLP]{Trip} each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone} and takes @Damage[3d6[bludgeoning]] damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal @Damage[1d6[bludgeoning]] damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
                 },
                 "TracingSigil": {
-                    "Description": "When you cast sigil, you can modify the spell to add the following to its standard effects: The target leaves a magical trail that you and others can try to follow. You and other creatures can attempt to @UUID[Compendium.pf2e.actionspf2e.Item.EA5vuSgJfiHH7plD]{Track} the target, substituting an Arcana, Nature, Occultism, or Religion check (whichever matches the magical tradition of your sigil spell) for the Survival check. Much like Tracking with Survival, this must take place somewhere the target has been and follow the trail; it doesn't allow anyone to find the target from a distance. You can only have a single target marked with a modified sigil in this way. If you use this ability again on a second target, the sigil spell on the first target ends, and your mark fades."
+                    "Description": "When you cast _sigil_, you can modify the spell to add the following to its standard effects: The target leaves a magical trail that you and others can try to follow. You and other creatures can attempt to @UUID[Compendium.pf2e.actionspf2e.Item.EA5vuSgJfiHH7plD]{Track} the target, substituting an Arcana, Nature, Occultism, or Religion check (whichever matches the magical tradition of your _sigil_ spell) for the Survival check. Much like Tracking with Survival, this must take place somewhere the target has been and follow the trail; it doesn't allow anyone to find the target from a distance. You can only have a single target marked with a modified _sigil_ in this way. If you use this ability again on a second target, the _sigil_ spell on the first target ends, and your mark fades."
                 },
                 "UneasyRest": {
-                    "Description": "When you cast sleep, you can modify the spell to add the following to its standard effects: Subjects of your spell experience troubled dreams. When a target that failed or critically failed its saving throw wakes up, it is @UUID[Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL]{Frightened 1}."
+                    "Description": "When you cast _sleep_, you can modify the spell to add the following to its standard effects: Subjects of your spell experience troubled dreams. When a target that failed or critically failed its saving throw wakes up, it is @UUID[Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL]{Frightened 1}."
                 },
                 "VolatileGrease": {
-                    "Description": "When you cast grease, you can modify its target to be 1 creature. If you do, replace the spell's standard effects with the following: You splash the target with combustible grease. The target must attempt a @Check[type:reflex] save.",
+                    "Description": "When you cast _grease_, you can modify its target to be 1 creature. If you do, replace the spell's standard effects with the following: You splash the target with combustible grease. The target must attempt a @Check[type:reflex] save.",
                     "CriticalSuccess": "The target is unaffected.",
                     "Failure": "As success, except the weakness to fire lasts for 1 minute.",
                     "Success": "The target is splattered with grease and gains weakness 2 to fire until the end of your next turn. The target or an adjacent creature can rub off the combustible grease with an Interact action, ending the effect.",
                     "DescriptionHeightened": "The weakness increases by 1."
                 },
                 "WildLights": {
-                    "Description": "When you cast light, you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights. The creature hovers over your head unless you spend a single action that has the concentrate trait to direct the light to move up to 30 feet, in which case it remains there until you direct it again. If you direct it back to your head, it hovers there and follows you again until you direct it elsewhere. If the light ever moves beyond 120 feet of you, it winks out immediately."
+                    "Description": "When you cast _light_, you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights. The creature hovers over your head unless you spend a single action that has the concentrate trait to direct the light to move up to 30 feet, in which case it remains there until you direct it again. If you direct it back to your head, it hovers there and follows you again until you direct it elsewhere. If the light ever moves beyond 120 feet of you, it winks out immediately."
                 }
             },
             "SpiritPower": {
@@ -3725,6 +4037,28 @@
                     "Prompt": "Select an element."
                 }
             },
+            "Surki": {
+                "BreakerSurki": {
+                    "DiggingWedgeLabel": "Activate Digging Wedge"
+                },
+                "Evolutions": {
+                    "DampeningField": "Dampening Field",
+                    "DiggingWedge": "Digging Wedge",
+                    "GlowingWings": "Glowing Wings",
+                    "GroundingClawSpikes": "Grounding Claw Spikes",
+                    "LanternBeam": "Lantern Beam",
+                    "LanternStrobe": "Lantern Strobe",
+                    "Prompt": "Select an evolution",
+                    "ResonatingMembranes": "Resonating Membranes",
+                    "StrengthenedCarapace": "Strengthened Carapace"
+                },
+                "LanternSurki": {
+                    "ToggleLabel": "Shed Light"
+                },
+                "SecondaryAdaptation": {
+                    "Prompt": "Select a surki heritage"
+                }
+            },
             "Swashbuckler": {
                 "Finisher": {
                     "Basic": "Basic",
@@ -3755,6 +4089,14 @@
                 "Undead": "Enable abilities that require an undead target",
                 "Vampire": "Enable abilities that require a vampire target"
             },
+            "Tanuki": {
+                "Dainiki": "Dainiki",
+                "Kagebashi": "Kagebashi",
+                "Mochi": "Mochi",
+                "Suzu": "Suzu",
+                "Tonta": "Tonta",
+                "Toshiro": "Toshiro"
+            },
             "Target": {
                 "AgainstDemons": "Against Demons",
                 "AgainstDevils": "Against Devils",
@@ -3774,6 +4116,11 @@
                         "InForestLabel": "Wildwood Ink (In Forest)"
                     }
                 }
+            },
+            "TempestForm": {
+                "Air": "Air",
+                "Mist": "Mist",
+                "Water": "Water"
             },
             "Tengu": {
                 "WeaponFamiliarity": {
@@ -3851,6 +4198,10 @@
                     }
                 }
             },
+            "VenomGlands": {
+                "Note": "On a critical hit, the target is also @UUID[Compendium.pf2e.conditionitems.Item.fesd1n5eVhpCSS18]{Sickened 1}.",
+                "Label": "Poison Spray"
+            },
             "VirtuosicPerformer": {
                 "Acting": "Acting",
                 "Comedy": "Comedy",
@@ -3897,6 +4248,47 @@
                 "Initiative": "When you roll initiative for a non-trivial combat encounter, as well as in other high-stress situations of the GM's choice, magic wells up within you. Attempt a @Check[type:flat|dc:6|traits:wellspring-magic].",
                 "Success": "You temporarily recover an expended spell slot of a spell rank chosen randomly among your top three ranks of spell slots (or all your ranks of spell slots if you have fewer than three). The slot lasts 3 rounds instead of 1 minute, otherwise you experience a @UUID[Compendium.pf2e.rollable-tables.RollTable.N0pDFNCffTe2Du39]{Wellspring Surge}."
             },
+            "Werecreature": {
+                "Werebat": {
+                    "Description": "You gain a 10ft speed and a 15ft fly speed, and a 1d8 piercing fangs unarmed attack. When Flying due to the fly speed granted by this form, you must begin and end your movement on a solid surface or immediately fall.",
+                    "Label": "Werebat"
+                },
+                "Werebear": {
+                    "Description": "You gain a 25ft speed, a 1d8 piercing jaws unarmed attack, and a 1d6 slashing claw unarmed attack with the agile trait.",
+                    "Label": "Werebear"
+                },
+                "Wereboar": {
+                    "Description": "You gain a 30ft speed, and a 1d8 slashing tusk unarmed attack with the sweep trait.",
+                    "Label": "Wereboar"
+                },
+                "Werecrocodile": {
+                    "Description": "You gain a 25ft speed and a 15ft swim speed, and a 1d8 piercing jaws unarmed attack with the grapple trait. You can hold your breath for 2 hours in animal or hybrid form.",
+                    "Label": "Werecrocodile"
+                },
+                "Weremoose": {
+                    "Description": "You gain a 25ft speed, and a 1d8 piercing antler unarmed attack with the shove trait.",
+                    "Label": "Weremoose"
+                },
+                "Wererat": {
+                    "Description": "You gain a 25ft speed, a 1d6 piercing jaws unarmed attack with the finesse trait, and a 1d4 slashing claw unarmed attack with the agile and finesse traits. Your animal shape is Small in size.",
+                    "Label": "Wererat"
+                },
+                "Wereshark": {
+                    "Description": "You gain a 15ft speed and a 25ft swim speed, and a 1d8 piercing jaws unarmed attack with the grapple trait. Your hybrid shape gains the amphibious swim 25 feet trait. In your animal shape, you lose your land Speed and your Swim speed increases to 35 feet, and you gain the aquatic trait.",
+                    "Label": "Wereshark"
+                },
+                "Weretiger": {
+                    "Description": "You gain a 25ft speed, a 1d8 piercing jaws unarmed attack, and a 1d6 slashing claw unarmed attack with the agile trait.",
+                    "Label": "Weretiger"
+                },
+                "Werewolf": {
+                    "Description": "You gain a 30ft speed, and a 1d8 piercing jaws unarmed attack with the trip trait.",
+                    "Label": "Werewolf"
+                },
+                "ChangeShape": {
+                    "AlterationLabel": "Hybrid and Animal Shape"
+                }
+            },
             "Witch": {
                 "Cauldron": {
                     "CraftingEntry": "Cauldron"
@@ -3905,33 +4297,56 @@
                     "Prompt": "Select a patron.",
                     "FamiliarAbility": {
                         "BalancedLuck": {
-                            "Title": "Familiar of Balanced Luck",
-                            "Description": "When you Cast or Sustain a hex, one creature within 15 feet of your familiar gets your choice of either a +1 status bonus to its AC or a –1 status penalty to its AC until the start of your next turn."
+                            "Description": "When you Cast or Sustain a hex, one creature within 15 feet of your familiar gets your choice of either a +1 status bonus to its AC or a –1 status penalty to its AC until the start of your next turn.",
+                            "Title": "Familiar of Balanced Luck"
                         },
                         "FlowingScript": {
-                            "Title": "Familiar of Flowing Script",
-                            "Description": "When you Cast or Sustain a hex, the letters begin to rapidly change, causing a distraction. Until the start of your next turn, your familiar can provide flanking for you and your allies as though it were able to attack and had a reach of 5 feet; this is a visual effect."
+                            "Description": "When you Cast or Sustain a hex, the letters begin to rapidly change, causing a distraction. Until the start of your next turn, your familiar can provide flanking for you and your allies as though it were able to attack and had a reach of 5 feet; this is a visual effect.",
+                            "Title": "Familiar of Flowing Script"
                         },
                         "FreezingRime": {
-                            "Title": "Familiar of Freezing Rime",
-                            "Description": "Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a @Template[type:burst|distance:5] centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn."
+                            "Description": "Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a @Template[type:burst|distance:5] centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn.",
+                            "Title": "Familiar of Freezing Rime"
                         },
                         "KeenSenses": {
-                            "Title": "Familiar of Keen Senses",
-                            "Description": "When you Cast or Sustain a hex, your familiar gains your choice of an imprecise scent, tremorsense, or wavesense, with a range of 60 feet until the start of your next turn, and it can immediately @UUID[Compendium.pf2e.actionspf2e.Item.sn2hIy1iIJX9Vpgj]{Point Out} as a free action."
+                            "Description": "When you Cast or Sustain a hex, your familiar gains your choice of an imprecise scent, tremorsense, or wavesense, with a range of 60 feet until the start of your next turn, and it can immediately @UUID[Compendium.pf2e.actionspf2e.Item.sn2hIy1iIJX9Vpgj]{Point Out} as a free action.",
+                            "Title": "Familiar of Keen Senses"
+                        },
+                        "NimbleFlight": {
+                            "Description": "When you Cast or Sustain a hex, your familiar can Fly up to 15 feet; this movement doesn't trigger reactions.",
+                            "Title": "Familiar of Nimble Flight"
                         },
                         "OngoingMisery": {
-                            "Title": "Familiar of Ongoing Misery",
-                            "Description": "When you Cast or Sustain a hex, your familiar can curse a creature within 15 feet of it, prolonging the duration of any negative conditions affecting it by 1 round. This is a curse effect. This prolongs only conditions with a timed duration (such as '1 round' or 'until the end of your next turn') and doesn't prevent conditions from being removed by other means."
+                            "Description": "When you Cast or Sustain a hex, your familiar can curse a creature within 15 feet of it, prolonging the duration of any negative conditions affecting it by 1 round. This is a curse effect. This prolongs only conditions with a timed duration (such as '1 round' or 'until the end of your next turn') and doesn't prevent conditions from being removed by other means.",
+                            "Title": "Familiar of Ongoing Misery"
+                        },
+                        "OverwhelmingTides": {
+                            "Description": "When you Cast or Sustain a hex, you can cause a small wave to surge forth from your familiar. One creature within 10 feet of your familiar is pushed 5 feet away from your familiar.",
+                            "Title": "Familiar of Overwhelming Tides"
+                        },
+                        "ParasiticMight": {
+                            "Description": "When you Cast or Sustain a hex, one creature within 15 feet of your familiar with less than half of its maximum Hit Points becomes @UUID[Compendium.pf2e.conditionitems.Item.fesd1n5eVhpCSS18]{Sickened 1} unless it succeeds at a @Check[type:fortitude|dc:resolve(@actor.system.attributes.spellDC.value)] saving throw.",
+                            "Title": "Familiar of Parasitic Might"
                         },
                         "RestoredSpirit": {
-                            "Title": "Familiar of Restored Spirit",
-                            "Description": "When you Cast or Sustain a hex, one willing creature within 15 feet of your familiar gains temporary Hit Points equal to 2 + half your level, which last until the start of your next turn."
+                            "Description": "When you Cast or Sustain a hex, one willing creature within 15 feet of your familiar gains temporary Hit Points equal to 2 + half your level, which last until the start of your next turn.",
+                            "Title": "Familiar of Restored Spirit"
                         },
                         "StalkingNight": {
-                            "Title": "Familiar of Stalking Night",
-                            "Description": "Your familiar is dark of fur or feather, and light seems to disappear into it. When you Cast or Sustain a hex, and your familiar is adjacent to an enemy to which it's @UUID[Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W]{Concealed}, @UUID[Compendium.pf2e.conditionitems.Item.iU0fEDdBp3rXpTMC]{Hidden}, or undetected, the enemy becomes @UUID[Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL]{Frightened 1}."
+                            "Description": "When you Cast or Sustain a hex, and your familiar is adjacent to an enemy to which it's @UUID[Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W]{Concealed}, @UUID[Compendium.pf2e.conditionitems.Item.iU0fEDdBp3rXpTMC]{Hidden}, or undetected, the enemy becomes @UUID[Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL]{Frightened 1}.",
+                            "Title": "Familiar of Stalking Night"
                         }
+                    }
+                },
+                "WildWitchsArmaments": {
+                    "EldritchNails": {
+                        "RollOptionLabel": "You hit the same enemy with two consecutive nail strikes"
+                    },
+                    "IronTeeth": {
+                        "Note": "A creature that you critically hit with a jaws Strike must succeed at a @Check[type:fortitude|dc:resolve(@actor.system.attributes.classDC.value)] save or become @UUID[Compendium.pf2e.conditionitems.Item.fesd1n5eVhpCSS18]{Sickened 1}."
+                    },
+                    "LivingHair": {
+                        "SrikeLabel": "Quill"
                     }
                 },
                 "WitchsArmaments": {

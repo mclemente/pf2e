@@ -107,7 +107,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You surround yourself with supernatural splendor, appearing to be a god or similarly majestic being. You choose the aspects of your new majestic appearance. This causes the targets to pay tribute to you by bowing or using some other action in keeping with your appearance. The number of times a target must do this depends on the result of their Will save. Paying tribute is a manipulate action or move action, as chosen by the creature paying tribute. A creature under this effect must pay tribute to you at least once on each of its turns if possible. While affected by this spell, a creature is @UUID[Compendium.pf2e.conditionitems.Item.Fascinated] by you and can't use hostile actions against you. The target is then temporarily immune for 1 minute.</p>\n<hr /><strong>Critical Success</strong> The target is unaffected.\n<p><strong>Success</strong> The target must pay tribute twice.</p>\n<p><strong>Failure</strong> The target must pay tribute six times.</p>\n<p><strong>Critical Failure</strong> As failure, and the target must spend all its actions paying tribute if possible.</p>"
+                    "value": "<p>You surround yourself with supernatural splendor, appearing to be a god or similarly majestic being. You choose the aspects of your new majestic appearance. This causes the targets to pay tribute to you by bowing or using some other action in keeping with your appearance. The number of times a target must do this depends on the result of their Will save. Paying tribute is a manipulate action or move action, as chosen by the creature paying tribute. A creature under this effect must pay tribute to you at least once on each of its turns if possible. While affected by this spell, a creature is @UUID[Compendium.pf2e.conditionitems.Item.Fascinated] by you and can't use hostile actions against you. The target is then temporarily immune for 1 minute.</p>\n<hr /><p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target must pay tribute twice.</p>\n<p><strong>Failure</strong> The target must pay tribute six times.</p>\n<p><strong>Critical Failure</strong> As failure, and the target must spend all its actions paying tribute if possible.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -2173,7 +2173,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the Spell. Each time you Sustain the Spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> <strong>Slowly</strong> lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or spell component.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p>Prestidigitation can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the Spell.</p>"
+                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the Spell. Each time you Sustain the Spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> Slowly lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or spell component.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p>Prestidigitation can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the Spell.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -2379,7 +2379,7 @@
                 }
             },
             "img": "systems/pf2e/icons/equipment/wands/specialty-wands/wand-of-manifold-missiles.webp",
-            "name": "Wand of Manifold Missiles (7th-Level Spell)",
+            "name": "Wand of Manifold Missiles (7th-Rank Spell)",
             "sort": 3500000,
             "system": {
                 "baseItem": null,
@@ -2895,6 +2895,20 @@
                         "mode": "override",
                         "path": "system.attributes.hp.negativeHealing",
                         "value": true
+                    },
+                    {
+                        "exceptions": [
+                            {
+                                "definition": [
+                                    "item:magical",
+                                    "damage:type:bludgeoning"
+                                ],
+                                "label": "PF2E.IWR.Custom.MagicalBludgeoning"
+                            }
+                        ],
+                        "key": "Resistance",
+                        "type": "physical",
+                        "value": 10
                     }
                 ],
                 "slug": "negative-healing",
@@ -3295,13 +3309,6 @@
             "resistances": [
                 {
                     "type": "cold",
-                    "value": 10
-                },
-                {
-                    "exceptions": [
-                        "bludgeoning"
-                    ],
-                    "type": "physical",
                     "value": 10
                 }
             ],

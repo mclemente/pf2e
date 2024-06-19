@@ -13,6 +13,8 @@ import {
     extractRollSubstitutions,
     extractRollTwice,
 } from "@module/rules/helpers.ts";
+import type { RegionDocumentPF2e, ScenePF2e } from "@scene";
+import type { EnvironmentRegionBehavior } from "@scene/region-behavior/types.ts";
 import { eventToRollParams } from "@scripts/sheet-util.ts";
 import { CheckCheckContext, CheckPF2e, CheckRoll } from "@system/check/index.ts";
 import { DamageDamageContext, DamagePF2e } from "@system/damage/index.ts";
@@ -94,7 +96,7 @@ function userColorForActor(actor: ActorPF2e): HexColorString {
         game.users.find((u) => u.character === actor) ??
         game.users.players.find((u) => actor.testUserPermission(u, "OWNER")) ??
         actor.primaryUpdater;
-    return user?.color ?? "#43dfdf";
+    return user?.color.toString() ?? "#43dfdf";
 }
 
 async function migrateActorSource(source: PreCreate<ActorSourcePF2e>): Promise<ActorSourcePF2e> {
@@ -250,6 +252,64 @@ function createEncounterRollOptions(actor: ActorPF2e): Record<string, boolean> {
     ).filter(([, value]) => !!value);
 
     return Object.fromEntries(entries);
+}
+
+/** Create roll options pertaining to the terrain the actor is currently in */
+function createEnvironmentRollOptions(actor: ActorPF2e): Record<string, boolean> {
+    const toAdd = new Set<string>();
+    // Always add the scene terrain types
+    for (const terrain of canvas.scene?.flags.pf2e.environmentTypes ?? []) {
+        toAdd.add(terrain);
+    }
+    const token = actor.getActiveTokens(false, true).at(0);
+    const terrains = ((): Set<string> => {
+        // No token on the scene means no terrain roll options
+        if (!token) return new Set();
+        const toRemove = new Set<string>();
+        for (const region of token.regions ?? []) {
+            // An elevation value of null translates to Infinity
+            const bottom = region.elevation.bottom ?? -Infinity;
+            const top = region.elevation.top ?? Infinity;
+            if (token.elevation < bottom || token.elevation > top) continue;
+
+            const environmentBehaviors = region.behaviors.filter(
+                (b): b is EnvironmentRegionBehavior<RegionDocumentPF2e<ScenePF2e>> => b.type === "environment",
+            );
+            for (const behavior of environmentBehaviors) {
+                const system = behavior.system;
+                switch (system.mode) {
+                    case "add": {
+                        for (const terrain of system.environmentTypes) {
+                            toAdd.add(terrain);
+                        }
+                        break;
+                    }
+                    case "remove": {
+                        for (const terrain of system.environmentTypes) {
+                            toRemove.add(terrain);
+                        }
+                        break;
+                    }
+                    case "override": {
+                        // Only clear out the exisiting values in case there is another
+                        // behavior after the override
+                        toAdd.clear();
+                        toRemove.clear();
+                        for (const terrain of system.environmentTypes) {
+                            toAdd.add(terrain);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        for (const terrain of toRemove) {
+            toAdd.delete(terrain);
+        }
+        return toAdd;
+    })();
+
+    return Object.fromEntries(terrains.map((t) => [`terrain:${t}`, true]));
 }
 
 /** Whether flanking puts this actor off-guard */
@@ -520,7 +580,6 @@ function strikeFromMeleeItem(item: MeleePF2e<ActorPF2e>): NPCStrike {
                 }
             }
 
-            const otherModifiers = R.compact([map]);
             const title = game.i18n.format(
                 item.isMelee ? "PF2E.Action.Strike.MeleeLabel" : "PF2E.Action.Strike.RangedLabel",
                 { weapon: item.name },
@@ -538,7 +597,8 @@ function strikeFromMeleeItem(item: MeleePF2e<ActorPF2e>): NPCStrike {
             );
             const dosAdjustments = extractDegreeOfSuccessAdjustments(context.origin.actor.synthetics, domains);
 
-            const check = new CheckModifier("strike", context.origin.statistic ?? strike, otherModifiers);
+            const allModifiers = R.compact([map, params.modifiers, context.origin.modifiers].flat());
+            const check = new CheckModifier("strike", context.origin.statistic ?? strike, allModifiers);
             const checkContext: CheckCheckContext = {
                 type: "attack-roll",
                 identifier: `${item.id}.${attackSlug}.${meleeOrRanged}`,
@@ -688,6 +748,7 @@ export {
     calculateRangePenalty,
     checkAreaEffects,
     createEncounterRollOptions,
+    createEnvironmentRollOptions,
     getRangeIncrement,
     getStrikeAttackDomains,
     getStrikeDamageDomains,

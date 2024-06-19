@@ -13,7 +13,6 @@ import {
     CreatureSystemSource,
     HeldShieldData,
     SaveData,
-    SkillAbbreviation,
     SkillData,
 } from "@actor/creature/data.ts";
 import { CreatureInitiativeSource, CreatureSpeeds, Language } from "@actor/creature/index.ts";
@@ -26,7 +25,7 @@ import {
     StrikeData,
     TraitViewData,
 } from "@actor/data/base.ts";
-import { AttributeString, MovementType, SaveType } from "@actor/types.ts";
+import { AttributeString, MovementType, SaveType, SkillSlug } from "@actor/types.ts";
 import type { WeaponPF2e } from "@item";
 import { ArmorCategory } from "@item/armor/types.ts";
 import { ProficiencyRank } from "@item/base/data/index.ts";
@@ -35,7 +34,7 @@ import { DeityDomain } from "@item/deity/types.ts";
 import { BaseWeaponType, WeaponCategory, WeaponGroup } from "@item/weapon/types.ts";
 import { ValueAndMax, ZeroToFour } from "@module/data.ts";
 import { DamageType } from "@system/damage/types.ts";
-import type { PredicatePF2e } from "@system/predication.ts";
+import type { Predicate } from "@system/predication.ts";
 import type { CharacterPF2e } from "./document.ts";
 import type { WeaponAuxiliaryAction } from "./helpers.ts";
 import type { CharacterSheetTabVisibility } from "./sheet.ts";
@@ -71,6 +70,7 @@ interface CharacterSystemSource extends CreatureSystemSource {
     proficiencies?: {
         attacks?: Record<string, MartialProficiencySource | undefined>;
     };
+    skills: Partial<Record<SkillSlug, { rank: ZeroToFour }>>;
     resources: CharacterResourcesSource;
     initiative: CreatureInitiativeSource;
     crafting?: { formulas: CraftingFormulaData[] };
@@ -257,7 +257,7 @@ interface CharacterSystemData extends Omit<CharacterSystemSource, SourceOmission
     };
 
     /** Player skills, used for various skill checks. */
-    skills: Record<SkillAbbreviation, CharacterSkillData>;
+    skills: Record<string, CharacterSkillData>;
 
     /** Special strikes which the character can take. */
     actions: CharacterStrike[];
@@ -281,7 +281,7 @@ interface CharacterSkillData extends SkillData {
     /** Is this skill a Lore skill? */
     lore?: boolean;
     /** If this is a lore skill, what item it came from */
-    itemID?: string;
+    itemID: string | null;
 }
 
 interface CharacterAbilityData extends AbilityData {
@@ -356,7 +356,7 @@ interface CharacterProficiency {
 interface MartialProficiency extends CharacterProficiency {
     label: string;
     /** A predicate to match against weapons and unarmed attacks */
-    definition?: PredicatePF2e;
+    definition?: Predicate;
     /** The category to which this proficiency is linked */
     sameAs?: WeaponCategory | ArmorCategory;
     /** The maximum rank this proficiency can reach */

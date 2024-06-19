@@ -1394,9 +1394,9 @@
                     "value": "pdcMo0Z3y78UAPle"
                 },
                 "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": "Pathfinder Core Rulebook"
+                    "license": "ORC",
+                    "remaster": true,
+                    "title": "Pathfinder Player Core"
                 },
                 "range": {
                     "value": "planetary"
@@ -1405,7 +1405,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"
@@ -3496,7 +3496,26 @@
                     "remaster": false,
                     "title": "Pathfinder Bestiary"
                 },
-                "rules": [],
+                "rules": [
+                    {
+                        "domain": "all",
+                        "key": "RollOption",
+                        "option": "catch-rock",
+                        "toggleable": true
+                    },
+                    {
+                        "key": "FlatModifier",
+                        "predicate": [
+                            "catch-rock"
+                        ],
+                        "selector": [
+                            "ac",
+                            "saving-throw"
+                        ],
+                        "type": "circumstance",
+                        "value": 4
+                    }
+                ],
                 "slug": "catch-rock",
                 "traits": {
                     "rarity": "common",
@@ -3656,6 +3675,20 @@
                         "mode": "override",
                         "path": "system.attributes.hp.negativeHealing",
                         "value": true
+                    },
+                    {
+                        "exceptions": [
+                            {
+                                "definition": [
+                                    "item:magical",
+                                    "damage:type:bludgeoning"
+                                ],
+                                "label": "PF2E.IWR.Custom.MagicalBludgeoning"
+                            }
+                        ],
+                        "key": "Resistance",
+                        "type": "physical",
+                        "value": 15
                     }
                 ],
                 "slug": "negative-healing",
@@ -4161,13 +4194,6 @@
             "resistances": [
                 {
                     "type": "cold",
-                    "value": 15
-                },
-                {
-                    "exceptions": [
-                        "bludgeoning"
-                    ],
-                    "type": "physical",
                     "value": 15
                 }
             ],

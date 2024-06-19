@@ -2392,7 +2392,7 @@
                 }
             },
             "img": "systems/pf2e/icons/equipment/wands/specialty-wands/wand-of-smoldering-fireballs.webp",
-            "name": "Wand of Smoldering Fireballs (7th-Level Spell)",
+            "name": "Wand of Smoldering Fireballs (7th-Rank Spell)",
             "sort": 3200000,
             "system": {
                 "baseItem": null,
@@ -2696,6 +2696,20 @@
                         "mode": "override",
                         "path": "system.attributes.hp.negativeHealing",
                         "value": true
+                    },
+                    {
+                        "exceptions": [
+                            {
+                                "definition": [
+                                    "item:magical",
+                                    "damage:type:bludgeoning"
+                                ],
+                                "label": "PF2E.IWR.Custom.MagicalBludgeoning"
+                            }
+                        ],
+                        "key": "Resistance",
+                        "type": "physical",
+                        "value": 10
                     }
                 ],
                 "slug": "negative-healing",
@@ -2943,13 +2957,6 @@
             "resistances": [
                 {
                     "type": "cold",
-                    "value": 10
-                },
-                {
-                    "exceptions": [
-                        "bludgeoning"
-                    ],
-                    "type": "physical",
                     "value": 10
                 }
             ],

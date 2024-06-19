@@ -286,7 +286,7 @@
                     "sourceId": "Compendium.pf2e.spells-srd.Item.Tc5NLaMu71vrGTJQ"
                 }
             },
-            "img": "systems/pf2e/icons/spells/natures-enmity.webp",
+            "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
             "name": "Nature's Enmity",
             "sort": 600000,
             "system": {
@@ -716,7 +716,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>The target is overcome with an all-consuming urge to dance. For the duration of the spell, the target is @UUID[Compendium.pf2e.conditionitems.Item.Off-Guard] and can't use reactions. While affected, the creature can't use actions with the move trait except to dance, using the Stride action to move up to half its Speed.</p>\n<hr /><strong>Critical Success</strong> The target is unaffected.\n<p><strong>Success</strong> The spell's duration is 3 rounds, and the target must spend at least 1 action each turn dancing.</p>\n<p><strong>Failure</strong> The spell's duration is 1 minute, and the target must spend at least 2 actions each turn dancing.</p>\n<p><strong>Critical Failure</strong> The spell's duration is 1 minute, and the target must spend all its actions each turn dancing.</p>"
+                    "value": "<p>The target is overcome with an all-consuming urge to dance. For the duration of the spell, the target is @UUID[Compendium.pf2e.conditionitems.Item.Off-Guard] and can't use reactions. While affected, the creature can't use actions with the move trait except to dance, using the Stride action to move up to half its Speed.</p>\n<hr /><p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The spell's duration is 3 rounds, and the target must spend at least 1 action each turn dancing.</p>\n<p><strong>Failure</strong> The spell's duration is 1 minute, and the target must spend at least 2 actions each turn dancing.</p>\n<p><strong>Critical Failure</strong> The spell's duration is 1 minute, and the target must spend all its actions each turn dancing.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -2097,9 +2097,9 @@
                     "value": "OqVIaOEX3mbFTW9O"
                 },
                 "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": "Pathfinder Core Rulebook"
+                    "license": "ORC",
+                    "remaster": true,
+                    "title": "Pathfinder Player Core"
                 },
                 "range": {
                     "value": "planetary"
@@ -2108,7 +2108,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"

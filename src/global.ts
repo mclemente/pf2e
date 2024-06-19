@@ -36,6 +36,8 @@ import type { UserPF2e } from "@module/user/index.ts";
 import type {
     AmbientLightDocumentPF2e,
     MeasuredTemplateDocumentPF2e,
+    RegionBehaviorPF2e,
+    RegionDocumentPF2e,
     ScenePF2e,
     TileDocumentPF2e,
     TokenDocumentPF2e,
@@ -59,6 +61,7 @@ import type { CheckPF2e } from "@system/check/index.ts";
 import type { ConditionManager } from "@system/conditions/manager.ts";
 import type { EffectTracker } from "@system/effect-tracker.ts";
 import type { ModuleArt } from "@system/module-art.ts";
+import type { Predicate } from "@system/predication.ts";
 import type {
     CustomDamageData,
     HomebrewTag,
@@ -115,6 +118,7 @@ interface GamePF2e
         ElementalBlast: typeof ElementalBlast;
         Modifier: typeof ModifierPF2e;
         ModifierType: { [K in Uppercase<ModifierType>]: Lowercase<K> };
+        Predicate: typeof Predicate;
         RuleElement: typeof RuleElementPF2e;
         RuleElements: typeof RuleElements;
         StatisticModifier: typeof StatisticModifier;
@@ -199,6 +203,8 @@ type ConfiguredConfig = Config<
     ItemPF2e,
     MacroPF2e,
     MeasuredTemplateDocumentPF2e,
+    RegionDocumentPF2e,
+    RegionBehaviorPF2e,
     TileDocumentPF2e,
     TokenDocumentPF2e,
     WallDocument<ScenePF2e | null>,
@@ -314,9 +320,9 @@ declare global {
         get(module: "pf2e", setting: "critRule"): "doubledamage" | "doubledice";
         get(module: "pf2e", setting: "deathIcon"): ImageFilePath;
         get(module: "pf2e", setting: "drawCritFumble"): boolean;
-        get(module: "pf2e", setting: "enabledRulesUI"): boolean;
         get(module: "pf2e", setting: "gmVision"): boolean;
         get(module: "pf2e", setting: "identifyMagicNotMatchingTraditionModifier"): 0 | 2 | 5 | 10;
+        get(module: "pf2e", setting: "minimumRulesUI"): Exclude<UserRole, 0>;
         get(module: "pf2e", setting: "nathMode"): boolean;
         get(module: "pf2e", setting: "seenRemasterJournalEntry"): boolean;
         get(module: "pf2e", setting: "statusEffectType"): StatusEffectIconTheme;

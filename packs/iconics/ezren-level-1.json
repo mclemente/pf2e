@@ -156,10 +156,12 @@
                 },
                 "rules": [],
                 "slug": "merchant",
-                "trainedLore": "Mercantile Lore",
                 "trainedSkills": {
+                    "lore": [
+                        "Mercantile Lore"
+                    ],
                     "value": [
-                        "dip"
+                        "diplomacy"
                     ]
                 },
                 "traits": {
@@ -423,7 +425,7 @@
                 "trainedSkills": {
                     "additional": 2,
                     "value": [
-                        "arc"
+                        "arcana"
                     ]
                 },
                 "traits": {
@@ -1119,7 +1121,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>You take advantage of one of the most fundamental lessons of magic to levitate and propel your weapon. You hurl a held melee weapon with which you are trained at the target, making a spell attack roll. On a success, you deal the weapon's damage as if you had hit with a melee Strike, but adding your spellcasting ability modifier to damage, rather than your Strength modifier. On a critical success, you deal double damage, and you add the weapon's critical specialization effect. Regardless of the outcome, the weapon flies back to you and returns to your hand.</p>"
+                    "value": "<p>You take advantage of one of the most fundamental lessons of magic to levitate and propel your weapon. You hurl a held melee weapon with which you are trained at the target, making a spell attack roll. On a success, you deal the weapon's damage as if you had hit with a melee Strike, but adding your spellcasting ability modifier to damage, rather than your Strength modifier. On a critical success, you deal double damage, and you add the weapon's critical specialization effect. Regardless of the outcome, the weapon flies back to you and returns to your hand.</p>\n<p>@UUID[Compendium.pf2e.spell-effects.Item.Spell Effect: Hand of the Apprentice]</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -3468,7 +3470,7 @@
                 }
             },
             "img": "icons/tools/navigation/map-chart-tan.webp",
-            "name": "Skilled Heritage (Society)",
+            "name": "Skilled Human (Society)",
             "sort": 0,
             "system": {
                 "ancestry": {
@@ -3488,74 +3490,74 @@
                     {
                         "choices": [
                             {
-                                "label": "PF2E.SkillAcr",
-                                "value": "acr"
+                                "label": "PF2E.Skill.Acrobatics",
+                                "value": "acrobatics"
                             },
                             {
-                                "label": "PF2E.SkillArc",
-                                "value": "arc"
+                                "label": "PF2E.Skill.Arcana",
+                                "value": "arcana"
                             },
                             {
-                                "label": "PF2E.SkillAth",
-                                "value": "ath"
+                                "label": "PF2E.Skill.Athletics",
+                                "value": "athletics"
                             },
                             {
-                                "label": "PF2E.SkillCra",
-                                "value": "cra"
+                                "label": "PF2E.Skill.Crafting",
+                                "value": "crafting"
                             },
                             {
-                                "label": "PF2E.SkillDec",
-                                "value": "dec"
+                                "label": "PF2E.Skill.Deception",
+                                "value": "deception"
                             },
                             {
-                                "label": "PF2E.SkillDip",
-                                "value": "dip"
+                                "label": "PF2E.Skill.Diplomacy",
+                                "value": "diplomacy"
                             },
                             {
-                                "label": "PF2E.SkillItm",
-                                "value": "itm"
+                                "label": "PF2E.Skill.Intimidation",
+                                "value": "intimidation"
                             },
                             {
-                                "label": "PF2E.SkillMed",
-                                "value": "med"
+                                "label": "PF2E.Skill.Medicine",
+                                "value": "medicine"
                             },
                             {
-                                "label": "PF2E.SkillNat",
-                                "value": "nat"
+                                "label": "PF2E.Skill.Nature",
+                                "value": "nature"
                             },
                             {
-                                "label": "PF2E.SkillOcc",
-                                "value": "occ"
+                                "label": "PF2E.Skill.Occultism",
+                                "value": "occultism"
                             },
                             {
-                                "label": "PF2E.SkillPrf",
-                                "value": "prf"
+                                "label": "PF2E.Skill.Performance",
+                                "value": "performance"
                             },
                             {
-                                "label": "PF2E.SkillRel",
-                                "value": "rel"
+                                "label": "PF2E.Skill.Religion",
+                                "value": "religion"
                             },
                             {
-                                "label": "PF2E.SkillSoc",
-                                "value": "soc"
+                                "label": "PF2E.Skill.Society",
+                                "value": "society"
                             },
                             {
-                                "label": "PF2E.SkillSte",
-                                "value": "ste"
+                                "label": "PF2E.Skill.Stealth",
+                                "value": "stealth"
                             },
                             {
-                                "label": "PF2E.SkillSur",
-                                "value": "sur"
+                                "label": "PF2E.Skill.Survival",
+                                "value": "survival"
                             },
                             {
-                                "label": "PF2E.SkillThi",
-                                "value": "thi"
+                                "label": "PF2E.Skill.Thievery",
+                                "value": "thievery"
                             }
                         ],
                         "flag": "skill",
                         "key": "ChoiceSet",
                         "prompt": "PF2E.SpecificRule.Prompt.Skill",
-                        "selection": "soc"
+                        "selection": "society"
                     },
                     {
                         "key": "ActiveEffectLike",
@@ -3617,7 +3619,7 @@
                 "anathema": [],
                 "appearance": "",
                 "attitude": "",
-                "backstory": "",
+                "backstory": "<p>For many adventurers, wanderlust strikes at a young age when minds are impressionable and the urge to escape the doldrums of homelife become too much to resist. In other cases, there's never a choice at all—being raised on the streets leaves few other options available for those who do not wish to become criminals. Rarest are those who come to adventuring late in life.</p>\n<p>This was Ezren's path to adventure. Born to a successful spice merchant in one of Absalom's more affluent districts, Ezren's childhood was pleasantly safe. As the fourth of six siblings, he never knew the responsibility implicit in being the eldest (and therefore the one expected to carry on father's trade) or the freedom of being the youngest. He enjoyed the comforts of a well-to-do family, lived in a neighborhood relatively safe from crime, and seemed poised for a life of mediocrity.</p>\n<p>That changed when his father was taken away, charged with heresy by the church of Abadar. The charges were too spurious to stick, and while his father escaped excommunication, the damage had been done—his father's business fell to pieces. Shocked, dismayed, and convinced that his father was innocent, Ezren abandoned his future and spent his adult life trying to repair his father's ruined reputation. So when Ezren finally uncovered irrefutable proof of his father's guilt, and he realized he'd wasted his life on a lie, he turned his evidence over to the church and said goodbye to his home, his family, and his life.</p>\n<p>At the age of 42, Ezren is full aware that he's missed his adulthood, yet at the same time he looks forward to discovering the world, and making a difference for a cause that he believes in. His dissatisfaction with family, religion, and government left him precious little to trust but his own intellect—in fighting for his father's redemption, he had become a gifted researcher, scholar, and intellectual. Lacking the spry limbs of youth, the trust in religion, the strong arm of the soldier, or the way with words of the politician, Ezren felt he had but one option open. He traveled to tarnished Oppara, capital of Taldor and one of the oldest cities of the continent of Avistan, hoping to join one of several prestigious schools of wizardry. Yet time and time again, he was turned away due to his age. No wizard seemed to want an apprentice who, in many cases, was older than them. So Ezren was forced to strike out on his own once again.</p>\n<p>Over the next decade, as he traveled Avistan, Ezren studied where he could, picking up tricks of the wizard's trade here and there. The combination of arcane study mixed with his worldly first-hand experiences have given him an edge over young wizards fresh out of apprenticeship and eager to make names for themselves. Ezren knows about the many ways the world can trick and betray you, but now he's finally begun to master the art of magic, giving him the tools to fight back.</p>",
                 "beliefs": "",
                 "birthPlace": "",
                 "campaignNotes": "",
@@ -3698,52 +3700,52 @@
         },
         "saves": {},
         "skills": {
-            "acr": {
+            "acrobatics": {
                 "rank": 1
             },
-            "arc": {
+            "arcana": {
                 "rank": 0
             },
-            "ath": {
+            "athletics": {
                 "rank": 0
             },
-            "cra": {
+            "crafting": {
                 "rank": 1
             },
-            "dec": {
+            "deception": {
                 "rank": 0
             },
-            "dip": {
+            "diplomacy": {
                 "rank": 0
             },
-            "itm": {
+            "intimidation": {
                 "rank": 0
             },
-            "med": {
+            "medicine": {
                 "rank": 0
             },
-            "nat": {
+            "nature": {
                 "rank": 1
             },
-            "occ": {
+            "occultism": {
                 "rank": 1
             },
-            "prf": {
+            "performance": {
                 "rank": 0
             },
-            "rel": {
+            "religion": {
                 "rank": 1
             },
-            "soc": {
+            "society": {
                 "rank": 1
             },
-            "ste": {
+            "stealth": {
                 "rank": 0
             },
-            "sur": {
+            "survival": {
                 "rank": 1
             },
-            "thi": {
+            "thievery": {
                 "rank": 0
             }
         }

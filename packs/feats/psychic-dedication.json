@@ -38,7 +38,7 @@
             {
                 "key": "ActiveEffectLike",
                 "mode": "upgrade",
-                "path": "system.skills.occ.rank",
+                "path": "system.skills.occultism.rank",
                 "value": 1
             },
             {
@@ -63,6 +63,16 @@
                 ],
                 "property": "other-tags",
                 "value": "amped"
+            },
+            {
+                "itemType": "spell",
+                "key": "ItemAlteration",
+                "mode": "add",
+                "predicate": [
+                    "item:tag:amped"
+                ],
+                "property": "focus-point-cost",
+                "value": 1
             }
         ],
         "subfeatures": {

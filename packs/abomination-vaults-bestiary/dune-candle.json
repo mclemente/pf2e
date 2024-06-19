@@ -74,9 +74,12 @@
                     {
                         "key": "TokenLight",
                         "predicate": [
-                            "glowing"
+                            {
+                                "not": "heat-mirage"
+                            }
                         ],
                         "value": {
+                            "alpha": 0.2,
                             "animation": {
                                 "intensity": 1,
                                 "speed": 3,
@@ -85,13 +88,6 @@
                             "bright": 20,
                             "color": "#fff9a3"
                         }
-                    },
-                    {
-                        "domain": "all",
-                        "key": "RollOption",
-                        "option": "glowing",
-                        "toggleable": true,
-                        "value": true
                     }
                 ],
                 "slug": null,
@@ -156,7 +152,32 @@
                     "remaster": false,
                     "title": ""
                 },
-                "rules": [],
+                "rules": [
+                    {
+                        "domain": "all",
+                        "key": "RollOption",
+                        "option": "heat-mirage",
+                        "suboptions": [
+                            {
+                                "label": "PF2E.ConditionTypeInvisible",
+                                "value": "Compendium.pf2e.conditionitems.Item.Invisible"
+                            },
+                            {
+                                "label": "PF2E.ConditionTypeHidden",
+                                "value": "Compendium.pf2e.conditionitems.Item.Hidden"
+                            }
+                        ],
+                        "toggleable": true
+                    },
+                    {
+                        "inMemoryOnly": true,
+                        "key": "GrantItem",
+                        "predicate": [
+                            "heat-mirage"
+                        ],
+                        "uuid": "{item|flags.pf2e.rulesSelections.heatMirage}"
+                    }
+                ],
                 "slug": null,
                 "traits": {
                     "rarity": "common",

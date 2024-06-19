@@ -134,7 +134,7 @@
                     "sourceId": "Compendium.pf2e.spells-srd.Item.MLNeD5sAunV0E23j"
                 }
             },
-            "img": "systems/pf2e/icons/spells/primal-phenomenon.webp",
+            "img": "icons/creatures/abilities/paw-print-orange.webp",
             "name": "Primal Phenomenon",
             "sort": 200000,
             "system": {
@@ -269,7 +269,7 @@
                     "sourceId": "Compendium.pf2e.spells-srd.Item.Tc5NLaMu71vrGTJQ"
                 }
             },
-            "img": "systems/pf2e/icons/spells/natures-enmity.webp",
+            "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
             "name": "Nature's Enmity",
             "sort": 400000,
             "system": {
@@ -1012,7 +1012,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>Using the weight of earth, you hamper a target's flight, with effects based on its Fortitude save. If the creature reaches the ground safely, it doesn't take falling damage.</p>\n<hr /><strong>Critical Success</strong> The target is unaffected.\n<p><strong>Success</strong> The target falls safely up to 120 feet.</p>\n<p><strong>Failure</strong> The target falls safely up to 120 feet. If it hits the ground, it can't Fly, levitate, or otherwise leave the ground for 1 round.</p>\n<p><strong>Critical Failure</strong> The target falls safely up to 120 feet. If it hits the ground, it can't Fly, levitate, or otherwise leave the ground for 1 minute.</p>"
+                    "value": "<p>Using the weight of earth, you hamper a target's flight, with effects based on its Fortitude save. If the creature reaches the ground safely, it doesn't take falling damage.</p>\n<hr /><p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target falls safely up to 120 feet.</p>\n<p><strong>Failure</strong> The target falls safely up to 120 feet. If it hits the ground, it can't Fly, levitate, or otherwise leave the ground for 1 round.</p>\n<p><strong>Critical Failure</strong> The target falls safely up to 120 feet. If it hits the ground, it can't Fly, levitate, or otherwise leave the ground for 1 minute.</p>"
                 },
                 "duration": {
                     "sustained": false,

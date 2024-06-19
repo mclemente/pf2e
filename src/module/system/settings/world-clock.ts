@@ -1,4 +1,4 @@
-import { localizer } from "@util";
+import { htmlQuery, localizer } from "@util";
 import { DateTime } from "luxon";
 
 type SettingsKey =
@@ -104,6 +104,7 @@ export class WorldClockSettings extends FormApplication {
 
     override activateListeners($html: JQuery): void {
         super.activateListeners($html);
+        const html = $html[0];
 
         const localize = localizer("PF2E.SETTINGS.WorldClock");
         const title = localize("ResetWorldTime.Name");
@@ -122,12 +123,17 @@ export class WorldClockSettings extends FormApplication {
             });
         });
 
-        $html.find<HTMLInputElement>('input[name="syncDarkness"]').on("change", (event) => {
-            const worldDefault = $(event.currentTarget)[0].checked
-                ? localize("SyncDarknessScene.Enabled")
-                : localize("SyncDarknessScene.Disabled");
-            const optionSelector = 'select[name="syncDarknessScene"] > option[value="default"]';
-            $html.find(optionSelector).text(localize("SyncDarknessScene.Default", { worldDefault }));
+        const syncDarknessInput = htmlQuery<HTMLInputElement>(html, 'input[name="syncDarkness"]');
+        syncDarknessInput?.addEventListener("change", () => {
+            const worldDefault = syncDarknessInput.checked
+                ? game.i18n.localize(CONFIG.PF2E.SETTINGS.worldClock.syncDarknessScene.enabled)
+                : game.i18n.localize(CONFIG.PF2E.SETTINGS.worldClock.syncDarknessScene.disabled);
+            const option = htmlQuery(html, 'select[name="syncDarknessScene"] > option[value="default"]');
+            if (option) {
+                option.innerText = game.i18n.format(CONFIG.PF2E.SETTINGS.worldClock.syncDarknessScene.default, {
+                    worldDefault,
+                });
+            }
         });
     }
 
@@ -154,7 +160,7 @@ export class WorldClockSettings extends FormApplication {
     /** Settings to be registered and also later referenced during user updates */
     private static get settings(): Record<SettingsKey, SettingRegistration> {
         return {
-            // Date theme, currently one of Golarion (Absalom Reckoning), Earth (Material Plane, 95 years ago), or
+            // Date theme, currently either one of Golarian's calenders, Earth (Material Plane, 95 years ago), or
             // Earth (real world)
             dateTheme: {
                 name: CONFIG.PF2E.SETTINGS.worldClock.dateTheme.name,
@@ -165,6 +171,7 @@ export class WorldClockSettings extends FormApplication {
                 type: String,
                 choices: {
                     AR: CONFIG.PF2E.SETTINGS.worldClock.dateTheme.AR,
+                    IC: CONFIG.PF2E.SETTINGS.worldClock.dateTheme.IC,
                     AD: CONFIG.PF2E.SETTINGS.worldClock.dateTheme.AD,
                     CE: CONFIG.PF2E.SETTINGS.worldClock.dateTheme.CE,
                 },

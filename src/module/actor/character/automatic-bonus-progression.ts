@@ -4,7 +4,7 @@ import type { ArmorPF2e, WeaponPF2e } from "@item";
 import { ZeroToThree } from "@module/data.ts";
 import type { FlatModifierRuleElement } from "@module/rules/rule-element/flat-modifier.ts";
 import { PotencySynthetic } from "@module/rules/synthetics.ts";
-import { PredicatePF2e } from "@system/predication.ts";
+import { Predicate } from "@system/predication.ts";
 
 class AutomaticBonusProgression {
     /** Whether the ABP variant is enabled and also not selectively disabled for a particular actor */
@@ -100,7 +100,7 @@ class AutomaticBonusProgression {
                     label: game.i18n.localize("PF2E.AutomaticBonusProgression.attackPotency"),
                     type: "potency",
                     bonus: attack,
-                    predicate: new PredicatePF2e(),
+                    predicate: new Predicate(),
                 };
                 const potencySynthetics = (synthetics.weaponPotency["strike-attack-roll"] ??= []);
                 potencySynthetics.push(potency);
@@ -137,20 +137,16 @@ class AutomaticBonusProgression {
         return level < 2 ? 0 : level < 10 ? 1 : level < 16 ? 2 : 3;
     }
 
+    static getDefensePotency(level: number): ZeroToThree {
+        return level < 5 ? 0 : level < 11 ? 1 : level < 18 ? 2 : 3;
+    }
+
     private static abpValues(level: number): AutomaticBonuses {
         const attack = this.getAttackPotency(level);
-        let ac: number;
+        const ac = this.getDefensePotency(level);
+
         let perception: number;
         let save: number;
-        if (level >= 5 && level < 11) {
-            ac = 1;
-        } else if (level >= 11 && level < 18) {
-            ac = 2;
-        } else if (level >= 18) {
-            ac = 3;
-        } else {
-            ac = 0;
-        }
         if (level >= 7 && level < 13) {
             perception = 1;
         } else if (level >= 13 && level < 19) {

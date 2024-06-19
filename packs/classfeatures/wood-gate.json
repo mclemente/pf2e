@@ -177,7 +177,7 @@
             {
                 "key": "ActiveEffectLike",
                 "mode": "upgrade",
-                "path": "system.skills.sur.rank",
+                "path": "system.skills.survival.rank",
                 "predicate": [
                     "junction:wood:skill"
                 ],
@@ -244,16 +244,36 @@
                             2
                         ]
                     },
-                    "impulse",
                     "junction:wood:impulse",
-                    "wood"
+                    "self:action:trait:impulse",
+                    "self:action:trait:wood"
                 ],
-                "selector": [
-                    "impulse-damage",
-                    "inline-damage"
-                ],
+                "selector": "impulse-attack-roll",
                 "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Wood",
                 "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+            },
+            {
+                "itemType": "feat",
+                "key": "ItemAlteration",
+                "mode": "add",
+                "predicate": [
+                    {
+                        "gte": [
+                            "item:action:cost",
+                            2
+                        ]
+                    },
+                    "junction:wood:impulse",
+                    "item:trait:impulse",
+                    "item:trait:wood"
+                ],
+                "property": "description",
+                "value": [
+                    {
+                        "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Wood",
+                        "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+                    }
+                ]
             },
             {
                 "key": "ActiveEffectLike",

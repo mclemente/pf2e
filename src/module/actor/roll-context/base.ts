@@ -132,7 +132,7 @@ abstract class RollContext<
             originToken?.object && targetToken?.object ? originToken.object.distanceTo(targetToken.object) : null;
         const rangeIncrement = itemClone ? getRangeIncrement(itemClone, distance) : null;
         const distanceRangeOptions =
-            rangeIncrement && Number.isInteger("distance")
+            rangeIncrement && Number.isInteger(distance)
                 ? [`${opposerRole}:distance:${distance}`, `${opposerRole}:range-increment:${rangeIncrement}`]
                 : [];
 
@@ -169,6 +169,12 @@ abstract class RollContext<
 
         const opposingActor = await this.#cloneActor(opposerRole, { other: rollingActor });
         const originIsSelf = selfRole === "origin";
+        if (opposingActor) {
+            rollOptions.add(opposerRole);
+            for (const option of opposingActor.getSelfRollOptions(opposerRole)) {
+                rollOptions.add(option);
+            }
+        }
 
         const originActor = originIsSelf ? rollingActor : opposingActor;
         const origin: RollOrigin | null = originActor
@@ -215,7 +221,25 @@ abstract class RollContext<
         if (!uncloned?.actor || !otherActor) {
             return uncloned?.actor ?? null;
         }
+
         const item = this.item;
+        const itemOptions = item?.getRollOptions("item") ?? [];
+
+        // Extract origin and target marks
+        const markOptions = (() => {
+            const originActor = unresolved.origin?.actor;
+            const originUuid = unresolved.origin?.token?.uuid;
+            const targetActor = unresolved.target?.actor;
+            const targetUuid = unresolved.target?.token?.uuid;
+
+            const originMark = originUuid ? targetActor?.synthetics.tokenMarks.get(originUuid) : null;
+            const targetMark = targetUuid ? originActor?.synthetics.tokenMarks.get(targetUuid) : null;
+
+            return R.compact([
+                originMark ? `origin:mark:${originMark}` : null,
+                targetMark ? `target:mark:${targetMark}` : null,
+            ]);
+        })();
 
         // Get ephemeral effects from the target that affect this actor while attacking
         const ephemeralEffects = await extractEphemeralEffects({
@@ -224,34 +248,29 @@ abstract class RollContext<
             target: unresolved.target?.actor ?? null,
             item,
             domains: this.domains,
-            options: [...this.rollOptions, ...(item?.getRollOptions("item") ?? [])],
+            options: R.compact([...this.rollOptions, ...itemOptions, ...markOptions]),
         });
 
         // Add an epehemeral effect from flanking
-        if (which === "target" && this.isFlankingAttack && isOffGuardFromFlanking(uncloned.actor, otherActor)) {
+        const isFlankingAttack = this.isFlankingAttack;
+        if (which === "target" && isFlankingAttack && isOffGuardFromFlanking(uncloned.actor, otherActor)) {
             const name = game.i18n.localize("PF2E.Item.Condition.Flanked");
             const condition = game.pf2e.ConditionManager.getCondition("off-guard", { name });
             ephemeralEffects.push(condition.toObject());
         }
 
-        const otherToken = unresolved[opposingAlias]?.token;
-        const markOption = ((): string | null => {
-            const tokenMark = otherToken ? uncloned.actor.synthetics.tokenMarks.get(otherToken.uuid) : null;
-            return tokenMark ? `${opposingAlias}:mark:${tokenMark}` : null;
-        })();
-
         const perspectivePrefix = which === "origin" ? (this.rollerRole === "origin" ? "self" : "target") : "origin";
-        const actionOptions = [
-            this.traits.map((t) => `${perspectivePrefix}:action:trait:${t}`),
-            this.isFlankingAttack ? `${perspectivePrefix}:flanking` : [],
-        ].flat();
+        const actionOptions = this.traits.map((t) => `${perspectivePrefix}:action:trait:${t}`);
 
         return uncloned.actor.getContextualClone(
             R.compact([
                 ...Array.from(this.rollOptions),
+                opposingAlias,
                 ...otherActor.getSelfRollOptions(opposingAlias),
-                markOption,
+                ...markOptions,
+                isFlankingAttack ? `${perspectivePrefix}:flanking` : null,
                 ...actionOptions,
+                ...(which === "target" ? itemOptions : []),
             ]),
             ephemeralEffects,
         );
@@ -306,7 +325,7 @@ abstract class RollContext<
               }) ??
                   unresolvedRoller?.statistic ??
                   null
-            : clonedActor?.getStatistic(unresolvedRoller?.statistic?.slug ?? "") ?? unresolvedRoller?.statistic ?? null;
+            : unresolvedRoller?.statistic ?? null;
     }
 }
 

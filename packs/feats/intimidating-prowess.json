@@ -44,6 +44,7 @@
                     }
                 ],
                 "selector": "intimidation",
+                "slug": "intimidating-prowess",
                 "type": "circumstance",
                 "value": 1
             },
@@ -59,7 +60,7 @@
                     },
                     {
                         "gte": [
-                            "skill:itm:rank",
+                            "skill:intimidation:rank",
                             3
                         ]
                     }

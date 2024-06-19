@@ -3,7 +3,7 @@ import { StrikeData } from "@actor/data/base.ts";
 import { ItemPF2e, ItemProxyPF2e } from "@item";
 import { ItemSourcePF2e } from "@item/base/data/index.ts";
 import { PickableThing } from "@module/apps/pick-a-thing-prompt.ts";
-import { PredicatePF2e } from "@system/predication.ts";
+import { Predicate } from "@system/predication.ts";
 import { Progress } from "@system/progress.ts";
 import {
     DataUnionField,
@@ -60,24 +60,28 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
                 : null;
 
         if (R.isObject(this.choices) && !Array.isArray(this.choices) && !("filter" in this.choices)) {
-            this.choices.predicate = new PredicatePF2e(this.choices.predicate ?? []);
+            this.choices.predicate = new Predicate(this.choices.predicate ?? []);
             if (this.choices.unarmedAttacks) this.choices.predicate.push("item:category:unarmed");
         }
 
-        // Assign the selection to a flag on the parent item so that it may be referenced by other rules elements on
-        // the same item. If a roll option is specified, assign that as well.
-        this.item.flags.pf2e.rulesSelections[this.flag] = this.selection;
-        if (this.actorFlag) {
-            this.actor.flags.pf2e[this.flag] = this.selection;
+        // Ignore if the choiceset passes predication, requires a selection, and there is no selection
+        if (!this.ignored && this.selection === null && !this.allowNoSelection && this.test()) {
+            this.ignored = true;
         }
 
-        if (this.selection !== null) {
-            this.#setRollOption(this.selection);
-        } else if (!this.allowNoSelection && this.test()) {
-            // Disable this and all other rule elements on the item until a selection is made
-            this.ignored = true;
+        // If ignored, disable this and all other rule elements on the item until a selection is made
+        if (this.ignored) {
             for (const ruleData of this.item.system.rules) {
                 ruleData.ignored = true;
+            }
+        } else {
+            this.#setRollOption(this.selection);
+
+            // Assign the selection to a flag on the parent item so that it may be referenced by other rules elements on
+            // the same item. If a roll option is specified, assign that as well.
+            this.item.flags.pf2e.rulesSelections[this.flag] = this.selection;
+            if (this.actorFlag) {
+                this.actor.flags.pf2e[this.flag] = this.selection;
             }
         }
     }
@@ -240,14 +244,14 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
                   ? this.#choicesFromOwnedItems(this.choices, rollOptions, tempItems)
                   : this.choices.attacks || this.choices.unarmedAttacks
                     ? this.#choicesFromAttacks(
-                          new PredicatePF2e(this.resolveInjectedProperties(this.choices.predicate)),
+                          new Predicate(this.resolveInjectedProperties(this.choices.predicate)),
                           rollOptions,
                       )
                     : "filter" in this.choices && Array.isArray(this.choices.filter)
                       ? await this.queryCompendium(this.choices, rollOptions, tempItems)
                       : []
               : typeof this.choices === "string"
-                ? this.#choicesFromPath(this.choices)
+                ? this.#choicesFromPath(this.choices, rollOptions)
                 : [];
 
         interface ItemChoice extends PickableThing<string> {
@@ -290,17 +294,19 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
 
     #choicesFromArray(choices: PickableThing[], actorRollOptions: Set<string>): PickableThing[] {
         return choices.filter((c) =>
-            this.resolveInjectedProperties(new PredicatePF2e(c.predicate ?? [])).test(actorRollOptions),
+            this.resolveInjectedProperties(new Predicate(c.predicate ?? [])).test(actorRollOptions),
         );
     }
 
-    #choicesFromPath(path: string): PickableThing<string>[] {
+    #choicesFromPath(path: string, actorRollOptions: Set<string>): PickableThing<string>[] {
         const choiceObject: unknown = fu.getProperty(CONFIG.PF2E, path) ?? fu.getProperty(this.actor, path) ?? {};
         if (
             Array.isArray(choiceObject) &&
             choiceObject.every((c) => R.isObject<{ value: string }>(c) && typeof c.value === "string")
         ) {
-            return choiceObject;
+            return choiceObject.filter((c) =>
+                this.resolveInjectedProperties(new Predicate(c.predicate ?? [])).test(actorRollOptions),
+            );
         } else if (R.isObject(choiceObject) && Object.values(choiceObject).every((c) => typeof c === "string")) {
             return Object.entries(choiceObject).map(([value, label]) => ({
                 value,
@@ -317,7 +323,7 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
         tempItems: ItemPF2e<ActorPF2e>[],
     ): PickableThing<string>[] {
         const { includeHandwraps, types } = options;
-        const predicate = new PredicatePF2e(this.resolveInjectedProperties(options.predicate));
+        const predicate = new Predicate(this.resolveInjectedProperties(options.predicate));
 
         const choices = this.actor.items
             .filter((i) => i.isOfType(...types) && predicate.test([...actorRollOptions, ...i.getRollOptions("item")]))
@@ -360,7 +366,7 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
         return choices;
     }
 
-    #choicesFromAttacks(predicate: PredicatePF2e, actorRollOptions: Set<string>): PickableThing<string>[] {
+    #choicesFromAttacks(predicate: Predicate, actorRollOptions: Set<string>): PickableThing<string>[] {
         if (!this.actor.isOfType("character", "npc")) return [];
 
         const actions: StrikeData[] = this.actor.system.actions;
@@ -384,8 +390,8 @@ class ChoiceSetRuleElement extends RuleElementPF2e<ChoiceSetSchema> {
         tempItems: ItemPF2e<ActorPF2e>[],
     ): Promise<PickableThing<string>[]> {
         const filter = Array.isArray(choices.filter)
-            ? new PredicatePF2e(this.resolveInjectedProperties(choices.filter))
-            : new PredicatePF2e();
+            ? new Predicate(this.resolveInjectedProperties(choices.filter))
+            : new Predicate();
         if (!filter.isValid || filter.length === 0) {
             this.failValidation("`filter` must be an array with at least one statement");
             return [];

@@ -174,7 +174,7 @@
             {
                 "key": "ActiveEffectLike",
                 "mode": "upgrade",
-                "path": "system.skills.ath.rank",
+                "path": "system.skills.athletics.rank",
                 "predicate": [
                     "junction:water:skill"
                 ],
@@ -240,16 +240,36 @@
                             2
                         ]
                     },
-                    "impulse",
                     "junction:water:impulse",
-                    "water"
+                    "self:action:trait:impulse",
+                    "self:action:trait:water"
                 ],
-                "selector": [
-                    "impulse-damage",
-                    "inline-damage"
-                ],
+                "selector": "impulse-attack-roll",
                 "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Water",
                 "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+            },
+            {
+                "itemType": "feat",
+                "key": "ItemAlteration",
+                "mode": "add",
+                "predicate": [
+                    {
+                        "gte": [
+                            "item:action:cost",
+                            2
+                        ]
+                    },
+                    "junction:water:impulse",
+                    "item:trait:impulse",
+                    "item:trait:water"
+                ],
+                "property": "description",
+                "value": [
+                    {
+                        "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Water",
+                        "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+                    }
+                ]
             },
             {
                 "key": "ActiveEffectLike",

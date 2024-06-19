@@ -4,7 +4,7 @@
     "name": "Effect: Invoke Rune",
     "system": {
         "description": {
-            "value": "<p>A glowing copy of the invoked rune appears on a single weapon the giant holds, granting the weapon one effect of the giant’s choice.</p>"
+            "value": "<p>A glowing copy of the invoked rune appears on a single weapon the giant holds, granting the weapon one effect of the giant's choice.</p>"
         },
         "duration": {
             "expiry": "turn-start",
@@ -16,9 +16,9 @@
             "value": 16
         },
         "publication": {
-            "license": "OGL",
-            "remaster": false,
-            "title": "Pathfinder Bestiary"
+            "license": "ORC",
+            "remaster": true,
+            "title": "Pathfinder Monster Core"
         },
         "rules": [
             {

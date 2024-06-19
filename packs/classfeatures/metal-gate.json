@@ -174,7 +174,7 @@
             {
                 "key": "ActiveEffectLike",
                 "mode": "upgrade",
-                "path": "system.skills.cra.rank",
+                "path": "system.skills.crafting.rank",
                 "predicate": [
                     "junction:metal:skill"
                 ],
@@ -267,16 +267,36 @@
                             2
                         ]
                     },
-                    "impulse",
                     "junction:metal:impulse",
-                    "metal"
+                    "self:action:trait:impulse",
+                    "self:action:trait:metal"
                 ],
-                "selector": [
-                    "impulse-damage",
-                    "inline-damage"
-                ],
+                "selector": "impulse-attack-roll",
                 "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Metal",
                 "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+            },
+            {
+                "itemType": "feat",
+                "key": "ItemAlteration",
+                "mode": "add",
+                "predicate": [
+                    {
+                        "gte": [
+                            "item:action:cost",
+                            2
+                        ]
+                    },
+                    "junction:metal:impulse",
+                    "item:trait:impulse",
+                    "item:trait:metal"
+                ],
+                "property": "description",
+                "value": [
+                    {
+                        "text": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Metal",
+                        "title": "PF2E.SpecificRule.Kineticist.Impulse.ImpulseJunction.Title"
+                    }
+                ]
             },
             {
                 "key": "ActiveEffectLike",

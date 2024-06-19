@@ -11,15 +11,16 @@ import { OneToFour, Rarity, ZeroToFour, ZeroToSix, ZeroToThree } from "@module/d
 import { RollNoteSource } from "@module/notes.ts";
 import { StrikeAdjustment } from "@module/rules/synthetics.ts";
 import { DegreeOfSuccessAdjustment } from "@system/degree-of-success.ts";
-import { PredicatePF2e } from "@system/predication.ts";
+import { Predicate } from "@system/predication.ts";
 import * as R from "remeda";
 
 function getPropertyRuneSlots(item: WeaponPF2e | ArmorPF2e): ZeroToFour {
     const fromMaterial = item.system.material.type === "orichalcum" ? 1 : 0;
+    const getABPPotency = item.isOfType("weapon") ? ABP.getAttackPotency : ABP.getDefensePotency;
 
     const fromPotency = ABP.isEnabled(item.actor)
         ? // If the item is unowned or on a loot actor, place no limit on slots
-          ABP.getAttackPotency(!item.actor || item.actor.isOfType("loot") ? 20 : item.actor.level)
+          getABPPotency(!item.actor || item.actor.isOfType("loot") ? 20 : item.actor.level)
         : item.system.runes.potency;
     return (fromMaterial + fromPotency) as ZeroToFour;
 }
@@ -1238,6 +1239,23 @@ const WEAPON_PROPERTY_RUNES: { [T in WeaponPropertyRuneType]: WeaponPropertyRune
         slug: "flaming",
         traits: ["fire", "magical"],
     },
+    flickering: {
+        damage: {
+            notes: [
+                {
+                    outcome: ["criticalSuccess"],
+                    title: "PF2E.WeaponPropertyRune.flickering.Name",
+                    text: "PF2E.WeaponPropertyRune.flickering.Note.criticalSuccess",
+                },
+            ],
+        },
+        level: 6,
+        name: "PF2E.WeaponPropertyRune.flickering.Name",
+        price: 250,
+        rarity: "uncommon",
+        slug: "flickering",
+        traits: ["illusion", "magical"],
+    },
     flurrying: {
         level: 7,
         name: "PF2E.WeaponPropertyRune.flurrying.Name",
@@ -1660,11 +1678,6 @@ const WEAPON_PROPERTY_RUNES: { [T in WeaponPropertyRuneType]: WeaponPropertyRune
                     title: "PF2E.WeaponPropertyRune.greaterRooting.Name",
                     text: "PF2E.WeaponPropertyRune.greaterRooting.Note.criticalSuccess",
                 },
-                {
-                    outcome: ["success"],
-                    title: "PF2E.WeaponPropertyRune.greaterRooting.Name",
-                    text: "PF2E.WeaponPropertyRune.greaterRooting.Note.success",
-                },
             ],
         },
     },
@@ -1798,7 +1811,7 @@ const WEAPON_PROPERTY_RUNES: { [T in WeaponPropertyRuneType]: WeaponPropertyRune
             adjustments: [
                 {
                     slug: "critical-specialization",
-                    test: (options): boolean => new PredicatePF2e("item:group:pick").test(options),
+                    test: (options): boolean => new Predicate("item:group:pick").test(options),
                     getNewValue: (current) => current * 2,
                 },
             ],
@@ -1927,7 +1940,7 @@ const WEAPON_PROPERTY_RUNES: { [T in WeaponPropertyRuneType]: WeaponPropertyRune
             dosAdjustments: [
                 {
                     adjustments: { success: { label: "PF2E.WeaponPropertyRune.keen.Name", amount: "criticalSuccess" } },
-                    predicate: new PredicatePF2e([
+                    predicate: new Predicate([
                         "check:total:natural:19",
                         { or: ["item:damage:type:slashing", "item:damage:type:piercing"] },
                     ]),
@@ -1990,6 +2003,24 @@ const WEAPON_PROPERTY_RUNES: { [T in WeaponPropertyRuneType]: WeaponPropertyRune
         rarity: "common",
         slug: "merciful",
         traits: ["magical", "mental"],
+    },
+    nightmare: {
+        damage: {
+            dice: [{ damageType: "mental", diceNumber: 1, dieSize: "d6" }],
+            notes: [
+                {
+                    outcome: ["criticalSuccess"],
+                    title: "PF2E.WeaponPropertyRune.nightmare.Name",
+                    text: "PF2E.WeaponPropertyRune.nightmare.Note.criticalSuccess",
+                },
+            ],
+        },
+        level: 9,
+        name: "PF2E.WeaponPropertyRune.nightmare.Name",
+        price: 250,
+        rarity: "uncommon",
+        slug: "nightmare",
+        traits: ["magical"],
     },
     pacifying: {
         level: 5,

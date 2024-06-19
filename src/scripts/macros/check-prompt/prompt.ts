@@ -14,6 +14,7 @@ interface CheckPromptDialogOptions extends ApplicationOptions {
 interface CheckPromptDialogData {
     proficiencyRanks: SelectData[];
     dcAdjustments: SelectData[];
+    partyLevel: number | null;
 }
 
 interface SelectData {
@@ -53,6 +54,7 @@ class CheckPromptDialog extends Application<CheckPromptDialogOptions> {
         return {
             proficiencyRanks: this.#prepareProficiencyRanks(),
             dcAdjustments: this.#prepareDCAdjustments(),
+            partyLevel: game.actors.party?.level ?? null,
         };
     }
 
@@ -153,7 +155,7 @@ class CheckPromptDialog extends Application<CheckPromptDialogOptions> {
             const dc = this.#getDC(html);
             const content = types.map((type) => this.#constructCheck(type, dc, traits, extras)).join("");
 
-            ChatMessagePF2e.create({ user: game.user.id, flavor, content });
+            ChatMessagePF2e.create({ author: game.user.id, flavor, content });
         }
     }
 

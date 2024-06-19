@@ -126,15 +126,6 @@ class Statistic<TActor extends ActorPF2e = ActorPF2e> extends BaseStatistic<TAct
         return this.check.mod;
     }
 
-    /** @deprecated */
-    get ability(): AttributeString | null {
-        fu.logCompatibilityWarning("`Statistic#ability` is deprecated. Use `Statistic#attribute` instead.", {
-            since: "5.5.0",
-            until: "6.0.0",
-        });
-        return this.attribute;
-    }
-
     override createRollOptions(domains = this.domains, args: RollOptionConfig = {}): Set<string> {
         const { item, extraRollOptions, origin, target } = args;
 
@@ -413,9 +404,10 @@ class StatisticCheck<TParent extends Statistic = Statistic> {
                     !!(args.dc?.slug || "statistic" in (args.dc ?? {})) &&
                     (!item || item.isOfType("action", "campaignFeature", "feat", "weapon"))));
 
+        // Only armies can target armies
         const isValidRoller = targetToken?.actor?.isOfType("army")
             ? self.isOfType("army")
-            : self.isOfType("creature", "hazard");
+            : self.isOfType("army", "creature", "hazard", "party");
         if (!isValidRoller) return null;
 
         // This is required to determine the AC for attack dialogs
@@ -528,7 +520,7 @@ class StatisticCheck<TParent extends Statistic = Statistic> {
                 });
             }
         }
-        const mapIncreases = Math.clamped((args.attackNumber ?? 1) - 1, 0, 2) as ZeroToTwo;
+        const mapIncreases = Math.clamp((args.attackNumber ?? 1) - 1, 0, 2) as ZeroToTwo;
 
         // Include multiple attack penalty to extra modifiers if given
         if (mapIncreases !== 0) {

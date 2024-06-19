@@ -1719,10 +1719,12 @@
                     }
                 ],
                 "slug": "cursed",
-                "trainedLore": "Curse Lore",
                 "trainedSkills": {
+                    "lore": [
+                        "Curse Lore"
+                    ],
                     "value": [
-                        "occ"
+                        "occultism"
                     ]
                 },
                 "traits": {
@@ -2639,7 +2641,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>The target is overtaken with uncontrollable laughter. It must attempt a Will save.</p>\n<hr /><strong>Critical Success</strong> The target is unaffected.\n<p><strong>Success</strong> The target is plagued with uncontrollable laughter. It can't use reactions.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Slowed]{Slowed 1} and can't use reactions.</p>\n<p><strong>Critical Failure</strong> The target falls @UUID[Compendium.pf2e.conditionitems.Item.Prone] and can't use actions or reactions for 1 round. It then suffers the failure effects.</p>"
+                    "value": "<p>The target is overtaken with uncontrollable laughter. It must attempt a Will save.</p>\n<hr /><p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target is plagued with uncontrollable laughter. It can't use reactions.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Slowed]{Slowed 1} and can't use reactions.</p>\n<p><strong>Critical Failure</strong> The target falls @UUID[Compendium.pf2e.conditionitems.Item.Prone] and can't use actions or reactions for 1 round. It then suffers the failure effects.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -4084,7 +4086,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>The target is overtaken with uncontrollable laughter. It must attempt a Will save.</p>\n<hr /><strong>Critical Success</strong> The target is unaffected.\n<p><strong>Success</strong> The target is plagued with uncontrollable laughter. It can't use reactions.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Slowed]{Slowed 1} and can't use reactions.</p>\n<p><strong>Critical Failure</strong> The target falls @UUID[Compendium.pf2e.conditionitems.Item.Prone] and can't use actions or reactions for 1 round. It then suffers the failure effects.</p>"
+                    "value": "<p>The target is overtaken with uncontrollable laughter. It must attempt a Will save.</p>\n<hr /><p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target is plagued with uncontrollable laughter. It can't use reactions.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Slowed]{Slowed 1} and can't use reactions.</p>\n<p><strong>Critical Failure</strong> The target falls @UUID[Compendium.pf2e.conditionitems.Item.Prone] and can't use actions or reactions for 1 round. It then suffers the failure effects.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -5405,13 +5407,13 @@
                     {
                         "key": "ActiveEffectLike",
                         "mode": "upgrade",
-                        "path": "system.skills.arc.rank",
+                        "path": "system.skills.arcana.rank",
                         "value": 1
                     },
                     {
                         "key": "ActiveEffectLike",
                         "mode": "upgrade",
-                        "path": "system.skills.dec.rank",
+                        "path": "system.skills.deception.rank",
                         "value": 1
                     },
                     {
@@ -5723,52 +5725,52 @@
             }
         },
         "skills": {
-            "acr": {
+            "acrobatics": {
                 "rank": 0
             },
-            "arc": {
+            "arcana": {
                 "rank": 1
             },
-            "ath": {
+            "athletics": {
                 "rank": 0
             },
-            "cra": {
+            "crafting": {
                 "rank": 2
             },
-            "dec": {
+            "deception": {
                 "rank": 2
             },
-            "dip": {
+            "diplomacy": {
                 "rank": 1
             },
-            "itm": {
+            "intimidation": {
                 "rank": 0
             },
-            "med": {
+            "medicine": {
                 "rank": 0
             },
-            "nat": {
+            "nature": {
                 "rank": 0
             },
-            "occ": {
+            "occultism": {
                 "rank": 1
             },
-            "prf": {
+            "performance": {
                 "rank": 0
             },
-            "rel": {
+            "religion": {
                 "rank": 0
             },
-            "soc": {
+            "society": {
                 "rank": 1
             },
-            "ste": {
+            "stealth": {
                 "rank": 1
             },
-            "sur": {
+            "survival": {
                 "rank": 0
             },
-            "thi": {
+            "thievery": {
                 "rank": 1
             }
         }
