@@ -348,6 +348,13 @@ class StatisticCheck<TParent extends Statistic = Statistic> {
         const parentLabel = this.parent.label;
         if (data.check?.label) return game.i18n.localize(data.check?.label);
 
+        // Check for specific check localization, and use if it exists
+        const checkKey = `PF2E.ActionsCheck.${this.parent.slug}`;
+        const checkLabel = game.i18n.localize(checkKey);
+        if (!["x", "x-attack-roll"].includes(this.parent.slug) && checkLabel !== checkKey) {
+            return checkLabel;
+        }
+
         if (this.domains.includes("spell-attack-roll")) {
             return game.i18n.format("PF2E.SpellAttackWithTradition", { tradition: parentLabel });
         }
@@ -444,7 +451,7 @@ class StatisticCheck<TParent extends Statistic = Statistic> {
                         item: contextItem,
                     },
                     domains,
-                    against: args.dc?.slug ?? "ac",
+                    against: args.dc?.slug ?? null,
                     options: optionSet,
                 }).resolve();
             } else {
@@ -468,7 +475,9 @@ class StatisticCheck<TParent extends Statistic = Statistic> {
 
         // Extract modifiers, unless this is a flat check
         const extraModifiers =
-            this.type === "flat-check" ? [] : R.compact([args.modifiers, rollContext?.origin?.modifiers].flat());
+            this.type === "flat-check"
+                ? []
+                : [args.modifiers, rollContext?.origin?.modifiers].flat().filter(R.isTruthy);
 
         // Get roll options and roll notes
         const extraRollOptions = R.compact([

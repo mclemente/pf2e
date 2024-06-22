@@ -1,6 +1,6 @@
 {
     "_id": "GDYy2HaaTAEWRfGQ",
-    "img": "systems/pf2e/icons/default-icons/feats.webp",
+    "img": "icons/sundries/books/book-red-exclamation.webp",
     "name": "Feral Senses",
     "system": {
         "actionType": {
@@ -28,7 +28,24 @@
             "remaster": true,
             "title": "Pathfinder Howl of the Wild"
         },
-        "rules": [],
+        "rules": [
+            {
+                "acuity": "imprecise",
+                "key": "Sense",
+                "predicate": [
+                    "self:effect:change-shape-werecreature"
+                ],
+                "range": 30,
+                "selector": "scent"
+            },
+            {
+                "key": "Sense",
+                "predicate": [
+                    "self:effect:change-shape-werecreature"
+                ],
+                "selector": "low-light-vision"
+            }
+        ],
         "traits": {
             "rarity": "common",
             "value": [
