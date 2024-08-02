@@ -237,10 +237,10 @@ abstract class RollContext<
             const originMark = originUuid ? targetActor?.synthetics.tokenMarks.get(originUuid) : null;
             const targetMark = targetUuid ? originActor?.synthetics.tokenMarks.get(targetUuid) : null;
 
-            return R.compact([
+            return [
                 originMark ? `origin:mark:${originMark}` : null,
                 targetMark ? `target:mark:${targetMark}` : null,
-            ]);
+            ].filter(R.isTruthy);
         })();
 
         // Get ephemeral effects from the target that affect this actor while attacking
@@ -250,7 +250,7 @@ abstract class RollContext<
             target: unresolved.target?.actor ?? null,
             item,
             domains: this.domains,
-            options: [...this.rollOptions, ...itemOptions, ...markOptions].filter(R.isTruthy),
+            options: [...this.rollOptions, ...itemOptions, ...markOptions],
         });
 
         // Add an epehemeral effect from flanking
@@ -277,7 +277,7 @@ abstract class RollContext<
                 isFlankingAttack ? `${perspectivePrefix}:flanking` : null,
                 ...actionOptions,
                 ...(which === "target" ? itemOptions : []),
-            ].filter(R.isTruthy),
+            ].filter(R.isNonNull),
             ephemeralEffects,
         );
     }

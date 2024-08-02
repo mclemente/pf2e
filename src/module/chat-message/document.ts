@@ -1,6 +1,6 @@
 import type { ActorPF2e } from "@actor";
 import { StrikeData } from "@actor/data/base.ts";
-import { ItemProxyPF2e, type ItemPF2e } from "@item";
+import { ItemPF2e, ItemProxyPF2e } from "@item";
 import type { UserPF2e } from "@module/user/index.ts";
 import type { ScenePF2e, TokenDocumentPF2e } from "@scene/index.ts";
 import { UserVisibilityPF2e } from "@scripts/ui/user-visibility.ts";
@@ -112,8 +112,8 @@ class ChatMessagePF2e extends ChatMessage {
             if (actor && embeddedSpell) return new ItemProxyPF2e(embeddedSpell, { parent: actor });
 
             const origin = this.flags.pf2e?.origin ?? null;
-            const match = /Item\.(\w+)/.exec(origin?.uuid ?? "") ?? [];
-            return actor?.items.get(match?.[1] ?? "") ?? null;
+            const item = origin?.uuid && !origin.uuid.startsWith("Compendium.") ? fromUuidSync(origin.uuid) : null;
+            return item instanceof ItemPF2e ? item : null;
         })();
         if (!item) return null;
 
@@ -250,9 +250,11 @@ class ChatMessagePF2e extends ChatMessage {
         html.addEventListener("mouseleave", (event) => this.#onHoverOut(event));
 
         UserVisibilityPF2e.processMessageSender(this, html);
-        if (!actor && this.content) UserVisibilityPF2e.process(html, { document: this });
+        if ((!actor || this.isRoll) && this.content) {
+            UserVisibilityPF2e.process(html, { document: actor ?? this });
+        }
 
-        return $html;
+        return $(html);
     }
 
     /** Highlight the message's corresponding token on the canvas */

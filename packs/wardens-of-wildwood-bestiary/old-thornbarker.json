@@ -568,7 +568,7 @@
                 },
                 "category": "defensive",
                 "description": {
-                    "value": "<p>Dozens of @UUID[Compendium.pf2e.rage-of-elements-bestiary.EjgbrWiEp37eIifZ]{Wood Scamps} clamber on, nest in, and flit around Old Thornbarker, feeding him their observations and gossip. The arboreal can grab a nearby scamp as if drawing a weapon, using it as a thrown weapon. The unlucky scamp impacts with a clatter of spines and toxic pollen, after which the dazed elemental scampers away to regain its senses.</p>\n<p>If Old Thornbarker takes 40 or more damage from an area effect, the scamps scatter and seek cover for [[/br 1d6 #rounds]]{1d6 rounds}, during which time Old Thornbarker can't make scamp Strikes and loses all-around vision.</p>"
+                    "value": "<p>Dozens of @UUID[Compendium.pf2e.rage-of-elements-bestiary.Actor.Wood Scamp]{Wood Scamps} clamber on, nest in, and flit around Old Thornbarker, feeding him their observations and gossip. The arboreal can grab a nearby scamp as if drawing a weapon, using it as a thrown weapon. The unlucky scamp impacts with a clatter of spines and toxic pollen, after which the dazed elemental scampers away to regain its senses.</p>\n<p>If Old Thornbarker takes 40 or more damage from an area effect, the scamps scatter and seek cover for [[/br 1d6 #rounds]]{1d6 rounds}, during which time Old Thornbarker can't make scamp Strikes and loses all-around vision.</p>"
                 },
                 "publication": {
                     "license": "OGL",
@@ -662,36 +662,10 @@
             "type": "action"
         },
         {
-            "_id": "wFLbEgSqYtWXX7ah",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Athletics",
-            "sort": 1500000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 23
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
             "_id": "2LqNyl4yrY4R0XPU",
             "img": "systems/pf2e/icons/default-icons/lore.svg",
             "name": "Cradle of Knot Lore",
-            "sort": 1600000,
+            "sort": 1500000,
             "system": {
                 "description": {
                     "value": ""
@@ -710,126 +684,6 @@
                 "rules": [],
                 "slug": null,
                 "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "b8CrbtcvxAC3D5vx",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Deception",
-            "sort": 1700000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 22
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "6dtjHeIl8XYAYRk6",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Intimidation",
-            "sort": 1800000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 22
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "8nhEgguSsgIANgpC",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Nature",
-            "sort": 1900000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 25
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "6kF88w6XCeKwvBaF",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Stealth",
-            "sort": 2000000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 19
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [
-                    {
-                        "key": "FlatModifier",
-                        "label": "PF2E.SkillVariant.Forests",
-                        "predicate": [
-                            "terrain:forest"
-                        ],
-                        "selector": "stealth",
-                        "value": 4
-                    }
-                ],
-                "slug": null,
-                "traits": {},
-                "variants": {
-                    "0": {
-                        "label": "+23 in forests",
-                        "options": "terrain:forest"
-                    }
-                }
             },
             "type": "lore"
         }
@@ -914,7 +768,7 @@
             "publication": {
                 "license": "ORC",
                 "remaster": true,
-                "title": "Pathfinder #203: Shepard of Decay"
+                "title": "Pathfinder #203: Shepherd of Decay"
             }
         },
         "initiative": {
@@ -952,6 +806,32 @@
             "will": {
                 "saveDetail": "",
                 "value": 25
+            }
+        },
+        "skills": {
+            "athletics": {
+                "base": 23
+            },
+            "deception": {
+                "base": 22
+            },
+            "intimidation": {
+                "base": 22
+            },
+            "nature": {
+                "base": 25
+            },
+            "stealth": {
+                "base": 19,
+                "special": [
+                    {
+                        "base": 23,
+                        "label": "in forests",
+                        "predicate": [
+                            "terrain:forest"
+                        ]
+                    }
+                ]
             }
         },
         "traits": {

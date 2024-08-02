@@ -558,9 +558,9 @@
             "type": "melee"
         },
         {
-            "_id": "NdeZPbdp9J9q4sCB",
+            "_id": "esmKRVM0VZvS53Fl",
             "img": "systems/pf2e/icons/actions/Passive.webp",
-            "name": "-2 to Perception to hear things",
+            "name": "-2 Penalty on Perception to Hear things",
             "sort": 1000000,
             "system": {
                 "actionType": {
@@ -569,7 +569,7 @@
                 "actions": {
                     "value": null
                 },
-                "category": "defensive",
+                "category": "interaction",
                 "description": {
                     "value": ""
                 },
@@ -581,18 +581,15 @@
                 "rules": [
                     {
                         "key": "FlatModifier",
-                        "label": "Penalty to Hearing",
                         "predicate": [
                             "auditory"
                         ],
                         "selector": "perception",
-                        "type": "untyped",
                         "value": -2
                     }
                 ],
                 "slug": null,
                 "traits": {
-                    "rarity": "common",
                     "value": []
                 }
             },
@@ -643,131 +640,6 @@
                 }
             },
             "type": "action"
-        },
-        {
-            "_id": "wnowXAeOQ54e1MLQ",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Crafting",
-            "sort": 1200000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 2
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "zwvnylpbuYer7a7j",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Deception",
-            "sort": 1300000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 2
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "C7jAnQO46LFfU5N3",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Nature",
-            "sort": 1400000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 4
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "QXTkVgsyIevRwV0x",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Stealth",
-            "sort": 1500000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 5
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "I0Yg0JKJrNLa6YYH",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Thievery",
-            "sort": 1600000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 5
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null
-            },
-            "type": "lore"
         }
     ],
     "name": "Pugwampi (SoT)",
@@ -844,7 +716,7 @@
             "statistic": "perception"
         },
         "perception": {
-            "details": "",
+            "details": "(-2 to hear things)",
             "mod": 6,
             "senses": [
                 {
@@ -870,6 +742,23 @@
             "will": {
                 "saveDetail": "",
                 "value": 6
+            }
+        },
+        "skills": {
+            "crafting": {
+                "base": 2
+            },
+            "deception": {
+                "base": 2
+            },
+            "nature": {
+                "base": 4
+            },
+            "stealth": {
+                "base": 5
+            },
+            "thievery": {
+                "base": 5
             }
         },
         "traits": {

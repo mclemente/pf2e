@@ -7,7 +7,7 @@ import { ZeroToThree } from "@module/data.ts";
 import { RollNotePF2e } from "@module/notes.ts";
 import { extractNotes } from "@module/rules/helpers.ts";
 import { DEGREE_OF_SUCCESS, DEGREE_OF_SUCCESS_STRINGS } from "@system/degree-of-success.ts";
-import { createHTMLElement } from "@util";
+import { createHTMLElement, objectHasKey } from "@util";
 import { DamageRoll, DamageRollData } from "./roll.ts";
 import { DamageDamageContext, DamageTemplate } from "./types.ts";
 
@@ -19,14 +19,14 @@ export class DamagePF2e {
         callback?: Function,
     ): Promise<Rolled<DamageRoll> | null> {
         const outcome = context.outcome ?? null;
-
-        context.rollMode ??= (context.secret ? "blindroll" : undefined) ?? game.settings.get("core", "rollMode");
         context.createMessage ??= true;
 
         // Change default roll mode to blind GM roll if the "secret" option is specified
-        if (context.options.has("secret")) {
-            context.secret = true;
-        }
+        if (context.options.has("secret")) context.secret = true;
+        if (context.secret) context.rollMode ??= game.user.isGM ? "gmroll" : "blindroll";
+        context.rollMode = objectHasKey(CONFIG.Dice.rollModes, context.rollMode)
+            ? context.rollMode
+            : game.settings.get("core", "rollMode");
 
         const subtitle = outcome
             ? context.sourceType === "attack"
@@ -157,9 +157,7 @@ export class DamagePF2e {
         // Create the damage roll and evaluate. If already created, evalute the one we've been given instead
         const roll = await (() => {
             const damage = data.damage;
-            if (damage.roll) {
-                return damage.roll.evaluate();
-            }
+            if (damage.roll) return damage.roll.evaluate();
 
             const formula = fu.deepClone(damage.formula[outcome ?? "success"]);
             if (!formula) {
@@ -181,11 +179,15 @@ export class DamagePF2e {
                 damage: data,
                 degreeOfSuccess,
                 critRule,
-                ignoredResistances: damage.ignoredResistances,
+                bypass: fu.deepClone(damage.bypass) ?? {
+                    immunity: { ignore: [], downgrade: [], redirect: [] },
+                    resistance: { ignore: [], redirect: [] },
+                },
                 showBreakdown,
             };
 
-            return new DamageRoll(formula, {}, options).evaluate();
+            const allowInteractive = context.rollMode !== "blindroll";
+            return new DamageRoll(formula, {}, options).evaluate({ allowInteractive });
         })();
 
         if (roll === null) return null;
@@ -230,7 +232,6 @@ export class DamagePF2e {
             return null;
         })();
 
-        const rollMode = context.rollMode ?? "roll";
         const contextFlag: DamageDamageContextFlag = {
             type: context.type,
             sourceType: context.sourceType,
@@ -242,7 +243,7 @@ export class DamagePF2e {
             mapIncreases: context.mapIncreases,
             notes: notes.map((n) => n.toObject()),
             secret: context.secret ?? false,
-            rollMode,
+            rollMode: context.rollMode,
             traits: context.traits ?? [],
             skipDialog: context.skipDialog ?? !game.user.settings.showDamageDialogs,
             outcome,
@@ -287,7 +288,7 @@ export class DamagePF2e {
 
         if (context.createMessage) {
             messageData.rolls.push(...splashRolls);
-            await ChatMessagePF2e.create(messageData, { rollMode });
+            await ChatMessagePF2e.create(messageData, { rollMode: context.rollMode });
         }
 
         Hooks.callAll(`pf2e.damageRoll`, roll);

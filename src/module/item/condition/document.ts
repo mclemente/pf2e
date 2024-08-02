@@ -78,13 +78,13 @@ class ConditionPF2e<TParent extends ActorPF2e | null = ActorPF2e | null> extends
     get breakdown(): string | null {
         if (!this.active) return null;
 
-        const granters = R.uniq(
-            R.compact(
+        const granters = R.unique(
+            (
                 this.actor?.conditions.bySlug(this.slug).map((condition) => {
                     const { appliedBy } = condition;
                     return !appliedBy?.isOfType("condition") || appliedBy?.active ? appliedBy : null;
-                }) ?? [],
-            ),
+                }) ?? []
+            ).filter(R.isTruthy),
         );
 
         const list = granters
@@ -188,7 +188,7 @@ class ConditionPF2e<TParent extends ActorPF2e | null = ActorPF2e | null> extends
         });
 
         // Append numeric badge value to condition name, set item image according to configured style
-        if (typeof this.badge?.value === "number") {
+        if (this.isEmbedded && typeof this.badge?.value === "number") {
             this.name = `${this.name} ${this.badge.value}`;
         }
         const folder = CONFIG.PF2E.statusEffects.iconDir;

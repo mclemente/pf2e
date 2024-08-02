@@ -1,7 +1,7 @@
 import { ArmyPF2e, CharacterPF2e, FamiliarPF2e, HazardPF2e, LootPF2e, NPCPF2e, PartyPF2e, VehiclePF2e } from "@actor";
 import { SenseAcuity } from "@actor/creature/types.ts";
 import { LANGUAGES, SENSE_TYPES } from "@actor/creature/values.ts";
-import { ActorType, AttributeString } from "@actor/types.ts";
+import type { ActorType, AttributeString, SkillSlug } from "@actor/types.ts";
 import { MOVEMENT_TYPES } from "@actor/values.ts";
 import {
     AbilityItemPF2e,
@@ -144,6 +144,7 @@ const tokenHUDConditions = {
 
 const conditionTypes: Record<ConditionSlug, string> = {
     ...tokenHUDConditions,
+    cursebound: "PF2E.ConditionTypeCursebound",
     friendly: "PF2E.ConditionTypeFriendly",
     helpful: "PF2E.ConditionTypeHelpful",
     hostile: "PF2E.ConditionTypeHostile",
@@ -654,25 +655,24 @@ export const PF2ECONFIG = {
         helpful: "PF2E.Attitudes.Helpful",
     },
 
-    skillList: {
-        acrobatics: "PF2E.Skill.Acrobatics",
-        arcana: "PF2E.Skill.Arcana",
-        athletics: "PF2E.Skill.Athletics",
-        crafting: "PF2E.Skill.Crafting",
-        deception: "PF2E.Skill.Deception",
-        diplomacy: "PF2E.Skill.Diplomacy",
-        intimidation: "PF2E.Skill.Intimidation",
-        medicine: "PF2E.Skill.Medicine",
-        nature: "PF2E.Skill.Nature",
-        occultism: "PF2E.Skill.Occultism",
-        performance: "PF2E.Skill.Performance",
-        religion: "PF2E.Skill.Religion",
-        society: "PF2E.Skill.Society",
-        stealth: "PF2E.Skill.Stealth",
-        survival: "PF2E.Skill.Survival",
-        thievery: "PF2E.Skill.Thievery",
-        lore: "PF2E.SkillLore",
-    },
+    skills: Object.freeze({
+        acrobatics: { label: "PF2E.Skill.Acrobatics", attribute: "dex" },
+        arcana: { label: "PF2E.Skill.Arcana", attribute: "int" },
+        athletics: { label: "PF2E.Skill.Athletics", attribute: "str" },
+        crafting: { label: "PF2E.Skill.Crafting", attribute: "int" },
+        deception: { label: "PF2E.Skill.Deception", attribute: "cha" },
+        diplomacy: { label: "PF2E.Skill.Diplomacy", attribute: "cha" },
+        intimidation: { label: "PF2E.Skill.Intimidation", attribute: "cha" },
+        medicine: { label: "PF2E.Skill.Medicine", attribute: "wis" },
+        nature: { label: "PF2E.Skill.Nature", attribute: "wis" },
+        occultism: { label: "PF2E.Skill.Occultism", attribute: "int" },
+        performance: { label: "PF2E.Skill.Performance", attribute: "cha" },
+        religion: { label: "PF2E.Skill.Religion", attribute: "wis" },
+        society: { label: "PF2E.Skill.Society", attribute: "int" },
+        stealth: { label: "PF2E.Skill.Stealth", attribute: "dex" },
+        survival: { label: "PF2E.Skill.Survival", attribute: "wis" },
+        thievery: { label: "PF2E.Skill.Thievery", attribute: "dex" },
+    }) satisfies Record<SkillSlug, { label: string; attribute: AttributeString }>,
 
     featCategories,
 
@@ -858,48 +858,6 @@ export const PF2ECONFIG = {
             lootableNPCs: {
                 name: "PF2E.SETTINGS.Automation.LootableNPCs.Name",
                 hint: "PF2E.SETTINGS.Automation.LootableNPCs.Hint",
-            },
-        },
-        homebrew: {
-            creatureTraits: {
-                name: "PF2E.SETTINGS.Homebrew.CreatureTraits.Name",
-                hint: "PF2E.SETTINGS.Homebrew.CreatureTraits.Hint",
-            },
-            featTraits: {
-                name: "PF2E.SETTINGS.Homebrew.FeatTraits.Name",
-                hint: "PF2E.SETTINGS.Homebrew.FeatTraits.Hint",
-            },
-            languages: {
-                name: "PF2E.Actor.Creature.Language.Plural",
-                hint: "PF2E.SETTINGS.Homebrew.Languages.Hint",
-            },
-            spellTraits: {
-                name: "PF2E.SETTINGS.Homebrew.SpellTraits.Name",
-                hint: "PF2E.SETTINGS.Homebrew.SpellTraits.Hint",
-            },
-            weaponCategories: {
-                name: "PF2E.SETTINGS.Homebrew.WeaponCategories.Name",
-                hint: "PF2E.SETTINGS.Homebrew.WeaponCategories.Hint",
-            },
-            weaponGroups: {
-                name: "PF2E.SETTINGS.Homebrew.WeaponGroups.Name",
-                hint: "PF2E.SETTINGS.Homebrew.WeaponGroups.Hint",
-            },
-            baseWeapons: {
-                name: "PF2E.SETTINGS.Homebrew.BaseWeapons.Name",
-                hint: "PF2E.SETTINGS.Homebrew.BaseWeapons.Hint",
-            },
-            weaponTraits: {
-                name: "PF2E.SETTINGS.Homebrew.WeaponTraits.Name",
-                hint: "PF2E.SETTINGS.Homebrew.WeaponTraits.Hint",
-            },
-            equipmentTraits: {
-                name: "PF2E.SETTINGS.Homebrew.EquipmentTraits.Name",
-                hint: "PF2E.SETTINGS.Homebrew.EquipmentTraits.Hint",
-            },
-            environmentTypes: {
-                name: "PF2E.SETTINGS.Homebrew.EnvironmentTypes.Name",
-                hint: "PF2E.SETTINGS.Homebrew.EnvironmentTypes.Hint",
             },
         },
         worldClock: {

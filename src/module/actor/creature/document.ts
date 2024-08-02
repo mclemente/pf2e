@@ -20,8 +20,8 @@ import { RollNotePF2e } from "@module/notes.ts";
 import { extractModifiers } from "@module/rules/helpers.ts";
 import { BaseSpeedSynthetic } from "@module/rules/synthetics.ts";
 import type { UserPF2e } from "@module/user/index.ts";
+import type { TokenDocumentPF2e } from "@scene";
 import { LightLevels } from "@scene/data.ts";
-import type { TokenDocumentPF2e } from "@scene/index.ts";
 import { eventToRollParams } from "@scripts/sheet-util.ts";
 import type { CheckRoll } from "@system/check/index.ts";
 import { CheckDC } from "@system/degree-of-success.ts";
@@ -333,14 +333,21 @@ abstract class CreaturePF2e<
 
         // Set IWR guaranteed by traits
         setImmunitiesFromTraits(this);
+
+        // Set difficult terrain roll options
+        if (game.ready && game.scenes.active) {
+            const tokens = this.getActiveTokens(true, true);
+            const highestGrade = Math.max(...tokens.map((t) => t.difficultTerrain));
+            if (highestGrade > 0) {
+                this.rollOptions.all["self:position:difficult-terrain"] = true;
+                const gradeOption = highestGrade === 2 ? "greater" : "normal";
+                this.rollOptions.all[`self:position:difficult-terrain:${gradeOption}`] = true;
+            }
+        }
     }
 
     override prepareEmbeddedDocuments(): void {
         super.prepareEmbeddedDocuments();
-
-        for (const rule of this.rules) {
-            rule.onApplyActiveEffects?.();
-        }
 
         for (const changeEntries of Object.values(this.system.autoChanges)) {
             changeEntries?.sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
@@ -387,7 +394,7 @@ abstract class CreaturePF2e<
 
         // Set labels for attributes
         if (this.system.abilities) {
-            for (const [shortForm, data] of R.toPairs.strict(this.system.abilities)) {
+            for (const [shortForm, data] of R.entries.strict(this.system.abilities)) {
                 data.label = CONFIG.PF2E.abilities[shortForm];
                 data.shortLabel = `PF2E.AbilityId.${shortForm}`;
             }
@@ -773,11 +780,11 @@ abstract class CreaturePF2e<
 
         // Preserve alignment traits if not exposed
         const traitChanges = changed.system.traits;
-        if (R.isObject(traitChanges) && Array.isArray(traitChanges.value)) {
+        if (R.isPlainObject(traitChanges) && Array.isArray(traitChanges.value)) {
             const sourceAlignmentTraits = this._source.system.traits?.value.filter(
                 (t) => ["good", "evil", "lawful", "chaotic"].includes(t) && !(t in CONFIG.PF2E.creatureTraits),
             );
-            traitChanges.value = R.uniq(R.compact([traitChanges.value, sourceAlignmentTraits].flat()).sort());
+            traitChanges.value = R.unique([traitChanges.value, sourceAlignmentTraits].flat()).filter(R.isTruthy).sort();
         }
 
         return super._preUpdate(changed, options, user);

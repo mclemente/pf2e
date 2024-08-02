@@ -14,7 +14,7 @@ import { CheckContextError } from "../helpers.ts";
 import { ActionMacroHelpers, SkillActionOptions } from "../index.ts";
 
 const toHighestModifier = (highest: StrikeData | null, current: StrikeData): StrikeData | null => {
-    return current.totalModifier > (highest?.totalModifier ?? 0) ? current : highest;
+    return current.totalModifier > (highest?.totalModifier ?? Number.MIN_SAFE_INTEGER) ? current : highest;
 };
 
 function unarmedStrikeWithHighestModifier<ItemType extends ItemPF2e<ActorPF2e>>(
@@ -172,6 +172,7 @@ class EscapeAction extends SingleCheckAction {
             cost: 1,
             description: "PF2E.Actions.Escape.Description",
             difficultyClass: "athletics",
+            img: "icons/skills/movement/figure-running-gray.webp",
             name: "PF2E.Actions.Escape.Title",
             notes: [
                 { outcome: ["criticalSuccess"], text: "PF2E.Actions.Escape.Notes.criticalSuccess" },

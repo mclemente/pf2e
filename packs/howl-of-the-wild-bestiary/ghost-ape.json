@@ -200,136 +200,6 @@
                 }
             },
             "type": "action"
-        },
-        {
-            "_id": "eszld07MHXkamsqM",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Acrobatics",
-            "sort": 600000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 10
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "lxih4eaKYIrUif25",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Athletics",
-            "sort": 700000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 14
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "UVSEKPgusX2QsO80",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Intimidation",
-            "sort": 800000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 10
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "LIZGbEZRb3gLna5d",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Stealth",
-            "sort": 900000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 12
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "jniTEbTpbpTg6de5",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Survival",
-            "sort": 1000000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 12
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
         }
     ],
     "name": "Ghost Ape",
@@ -390,7 +260,7 @@
                 "value": 4
             },
             "privateNotes": "",
-            "publicNotes": "<p>Ghost apes are reclusive and territorial creatures that usually reveal themselves only when their homes are threatened. Most ghost apes will first attempt to use their imposing presence and natural teleportation to frighten and confuse their foes into fleeing. Ghost apes can speak but aren’t particularly talkative, though they will, on rare occasions,&amp;nbsp;treat with those who approach them with respect. Ghost apes can&amp;nbsp;be powerful allies when motivated by a common cause, although they tend to be suspicious of outsiders, and their trust isn’t easily earned.</p>",
+            "publicNotes": "<p>Ghost apes are reclusive and territorial creatures that usually reveal themselves only when their homes are threatened. Most ghost apes will first attempt to use their imposing presence and natural teleportation to frighten and confuse their foes into fleeing. Ghost apes can speak but aren't particularly talkative, though they will, on rare occasions,&amp;nbsp;treat with those who approach them with respect. Ghost apes can&amp;nbsp;be powerful allies when motivated by a common cause, although they tend to be suspicious of outsiders, and their trust isn't easily earned.</p>",
             "publication": {
                 "license": "ORC",
                 "remaster": true,
@@ -418,6 +288,23 @@
             "will": {
                 "saveDetail": "",
                 "value": 12
+            }
+        },
+        "skills": {
+            "acrobatics": {
+                "base": 10
+            },
+            "athletics": {
+                "base": 14
+            },
+            "intimidation": {
+                "base": 10
+            },
+            "stealth": {
+                "base": 12
+            },
+            "survival": {
+                "base": 12
             }
         },
         "traits": {

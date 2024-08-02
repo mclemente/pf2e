@@ -29,6 +29,7 @@ type ActorFlagsPF2e = foundry.documents.ActorFlags & {
         rollOptions: RollOptionFlags;
         /** IDs of granted items that are tracked */
         trackedItems: Record<string, string>;
+        hideStowed?: boolean;
         [key: string]: unknown;
     };
 };
@@ -85,6 +86,7 @@ interface ActorAttributes extends ActorAttributesSource {
     shield?: {
         raised: boolean;
         broken: boolean;
+        itemId: string | null;
     };
     flanking: {
         /** Whether the actor can flank at all */
@@ -309,9 +311,9 @@ export type {
     HitPointsStatistic,
     InitiativeData,
     PrototypeTokenPF2e,
-    Rollable,
     RollFunction,
     RollOptionFlags,
+    Rollable,
     StrikeData,
     TraitViewData,
 };

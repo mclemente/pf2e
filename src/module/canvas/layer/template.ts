@@ -13,12 +13,25 @@ export class TemplateLayerPF2e<
         return preview;
     }
 
+    /** Overriden to snap according to the dragged template's type */
+    override getSnappedPoint(point: Point): Point {
+        const template = this.preview.children.at(0);
+        if (!template || !canvas.grid.isSquare) {
+            return super.getSnappedPoint(point);
+        }
+
+        return canvas.grid.getSnappedPoint(point, {
+            mode: template.snappingMode,
+            resolution: 1,
+        });
+    }
+
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
     protected override _onDragLeftMove(event: PlaceablesLayerPointerEvent<TObject>): void {
-        if (!canvas.ready || !canvas.scene || canvas.grid.type === CONST.GRID_TYPES.GRIDLESS) {
+        if (!canvas.ready || !canvas.scene || !canvas.grid.isSquare) {
             return super._onDragLeftMove(event);
         }
 
@@ -28,18 +41,16 @@ export class TemplateLayerPF2e<
         const dimensions = canvas.dimensions;
 
         // Snap the destination to the grid
-        const { x, y } = canvas.grid.getSnappedPoint(destination, {
-            mode: template.snappingMode,
-        });
+        const { x, y } = canvas.grid.getSnappedPoint(destination, { mode: template.snappingMode });
         destination.x = x;
         destination.y = y;
         const ray = new Ray(origin, destination);
         const ratio = dimensions.size / dimensions.distance;
-        const { document } = template;
+        const document = template.document;
 
         // Update the shape data
         if (["cone", "circle"].includes(document.t)) {
-            const snapAngle = Math.PI / (canvas.scene.hasHexGrid ? 6 : 4);
+            const snapAngle = Math.PI / 4;
             document.direction = Math.toDegrees(Math.floor((ray.angle + Math.PI * 0.125) / snapAngle) * snapAngle);
         } else {
             document.direction = Math.toDegrees(ray.angle);
@@ -52,10 +63,10 @@ export class TemplateLayerPF2e<
         template.refresh();
     }
 
-    protected override _onMouseWheel(event: WheelEvent): Promise<TObject["document"] | undefined> | void {
+    protected override _onMouseWheel(event: WheelEvent): Promise<TObject> | void {
         // Abort if there's no hovered template
         const template = this.hover;
-        if (!template || !canvas.scene || canvas.grid.type === CONST.GRID_TYPES.GRIDLESS) {
+        if (!template || !canvas.scene || !canvas.grid.isSquare) {
             return super._onMouseWheel(event);
         }
 
@@ -63,7 +74,7 @@ export class TemplateLayerPF2e<
         const shapeType = template.document.t;
         const distance = template.document.distance ?? 5;
         const increment = event.shiftKey || distance <= 30 ? 15 : 5;
-        const coneMultiplier = shapeType === "cone" ? (canvas.scene.hasHexGrid ? 2 : 3) : 1;
+        const coneMultiplier = shapeType === "cone" ? (canvas.grid.isHexagonal ? 2 : 3) : 1;
         const snap = increment * coneMultiplier;
         const delta = snap * Math.sign(event.deltaY);
 
@@ -102,10 +113,7 @@ export class TemplateLayerPF2e<
                     preview.document.updateSource({ direction: direction + snap * Math.sign(event.deltaY) });
                     preview.renderFlags.set({ refresh: true });
                 } else if (event.shiftKey) {
-                    const snap =
-                        canvas.grid.type >= CONST.GRID_TYPES.HEXODDR && canvas.grid.type <= CONST.GRID_TYPES.HEXEVENQ
-                            ? 60
-                            : 45;
+                    const snap = canvas.grid.isHexagonal ? 60 : 45;
                     preview.document.updateSource({ direction: direction + snap * Math.sign(event.deltaY) });
                     preview.renderFlags.set({ refresh: true });
                 }
@@ -117,9 +125,11 @@ export class TemplateLayerPF2e<
                 const { document, position } = preview;
                 this.#deactivatePreviewListeners(initialLayer, event);
                 document.updateSource(
-                    canvas.grid.getSnappedPoint(position, {
-                        mode: preview.snappingMode,
-                    }),
+                    canvas.grid.isSquare
+                        ? canvas.grid.getSnappedPoint(position, {
+                              mode: preview.snappingMode,
+                          })
+                        : super.getSnappedPoint(position),
                 );
                 canvas.scene?.createEmbeddedDocuments("MeasuredTemplate", [document.toObject()]);
             },

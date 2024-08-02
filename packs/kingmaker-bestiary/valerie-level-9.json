@@ -1176,7 +1176,7 @@
                 "checkPenalty": -3,
                 "containerId": null,
                 "description": {
-                    "value": "<p>Plate mail consists of interlocking plates that encase nearly the entire body in a carapace of steel. It is costly and heavy, and the wearer often requires help to don it correctly, but it provides some of the best defense armor can supply. A suit of this armor comes with an undercoat of @UUID[Compendium.pf2e.equipment-srd.Item.Padded Armor]{padded armor} and a pair of @UUID[Compendium.pf2e.equipment-srd.Item.Gauntlet]{gauntlets}.</p>"
+                    "value": "<p>Plate mail consists of interlocking plates that encase nearly the entire body in a carapace of steel. It is costly and heavy, and the wearer often requires help to don it correctly, but it provides some of the best defense armor can supply. A suit of this armor comes with an undercoat of @UUID[Compendium.pf2e.equipment-srd.Item.Padded Armor] and a pair of @UUID[Compendium.pf2e.equipment-srd.Item.Gauntlet]{gauntlets}.</p>"
                 },
                 "dexCap": 0,
                 "equipped": {
@@ -2436,7 +2436,7 @@
                         "uuid": "Compendium.pf2e.classfeatures.Item.Bravery"
                     },
                     "lphi1": {
-                        "img": "systems/pf2e/icons/features/classes/juggerenaut.webp",
+                        "img": "icons/creatures/mammals/bull-horned-blue.webp",
                         "level": 9,
                         "name": "Juggernaut",
                         "uuid": "Compendium.pf2e.classfeatures.Item.Juggernaut"
@@ -3021,7 +3021,7 @@
                     "sourceId": "Compendium.pf2e.classfeatures.Item.OMZs5y16jZRW9KQK"
                 }
             },
-            "img": "systems/pf2e/icons/features/classes/juggerenaut.webp",
+            "img": "icons/creatures/mammals/bull-horned-blue.webp",
             "name": "Juggernaut",
             "sort": 6300,
             "system": {

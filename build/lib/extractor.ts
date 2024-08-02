@@ -292,7 +292,7 @@ class PackExtractor {
             // Remove link labels when the label is the same as the document name
             const labeledLinkPattern = (() => {
                 const escapedDocName = docName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-                return new RegExp(String.raw`(@UUID\[[^\]]+\])\{${escapedDocName}\}`);
+                return new RegExp(String.raw`(@UUID\[[^\]]+\])\{${escapedDocName}\}`, "i");
             })();
             return partiallyConverted.replace(idPattern, docName).replace(labeledLinkPattern, "$1");
         }, docJSON);
@@ -594,6 +594,11 @@ class PackExtractor {
 
     #pruneRuleElement(source: RuleElementSource): void {
         switch (source.key) {
+            case "Aura":
+                if ("appearance" in source) {
+                    delete source.appearance;
+                }
+                break;
             case "RollOption":
                 if ("toggleable" in source && source.toggleable && "value" in source && !source.value) {
                     delete source.value;

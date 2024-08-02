@@ -1,6 +1,11 @@
 import { LightLevels, SceneFlagsPF2e } from "./data.ts";
 import { checkAuras } from "./helpers.ts";
-import type { AmbientLightDocumentPF2e, MeasuredTemplateDocumentPF2e, TileDocumentPF2e } from "./index.ts";
+import type {
+    AmbientLightDocumentPF2e,
+    MeasuredTemplateDocumentPF2e,
+    RegionDocumentPF2e,
+    TileDocumentPF2e,
+} from "./index.ts";
 import { TokenDocumentPF2e } from "./index.ts";
 import type { SceneConfigPF2e } from "./sheet.ts";
 
@@ -40,11 +45,6 @@ class ScenePF2e extends Scene {
 
     get isDark(): boolean {
         return this.lightLevel <= LightLevels.DARKNESS;
-    }
-
-    get hasHexGrid(): boolean {
-        const squareOrGridless: number[] = [CONST.GRID_TYPES.GRIDLESS, CONST.GRID_TYPES.SQUARE];
-        return !squareOrGridless.includes(this.grid.type);
     }
 
     /** Whether this scene is "in focus": the active scene, or the viewed scene if only a single GM is logged in */
@@ -87,11 +87,27 @@ class ScenePF2e extends Scene {
         }
     }
 
+    /** Check for tokens that moved into or out of difficult terrain and reset their respective actors */
+    #refreshTerrainAwareness(): void {
+        if (this.regions.some((r) => r.behaviors.some((b) => b.type === "environmentFeature"))) {
+            for (const token of this.tokens.filter((t) => t.isLinked)) {
+                const rollOptionsAll = token.actor?.rollOptions.all ?? {};
+                const actorDifficultTerrain = rollOptionsAll["self:position:difficult-terrain"]
+                    ? rollOptionsAll["self:position:difficult-terrain:greater"]
+                        ? 2
+                        : 1
+                    : 0;
+                if (actorDifficultTerrain !== token.difficultTerrain) {
+                    token.actor?.reset();
+                }
+            }
+        }
+    }
+
     /* -------------------------------------------- */
     /*  Event Handlers                              */
     /* -------------------------------------------- */
 
-    /** Redraw auras if the scene was activated while being viewed */
     override _onUpdate(changed: DeepPartial<this["_source"]>, operation: SceneUpdateOperation, userId: string): void {
         super._onUpdate(changed, operation, userId);
 
@@ -100,11 +116,30 @@ class ScenePF2e extends Scene {
             canvas.perception.update({ initializeLighting: true, initializeVision: true });
         }
 
+        if (changed.active === true || (this.active && changed.flags?.pf2e?.environmentTypes)) {
+            this.#refreshTerrainAwareness();
+        }
+
         // Check if this is the new active scene or an update to an already active scene
         if (changed.active !== false && canvas.scene === this) {
             for (const token of canvas.tokens.placeables) {
                 token.auras.reset();
             }
+        }
+    }
+
+    protected override _onUpdateDescendantDocuments(
+        parent: this,
+        collection: string,
+        documents: ClientDocument[],
+        changes: object[],
+        options: DatabaseUpdateOperation<this>,
+        userId: string,
+    ): void {
+        super._onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId);
+
+        if (["behaviors", "regions", "tokens"].includes(collection)) {
+            this.#refreshTerrainAwareness();
         }
     }
 
@@ -138,12 +173,11 @@ interface ScenePF2e extends Scene {
     /** Check for auras containing newly-placed or moved tokens (added as a debounced method) */
     checkAuras(): void;
 
-    _sheet: SceneConfigPF2e<this> | null;
-
     readonly lights: foundry.abstract.EmbeddedCollection<AmbientLightDocumentPF2e<this>>;
+    readonly regions: foundry.abstract.EmbeddedCollection<RegionDocumentPF2e<this>>;
     readonly templates: foundry.abstract.EmbeddedCollection<MeasuredTemplateDocumentPF2e<this>>;
-    readonly tokens: foundry.abstract.EmbeddedCollection<TokenDocumentPF2e<this>>;
     readonly tiles: foundry.abstract.EmbeddedCollection<TileDocumentPF2e<this>>;
+    readonly tokens: foundry.abstract.EmbeddedCollection<TokenDocumentPF2e<this>>;
 
     get sheet(): SceneConfigPF2e<this>;
 }

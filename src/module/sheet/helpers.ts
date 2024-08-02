@@ -1,18 +1,19 @@
 import { htmlClosest, htmlQuery, sortLabeledRecord } from "@util";
+import * as R from "remeda";
 
 /** Prepare form options on an item or actor sheet */
 function createSheetOptions(
-    options: Record<string, string>,
+    options: Record<string, string | { label: string }>,
     selections: SheetSelections = [],
     { selected = false } = {},
 ): SheetOptions {
-    const sheetOptions = Object.entries(options).reduce((compiledOptions: SheetOptions, [stringKey, label]) => {
+    const sheetOptions = Object.entries(options).reduce((compiledOptions: SheetOptions, [stringKey, value]) => {
         const selectionList = Array.isArray(selections) ? selections : selections.value;
         const key = typeof selectionList[0] === "number" ? Number(stringKey) : stringKey;
         const isSelected = selectionList.includes(key);
         if (isSelected || !selected) {
             compiledOptions[key] = {
-                label: game.i18n.localize(label),
+                label: game.i18n.localize(R.isObjectType(value) ? value.label : value),
                 value: stringKey,
                 selected: isSelected,
             };
@@ -24,7 +25,10 @@ function createSheetOptions(
     return sortLabeledRecord(sheetOptions);
 }
 
-function createSheetTags(options: Record<string, string>, selections: SheetSelections): SheetOptions {
+function createSheetTags(
+    options: Record<string, string | { label: string }>,
+    selections: SheetSelections,
+): SheetOptions {
     return createSheetOptions(options, selections, { selected: true });
 }
 
@@ -41,25 +45,6 @@ function createTagifyTraits(
             return { id: slug, value: label, readonly: readonlyTraits.includes(slug) };
         })
         .sort((t1, t2) => t1.value.localeCompare(t2.value));
-}
-
-/**
- * Process tagify elements in a form, converting their data into something the pf2e system can handle.
- * This method is meant to be called in _getSubmitData().
- */
-function processTagifyInSubmitData(form: HTMLFormElement, data: Record<string, unknown>): void {
-    // Tagify has a convention (used in their codebase as well) where it prepends the input element
-    const tagifyInputElements = form.querySelectorAll<HTMLInputElement>("tags.tagify ~ input");
-    for (const inputEl of tagifyInputElements.values()) {
-        const path = inputEl.name;
-        const inputValue = data[path];
-        const selections = inputValue && typeof inputValue === "string" ? JSON.parse(inputValue) : inputValue;
-        if (Array.isArray(selections)) {
-            data[path] = selections
-                .filter((s: { id?: string; value?: string; readonly?: boolean }) => !s.readonly)
-                .map((s: { id?: string; value?: string }) => s.id ?? s.value);
-        }
-    }
 }
 
 /**
@@ -143,6 +128,5 @@ export {
     getAdjustedValue,
     getAdjustment,
     maintainFocusInRender,
-    processTagifyInSubmitData,
 };
 export type { AdjustedValue, SheetOption, SheetOptions, TraitTagifyEntry };

@@ -1,9 +1,9 @@
 import { ActorPF2e } from "@actor";
 import { DamageDicePF2e, ModifierPF2e, createAttributeModifier } from "@actor/modifiers.ts";
 import { ATTRIBUTE_ABBREVIATIONS } from "@actor/values.ts";
-import { MeleePF2e, WeaponPF2e } from "@item";
+import type { ItemPF2e, MeleePF2e, WeaponPF2e } from "@item";
 import type { NPCAttackDamage } from "@item/melee/data.ts";
-import { RUNE_DATA, getPropertyRuneDice, getPropertyRuneModifierAdjustments } from "@item/physical/runes.ts";
+import { RUNE_DATA, getPropertyRuneDamage, getPropertyRuneModifierAdjustments } from "@item/physical/runes.ts";
 import type { WeaponDamage } from "@item/weapon/data.ts";
 import type { ZeroToThree } from "@module/data.ts";
 import { RollNotePF2e } from "@module/notes.ts";
@@ -25,6 +25,7 @@ import {
     DamageDamageContext,
     DamageDieSize,
     DamageFormulaData,
+    DamageIRBypassData,
     MaterialDamageEffect,
     WeaponBaseDamageData,
     WeaponDamageTemplate,
@@ -39,7 +40,7 @@ class WeaponDamagePF2e {
         const baseDamage = attack.baseDamage;
         const secondaryInstances = Object.values(attack.system.damageRolls)
             .map(this.npcDamageToWeaponDamage)
-            .filter((d) => !R.equals(d, baseDamage));
+            .filter((d) => !R.isDeepEqual(d, baseDamage));
 
         // Collect damage dice and modifiers from secondary damage instances
         const damageDice: DamageDicePF2e[] = [];
@@ -98,10 +99,10 @@ class WeaponDamagePF2e {
         weaponPotency = null,
         context,
     }: WeaponDamageCalculateParams): Promise<WeaponDamageTemplate | null> {
-        const baseDamage = weapon.baseDamage;
+        const unprocessedBaseDamage = weapon.baseDamage;
         const { domains, options } = context;
-        if (baseDamage.die === null && baseDamage.modifier > 0) {
-            baseDamage.dice = 0;
+        if (unprocessedBaseDamage.die === null && unprocessedBaseDamage.modifier > 0) {
+            unprocessedBaseDamage.dice = 0;
         } else if (!weapon.dealsDamage) {
             return null;
         }
@@ -144,6 +145,8 @@ class WeaponDamagePF2e {
         for (const rule of actor.rules.filter((r) => !r.ignored)) {
             rule.beforeRoll?.(domains, options);
         }
+
+        const baseDamage = WeaponDamagePF2e.#processBaseDamage(unprocessedBaseDamage, { actor, item: weapon, domains });
 
         // Splash damage
         const hasScatterTrait = weaponTraits.some((t) => t.startsWith("scatter-"));
@@ -246,11 +249,18 @@ class WeaponDamagePF2e {
 
         // Property Runes
         const propertyRunes = weapon.system.runes.property;
-        damageDice.push(...getPropertyRuneDice(propertyRunes, options));
+        const runeDamage = getPropertyRuneDamage(weapon, propertyRunes, options);
+        damageDice.push(...runeDamage.filter((d): d is DamageDicePF2e => "diceNumber" in d));
+        modifiers.push(...runeDamage.filter((d): d is ModifierPF2e => "modifier" in d));
         const propertyRuneAdjustments = getPropertyRuneModifierAdjustments(propertyRunes);
-        const ignoredResistances = propertyRunes.flatMap(
-            (r) => RUNE_DATA.weapon.property[r].damage?.ignoredResistances ?? [],
-        );
+
+        const irBypassData: DamageIRBypassData = {
+            immunity: { ignore: [], downgrade: [], redirect: [] },
+            resistance: {
+                ignore: propertyRunes.flatMap((r) => RUNE_DATA.weapon.property[r].damage?.ignoredResistances ?? []),
+                redirect: [],
+            },
+        };
 
         // Backstabber trait
         if (weaponTraits.some((t) => t === "backstabber") && options.has("target:condition:off-guard")) {
@@ -261,6 +271,18 @@ class WeaponDamagePF2e {
                 damageCategory: "precision",
             });
             modifiers.push(modifier);
+        }
+
+        // Concussive trait
+        if (weaponTraits.includes("concussive")) {
+            irBypassData.immunity.redirect.push(
+                { from: "piercing", to: "bludgeoning" },
+                { from: "bludgeoning", to: "piercing" },
+            );
+            irBypassData.resistance.redirect.push(
+                { from: "piercing", to: "bludgeoning" },
+                { from: "bludgeoning", to: "piercing" },
+            );
         }
 
         // If there are any striking synthetics, possibly upgrade the weapon's base damage dice
@@ -423,7 +445,7 @@ class WeaponDamagePF2e {
         })();
         if (!(baseUncategorized || basePersistent || splashDamage)) return null;
 
-        const base = R.compact([baseUncategorized, basePersistent]);
+        const base = [baseUncategorized, basePersistent].filter(R.isTruthy);
 
         const adjustmentsRecord = actor.synthetics.modifierAdjustments;
         const alterationsRecord = actor.synthetics.damageAlterations;
@@ -478,7 +500,7 @@ class WeaponDamagePF2e {
             dice: damageDice,
             maxIncreases,
             modifiers: testedModifiers,
-            ignoredResistances,
+            bypass: irBypassData,
         };
 
         // If a weapon deals no base damage, remove all bonuses, penalties, and modifiers to it.
@@ -511,6 +533,74 @@ class WeaponDamagePF2e {
                 formula: mapValues(computedFormulas, (formula) => formula?.formula ?? null),
                 breakdown: mapValues(computedFormulas, (formula) => formula?.breakdown ?? []),
             },
+        };
+    }
+
+    /** Apply damage alterations to weapon base damage. */
+    static #processBaseDamage(
+        unprocessed: ConvertedNPCDamage | WeaponDamage,
+        { actor, item, domains }: { actor: ActorPF2e; item: ItemPF2e<ActorPF2e>; domains: string[] },
+    ): ConvertedNPCDamage | WeaponDamage {
+        const damageCategory = "category" in unprocessed ? unprocessed.category : null;
+        const dice =
+            unprocessed.dice > 0
+                ? new DamageDicePF2e({
+                      selector: "strike-damage",
+                      slug: "base",
+                      category: damageCategory,
+                      damageType: unprocessed.damageType,
+                      diceNumber: unprocessed.dice,
+                      dieSize: unprocessed.die,
+                  })
+                : null;
+        const modifier =
+            unprocessed.modifier > 0
+                ? new ModifierPF2e({
+                      slug: "base",
+                      label: "Base",
+                      damageCategory,
+                      damageType: unprocessed.damageType,
+                      modifier: unprocessed.modifier,
+                  })
+                : null;
+        const persistent = unprocessed.persistent
+            ? unprocessed.persistent.faces
+                ? new DamageDicePF2e({
+                      selector: "strike-damage",
+                      slug: "base-persistent",
+                      category: "persistent",
+                      damageType: unprocessed.persistent.type,
+                      diceNumber: unprocessed.persistent.number,
+                      dieSize: `d${unprocessed.persistent.faces}`,
+                  })
+                : new ModifierPF2e({
+                      slug: "base-persistent",
+                      label: "Base",
+                      damageCategory: "persistent",
+                      damageType: unprocessed.persistent.type,
+                      modifier: unprocessed.persistent.number,
+                  })
+            : null;
+        const alterations = extractDamageAlterations(actor.synthetics.damageAlterations, domains, "base");
+        for (const alteration of alterations) {
+            if (dice) alteration.applyTo(dice, { item, test: domains });
+            if (modifier) alteration.applyTo(modifier, { item, test: domains });
+            if (persistent) alteration.applyTo(persistent, { item, test: domains });
+        }
+
+        return {
+            category: damageCategory,
+            damageType: dice?.damageType ?? modifier?.damageType ?? unprocessed.damageType,
+            dice: dice?.diceNumber ?? 0,
+            die: dice?.dieSize ?? null,
+            modifier: modifier?.value ?? 0,
+            persistent: persistent
+                ? {
+                      type: persistent.damageType ?? unprocessed.persistent?.type ?? unprocessed.damageType,
+                      number: unprocessed.persistent?.number ?? 0,
+                      faces: "dieSize" in persistent ? persistent.faces : null,
+                  }
+                : null,
         };
     }
 

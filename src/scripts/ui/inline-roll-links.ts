@@ -9,7 +9,7 @@ import { eventToRollParams } from "@scripts/sheet-util.ts";
 import { CheckDC } from "@system/degree-of-success.ts";
 import { Statistic, StatisticRollParameters } from "@system/statistic/index.ts";
 import { TextEditorPF2e } from "@system/text-editor.ts";
-import { ErrorPF2e, getActionGlyph, htmlClosest, htmlQueryAll, sluggify, tupleHasValue } from "@util";
+import { ErrorPF2e, getActionGlyph, htmlClosest, htmlQueryAll, sluggify, splitListString, tupleHasValue } from "@util";
 import { getSelectedActors } from "@util/token-actor-utils.ts";
 import { UUIDUtils } from "@util/uuid.ts";
 import * as R from "remeda";
@@ -94,17 +94,22 @@ export class InlineRollLinks {
     }
 
     static #onClickInlineAction(event: MouseEvent, link: HTMLAnchorElement | HTMLSpanElement): void {
-        const { pf2Action, pf2Glyph, pf2Variant, pf2Dc, pf2ShowDc, pf2Skill } = link.dataset;
+        const { pf2Action, pf2Glyph, pf2Variant, pf2Dc, pf2ShowDc, pf2Skill, pf2Options, pf2Traits } = link.dataset;
 
         const slug = sluggify(pf2Action ?? "");
         const visibility = pf2ShowDc ?? "all";
         const difficultyClass = Number.isNumeric(pf2Dc)
             ? { scope: "check", value: Number(pf2Dc) || 0, visibility }
             : pf2Dc;
+        const maybeTraits = splitListString(pf2Traits ?? "");
+        const traits = maybeTraits.filter((trait): trait is ActionTrait => trait in CONFIG.PF2E.actionTraits);
+        const rollOptions = R.unique(
+            [maybeTraits, traits.map((trait) => `item:trait:${trait}`), splitListString(pf2Options ?? "")].flat(),
+        );
         if (slug && game.pf2e.actions.has(slug)) {
             game.pf2e.actions
                 .get(slug)
-                ?.use({ event, variant: pf2Variant, difficultyClass, statistic: pf2Skill })
+                ?.use({ event, variant: pf2Variant, difficultyClass, rollOptions, statistic: pf2Skill, traits })
                 .catch((reason: string) => ui.notifications.warn(reason));
         } else {
             const action = game.pf2e.actions[pf2Action ? sluggify(pf2Action, { camel: "dromedary" }) : ""];
@@ -114,7 +119,9 @@ export class InlineRollLinks {
                     glyph: pf2Glyph,
                     variant: pf2Variant,
                     difficultyClass,
+                    rollOptions,
                     skill: pf2Skill,
+                    traits,
                 });
             } else {
                 console.warn(`PF2e System | Skip executing unknown action '${pf2Action}'`);
@@ -138,7 +145,7 @@ export class InlineRollLinks {
                     return parent?.canUserModify(game.user, "update") ? [parent] : [];
                 case "party":
                     if (parent?.isOfType("party")) return [parent];
-                    return R.filter([game.actors.party], R.isTruthy);
+                    return [game.actors.party].filter(R.isTruthy);
             }
 
             // If this is inside a sheet, return the actor always
@@ -167,10 +174,12 @@ export class InlineRollLinks {
             return;
         }
 
-        const extraRollOptions = [
-            ...(pf2Traits?.split(",").map((o) => o.trim()) ?? []),
-            ...(pf2RollOptions?.split(",").map((o) => o.trim()) ?? []),
-        ];
+        const maybeTraits = splitListString(pf2Traits ?? "");
+        const additionalTraits = maybeTraits.filter((t): t is ActionTrait => t in CONFIG.PF2E.actionTraits);
+
+        const extraRollOptions = R.unique(
+            [maybeTraits, additionalTraits.map((t) => `item:trait:${t}`), splitListString(pf2RollOptions ?? "")].flat(),
+        );
         const eventRollParams = eventToRollParams(event, { type: "check" });
         const checkSlug = link.dataset.slug ? sluggify(link.dataset.slug) : null;
 
@@ -192,9 +201,9 @@ export class InlineRollLinks {
         const isSavingThrow = tupleHasValue(SAVE_TYPES, pf2Check);
 
         // Get actual traits for display in chat cards
-        const traits = isSavingThrow
+        const abilityTraits = isSavingThrow
             ? []
-            : extraRollOptions.filter((t): t is ActionTrait => t in CONFIG.PF2E.actionTraits) ?? [];
+            : extraRollOptions.filter((t): t is ActionTrait => t in CONFIG.PF2E.actionTraits);
 
         // Pre-emptively grab statistics to visibly error if the statistic is missing from all of them
         const actorStatistics = actors.map((actor) => ({ actor, statistic: actor.getStatistic(pf2Check) }));
@@ -262,7 +271,7 @@ export class InlineRollLinks {
                 dc,
                 target: !isSavingThrow && dc?.statistic ? targetActor : null,
                 item,
-                traits,
+                traits: abilityTraits,
             };
 
             // Use a special header for checks against defenses
@@ -348,16 +357,16 @@ export class InlineRollLinks {
             flags.pf2e.messageId = messageId;
         }
 
-        const actor = resolveActor(foundryDoc ?? resolveDocument(link));
-        if (actor || pf2Traits) {
-            const origin: Record<string, unknown> = {};
-            if (actor) {
-                origin.actor = actor.uuid;
-            }
-            if (pf2Traits) {
-                origin.traits = pf2Traits.split(",");
-            }
+        const actor = resolveActor(foundryDoc);
+        const item = foundryDoc instanceof ItemPF2e ? foundryDoc : null;
+        if (item) {
+            const origin = item.getOriginData();
             flags.pf2e.origin = origin;
+        } else if (actor || pf2Traits) {
+            flags.pf2e.origin = {
+                actor: actor?.uuid ?? null,
+                traits: splitListString(pf2Traits ?? ""),
+            };
         }
 
         if (!R.isEmpty(flags.pf2e)) {

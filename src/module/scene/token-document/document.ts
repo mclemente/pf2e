@@ -4,7 +4,7 @@ import { SIZE_LINKABLE_ACTOR_TYPES } from "@actor/values.ts";
 import type { TokenPF2e } from "@module/canvas/index.ts";
 import { ChatMessagePF2e } from "@module/chat-message/document.ts";
 import type { CombatantPF2e, EncounterPF2e } from "@module/encounter/index.ts";
-import { RegionDocumentPF2e } from "@scene";
+import { DifficultTerrainGrade, EnvironmentFeatureRegionBehavior, RegionDocumentPF2e } from "@scene";
 import { computeSightAndDetectionForRBV } from "@scene/helpers.ts";
 import { objectHasKey, sluggify } from "@util";
 import * as R from "remeda";
@@ -19,6 +19,9 @@ class TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null> ext
 
     declare auras: Map<string, TokenAura>;
 
+    /** The most recently used animation for later use when a token override is reverted. */
+    #lastAnimation: TokenAnimationOptions | null = null;
+
     /** Returns if the token is in combat, though some actors have different conditions */
     override get inCombat(): boolean {
         if (this.actor?.isOfType("party")) {
@@ -26,79 +29,6 @@ class TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null> ext
         }
 
         return super.inCombat;
-    }
-
-    /** Check actor for effects found in `CONFIG.specialStatusEffects` */
-    override hasStatusEffect(statusId: string): boolean {
-        if (statusId === "dead") return !!this.actor?.statuses.has("dead");
-
-        const actor = this.actor;
-        if (!actor || !game.pf2e.settings.rbv) {
-            return false;
-        }
-
-        const hasCondition = objectHasKey(CONFIG.PF2E.conditionTypes, statusId) && actor.hasCondition(statusId);
-        const hasEffect = () => actor.itemTypes.effect.some((e) => (e.slug ?? sluggify(e.name)) === statusId);
-
-        return hasCondition || hasEffect();
-    }
-
-    /** Filter trackable attributes for relevance and avoidance of circular references */
-    static override getTrackedAttributes(
-        data: Record<string, unknown> = {},
-        _path: string[] = [],
-    ): TrackedAttributesDescription {
-        // This method is being called with no associated actor: fill from the models
-        if (_path.length === 0 && Object.keys(data).length === 0) {
-            for (const [type, model] of Object.entries(game.model.Actor)) {
-                if (!["character", "npc"].includes(type)) continue;
-                fu.mergeObject(data, model);
-            }
-        }
-
-        if (_path.length > 0) {
-            return super.getTrackedAttributes(data, _path);
-        }
-
-        const patterns = {
-            positive: /^(?:attributes|resources)\./,
-            negative: /\b(?:rank|_?modifiers|item|classdc|dexcap|familiar|\w+hp\b)|bonus/i,
-        };
-
-        const prunedData = fu.expandObject<Record<string, unknown>>(
-            Object.fromEntries(
-                Object.entries(fu.flattenObject(data)).filter(
-                    ([k, v]) =>
-                        patterns.positive.test(k) &&
-                        !patterns.negative.test(k) &&
-                        !["boolean", "string"].includes(typeof v),
-                ),
-            ),
-        );
-
-        return super.getTrackedAttributes(prunedData, _path);
-    }
-
-    static override getTrackedAttributeChoices(
-        attributes?: TrackedAttributesDescription,
-    ): TrackedAttributesDescription {
-        attributes ??= this.getTrackedAttributes();
-        // Add stamina here because TokenDocument._getTrackedAttributesFromObject returns the first encountered
-        // { value, max } property and sp is nested within the hp property
-        if (game.pf2e.settings.variants.stamina) {
-            attributes.bar.push(["attributes", "hp", "sp"]);
-        }
-        return super.getTrackedAttributeChoices(attributes);
-    }
-
-    /** Make stamina and resolve editable despite not being present in template.json */
-    override getBarAttribute(barName: string, options?: { alternative?: string }): TokenResourceData | null {
-        const attribute = super.getBarAttribute(barName, options);
-        if (attribute && ["attributes.hp.sp", "resources.resolve"].includes(attribute.attribute)) {
-            attribute.editable = true;
-        }
-
-        return attribute;
     }
 
     /** This should be in Foundry core, but ... */
@@ -174,6 +104,102 @@ class TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null> ext
             x: bounds.x + bounds.width / 2,
             y: bounds.y + bounds.height / 2,
         };
+    }
+
+    /** The grade of difficult terrain at this token's position */
+    get difficultTerrain(): DifficultTerrainGrade {
+        const regions = Array.from(this.regions ?? []);
+        return regions
+            .map((r) =>
+                r.behaviors.filter(
+                    (b): b is EnvironmentFeatureRegionBehavior<RegionDocumentPF2e<TParent>> =>
+                        b.type === "environmentFeature" && b.system.terrain.difficult > 0,
+                ),
+            )
+            .flat()
+            .reduce(
+                (highest: DifficultTerrainGrade, b) =>
+                    b.system.terrain.difficult > highest ? b.system.terrain.difficult : highest,
+                0,
+            );
+    }
+
+    /** Check actor for effects found in `CONFIG.specialStatusEffects` */
+    override hasStatusEffect(statusId: string): boolean {
+        if (statusId === "dead") return !!this.actor?.statuses.has("dead");
+
+        const actor = this.actor;
+        if (!actor || !game.pf2e.settings.rbv) {
+            return false;
+        }
+
+        const hasCondition = objectHasKey(CONFIG.PF2E.conditionTypes, statusId) && actor.hasCondition(statusId);
+        const hasEffect = () => actor.itemTypes.effect.some((e) => (e.slug ?? sluggify(e.name)) === statusId);
+
+        return hasCondition || hasEffect();
+    }
+
+    /** Filter trackable attributes for relevance and avoidance of circular references */
+    static override getTrackedAttributes(
+        data: Record<string, unknown> = {},
+        _path: string[] = [],
+    ): TrackedAttributesDescription {
+        // This method is being called with no associated actor: fill from the models
+        if (_path.length === 0 && Object.keys(data).length === 0) {
+            for (const [type, model] of Object.entries(game.model.Actor)) {
+                if (!["character", "npc"].includes(type)) continue;
+                fu.mergeObject(data, model);
+            }
+        }
+
+        if (_path.length > 0) {
+            return super.getTrackedAttributes(data, _path);
+        }
+
+        const patterns = {
+            positive: /^(?:attributes|resources)\./,
+            negative: /\b(?:rank|_?modifiers|item|classdc|dexcap|familiar|\w+hp\b)|bonus/i,
+        };
+
+        const prunedData = fu.expandObject<Record<string, unknown>>(
+            Object.fromEntries(
+                Object.entries(fu.flattenObject(data)).filter(
+                    ([k, v]) =>
+                        patterns.positive.test(k) &&
+                        !patterns.negative.test(k) &&
+                        !["boolean", "string"].includes(typeof v),
+                ),
+            ),
+        );
+
+        return super.getTrackedAttributes(prunedData, _path);
+    }
+
+    static override getTrackedAttributeChoices(
+        attributes?: TrackedAttributesDescription,
+    ): TrackedAttributesDescription {
+        attributes ??= this.getTrackedAttributes();
+        // Add stamina here because TokenDocument._getTrackedAttributesFromObject returns the first encountered
+        // { value, max } property and sp is nested within the hp property
+        if (game.pf2e.settings.variants.stamina) {
+            attributes.bar.push(["attributes", "hp", "sp"]);
+        }
+        return super.getTrackedAttributeChoices(attributes);
+    }
+
+    /** Make stamina, resolve, and shield HP editable despite not being present in template.json */
+    override getBarAttribute(barName: string, options?: { alternative?: string }): TokenResourceData | null {
+        const attribute = super.getBarAttribute(barName, options);
+        if (!attribute) return null;
+        const isStaminaOrResolve =
+            ["attributes.hp.sp", "resources.resolve"].includes(attribute.attribute) &&
+            game.pf2e.settings.variants.stamina;
+        const isShieldHP = attribute.attribute === "attributes.shield.hp" && !!this.actor?.attributes.shield?.itemId;
+        if (isStaminaOrResolve || isShieldHP) {
+            attribute.editable = true;
+        }
+
+        return attribute;
     }
 
     protected override _initialize(options?: Record<string, unknown>): void {
@@ -256,6 +282,32 @@ class TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null> ext
         } else {
             super._prepareDetectionModes();
         }
+    }
+
+    /** Ensure that actors that don't allow synthetics are linked */
+    protected override _preCreate(
+        data: this["_source"],
+        options: DatabaseCreateOperation<TParent>,
+        user: User<Actor<null>>,
+    ): Promise<boolean | void> {
+        if (this.actor?.allowSynthetics === false && data.actorLink === false) {
+            this.updateSource({ actorLink: true });
+        }
+
+        return super._preCreate(data, options, user);
+    }
+
+    /** Ensure that actors that don't allow synthetics stay linked */
+    protected override _preUpdate(
+        data: Record<string, unknown>,
+        options: TokenUpdateOperation<TParent>,
+        user: User<Actor<null>>,
+    ): Promise<boolean | void> {
+        if (this.actor?.allowSynthetics === false && (data.actorLink ?? this.actorLink) === false) {
+            data.actorLink = true;
+        }
+
+        return super._preUpdate(data, options, user);
     }
 
     /** Synchronize the token image with the actor image if the token does not currently have an image */
@@ -380,11 +432,16 @@ class TokenDocumentPF2e<TParent extends ScenePF2e | null = ScenePF2e | null> ext
         const tokenChanges = fu.diffObject<DeepPartial<this["_source"]>>(preUpdate, postUpdate);
 
         if (this.scene?.isView && Object.keys(tokenChanges).length > 0) {
-            this.object?._onUpdate(tokenChanges, { broadcast: false, updates: [] }, game.user.id);
+            const tokenOverrides = this.actor?.synthetics.tokenOverrides ?? {};
+            const animation = tokenChanges.texture?.src ? tokenOverrides.animation ?? this.#lastAnimation ?? {} : {};
+            this.#lastAnimation = R.isDeepEqual(animation, this.#lastAnimation ?? {})
+                ? null
+                : tokenOverrides.animation ?? null;
+            this.object?._onUpdate(tokenChanges, { broadcast: false, updates: [], animation }, game.user.id);
         }
 
         // Assess the full diff using `diffObject`: additions, removals, and changes
-        const aurasChanged = () => !!this.scene?.isInFocus && !R.equals(preUpdateAuras, postUpdateAuras);
+        const aurasChanged = () => !!this.scene?.isInFocus && !R.isDeepEqual(preUpdateAuras, postUpdateAuras);
 
         if ("disposition" in tokenChanges || "width" in tokenChanges || "height" in tokenChanges || aurasChanged()) {
             this.scene?.checkAuras?.();

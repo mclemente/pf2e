@@ -1,6 +1,6 @@
 import type { DamageDicePF2e, ModifierPF2e } from "@actor/modifiers.ts";
 import type { RollOrigin, RollTarget } from "@actor/roll-context/types.ts";
-import type { ResistanceType } from "@actor/types.ts";
+import type { ImmunityType, ResistanceType } from "@actor/types.ts";
 import type { ZeroToTwo } from "@module/data.ts";
 import type { DegreeOfSuccessString } from "@system/degree-of-success.ts";
 import type { BaseRollContext } from "@system/rolls.ts";
@@ -62,8 +62,44 @@ interface DamageFormulaData {
     modifiers: ModifierPF2e[];
     /** Maximum number of die increases. Weapons should be set to 1 */
     maxIncreases?: number;
-    ignoredResistances: { type: ResistanceType; max: number | null }[];
+    bypass?: DamageIRBypassData;
     kinds?: Set<DamageKind>;
+}
+
+/** Data detailing whether and how a damaging effect can reduce or ignore a target's immunities or resistances */
+interface DamageIRBypassData {
+    immunity: {
+        ignore: ImmunityType[];
+        downgrade: DowngradedImmunity[];
+        redirect: ImmunityRedirect[];
+    };
+    resistance: {
+        ignore: IgnoredResistance[];
+        redirect: ResistanceRedirect[];
+    };
+}
+
+interface DowngradedImmunity {
+    type: ImmunityType;
+    resistence: number;
+}
+
+/** A resistance type to ignore up to a maximum (possibly `Infinity`) */
+interface IgnoredResistance {
+    type: ResistanceType;
+    max: number;
+}
+
+/** A damage type to check against instead if the target would resist the actual damage type */
+interface ImmunityRedirect {
+    from: Exclude<DamageType, "untyped">;
+    to: Exclude<DamageType, "untyped">;
+}
+
+/** A damage type to check against instead if the target would resist the actual damage type */
+interface ResistanceRedirect {
+    from: Exclude<DamageType, "untyped">;
+    to: Exclude<DamageType, "untyped">;
 }
 
 interface ResolvedDamageFormulaData extends DamageFormulaData {
@@ -126,13 +162,16 @@ export type {
     DamageDiceFaces,
     DamageDieSize,
     DamageFormulaData,
+    DamageIRBypassData,
     DamageKind,
     DamagePartialTerm,
     DamageRollRenderData,
     DamageTemplate,
     DamageType,
     DamageTypeRenderData,
+    ImmunityRedirect,
     MaterialDamageEffect,
+    ResistanceRedirect,
     SimpleDamageTemplate,
     SpellDamageTemplate,
     WeaponBaseDamageData,

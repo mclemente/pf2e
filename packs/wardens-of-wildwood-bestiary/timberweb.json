@@ -267,58 +267,6 @@
                 }
             },
             "type": "action"
-        },
-        {
-            "_id": "LQsUQuvKI2nHYcuK",
-            "img": "icons/svg/item-bag.svg",
-            "name": "Acrobatics",
-            "sort": 900000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 26
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "UGu0IyYHLA9uFiJ7",
-            "img": "icons/svg/item-bag.svg",
-            "name": "Athletics",
-            "sort": 1000000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 27
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
         }
     ],
     "name": "Timberweb",
@@ -402,11 +350,11 @@
                 "value": 14
             },
             "privateNotes": "",
-            "publicNotes": "<p>On the Plane of Wood, carnivorous plants sometimes grow so large that they can’t sustain themselves on local prey. Rather than starve, parts of these plants sometimes tear themselves free and hunt for themselves. The resulting elementals adopt spiderlike forms and hunting strategies.</p>\n<p>Timberwebs extrude vines covered in tiny barbules and sticky sap. After finding a territory with sufficient prey, a timberweb often uses these vines to create shadowy canopies in which to launch ambushes.</p><hr /><p>Wood elementals are nearly as varied as plant life itself. The following are particularly powerful elementals formed when immense plants experience environmental stress.</p>",
+            "publicNotes": "<p>On the Plane of Wood, carnivorous plants sometimes grow so large that they can't sustain themselves on local prey. Rather than starve, parts of these plants sometimes tear themselves free and hunt for themselves. The resulting elementals adopt spiderlike forms and hunting strategies.</p>\n<p>Timberwebs extrude vines covered in tiny barbules and sticky sap. After finding a territory with sufficient prey, a timberweb often uses these vines to create shadowy canopies in which to launch ambushes.</p><hr /><p>Wood elementals are nearly as varied as plant life itself. The following are particularly powerful elementals formed when immense plants experience environmental stress.</p>",
             "publication": {
                 "license": "ORC",
                 "remaster": true,
-                "title": "Pathfinder #203: Shepard of Decay"
+                "title": "Pathfinder #203: Shepherd of Decay"
             }
         },
         "initiative": {
@@ -439,6 +387,14 @@
             "will": {
                 "saveDetail": "",
                 "value": 23
+            }
+        },
+        "skills": {
+            "acrobatics": {
+                "base": 26
+            },
+            "athletics": {
+                "base": 27
             }
         },
         "traits": {

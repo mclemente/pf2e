@@ -302,7 +302,7 @@ class Grouping extends terms.RollTerm<GroupingData> {
             "operands" in data &&
             Array.isArray(data.operands) &&
             data.operands.length === 2 &&
-            data.operands.every((o): o is Record<string, unknown> => R.isObject(o)) &&
+            data.operands.every((o): o is Record<string, unknown> => R.isPlainObject(o)) &&
             data.operands[0].number === 2
         );
     }
@@ -409,7 +409,10 @@ class IntermediateDie extends terms.RollTerm<IntermediateDieData> {
     static override SERIALIZE_ATTRIBUTES = ["number", "faces", "die"];
 
     get expression(): string {
-        return this.die?.expression ?? `${this.number}d${this.faces}`;
+        if (this.die) return this.die.expression;
+        const number = typeof this.number === "number" ? this.number : this.number.expression;
+        const faces = typeof this.faces === "number" ? this.faces : this.faces.expression;
+        return `${number}d${faces}`;
     }
 
     override get total(): number | undefined {

@@ -1,5 +1,5 @@
 import type { ActorPF2e, CharacterPF2e, NPCPF2e } from "@actor";
-import { AttributeString } from "@actor/types.ts";
+import type { AttributeString } from "@actor/types.ts";
 import type { ItemPF2e } from "@item";
 import { ZeroToFour } from "@module/data.ts";
 import type { RollNotePF2e } from "@module/notes.ts";
@@ -7,7 +7,7 @@ import { extractModifierAdjustments } from "@module/rules/helpers.ts";
 import type { RuleElementPF2e } from "@module/rules/index.ts";
 import { DamageAlteration } from "@module/rules/rule-element/damage-alteration/alteration.ts";
 import { DamageCategorization } from "@system/damage/helpers.ts";
-import { DamageCategoryUnique, DamageDieSize, DamageType } from "@system/damage/types.ts";
+import type { DamageCategoryUnique, DamageDiceFaces, DamageDieSize, DamageType } from "@system/damage/types.ts";
 import { Predicate, RawPredicate } from "@system/predication.ts";
 import { ErrorPF2e, objectHasKey, setHasElement, signedInteger, sluggify, tupleHasValue } from "@util";
 import * as R from "remeda";
@@ -255,10 +255,10 @@ class ModifierPF2e implements RawModifier {
             options.push(`modifier:ability:${this.ability}`);
         }
 
-        const damageKinds = R.compact([
+        const damageKinds = [
             this.domains.some((d) => /\bdamage$/.test(d)) ? "damage" : null,
             this.domains.some((d) => /\bhealing$/.test(d)) ? "healing" : null,
-        ]);
+        ].filter(R.isTruthy);
 
         for (const damageKind of damageKinds) {
             options.push(damageKind);
@@ -502,7 +502,8 @@ class StatisticModifier {
         rollOptions = rollOptions instanceof Set ? rollOptions : new Set(rollOptions);
         this.slug = slug;
 
-        // De-duplication. Prefer higher valued
+        // De-duplication. Prefer higher valued, and deprioritize disabled ones
+        // This behavior is used by kingmaker to create "custom modifier types" as well special skill modifiers when rolling manually
         const seen = modifiers.reduce((result: Record<string, ModifierPF2e>, modifier) => {
             const existing = result[modifier.slug];
             if (!existing?.enabled || Math.abs(modifier.modifier) > Math.abs(result[modifier.slug].modifier)) {
@@ -631,7 +632,7 @@ class CheckModifier extends StatisticModifier {
         const baseModifiers = statistic.modifiers
             .filter((modifier: unknown) => {
                 if (modifier instanceof ModifierPF2e) return true;
-                if (R.isObject(modifier) && "slug" in modifier && typeof modifier.slug === "string") {
+                if (R.isObjectType(modifier) && "slug" in modifier && typeof modifier.slug === "string") {
                     ui.notifications.error(`Unsupported modifier object (slug: ${modifier.slug}) passed`);
                 }
                 return false;
@@ -724,6 +725,11 @@ class DamageDicePF2e {
         this.hideIfDisabled = params.hideIfDisabled ?? false;
     }
 
+    /** The `dieSize` as a number (or null) */
+    get faces(): DamageDiceFaces | null {
+        return (Number(this.dieSize?.replace("d", "")) || null) as DamageDiceFaces | null;
+    }
+
     /** Test the `predicate` against a set of roll options */
     test(options: Set<string>): void {
         this.enabled = this.predicate.test(options);
@@ -792,6 +798,7 @@ export {
     PROFICIENCY_RANK_OPTION,
     StatisticModifier,
 };
+
 export type {
     DamageDiceOverride,
     DamageDiceParameters,
@@ -800,6 +807,7 @@ export type {
     DeferredValue,
     DeferredValueParams,
     ModifierAdjustment,
+    ModifierObjectParams,
     ModifierType,
     RawDamageDice,
     RawModifier,

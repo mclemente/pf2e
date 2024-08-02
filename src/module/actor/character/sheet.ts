@@ -129,7 +129,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
         // Attacks and defenses
         // Prune untrained martial proficiencies
         for (const section of ["attacks", "defenses"] as const) {
-            for (const key of R.keys.strict(sheetData.data.proficiencies[section])) {
+            for (const key of Object.keys(sheetData.data.proficiencies[section])) {
                 const proficiency = sheetData.data.proficiencies[section][key];
                 if (proficiency?.rank === 0 && !proficiency.custom) {
                     delete sheetData.data.proficiencies[section][key];
@@ -256,7 +256,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
         // Spellcasting
         const collectionGroups: Record<SpellcastingTabSlug, SpellcastingSheetData[]> = fu.mergeObject(
             { "known-spells": [], rituals: [], activations: [] },
-            R.groupBy.strict(await this.prepareSpellcasting(), (a) => {
+            R.groupBy(await this.prepareSpellcasting(), (a) => {
                 if (a.category === "items") return "activations";
                 if (a.category === "ritual") return "rituals";
                 return "known-spells";
@@ -454,7 +454,6 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
 
     /** Prepares all ability-type items that create an action in the sheet */
     #prepareAbilities(): CharacterSheetData["actions"] {
-        const { actor } = this;
         const result: CharacterSheetData["actions"] = {
             encounter: {
                 action: { label: game.i18n.localize("PF2E.ActionsActionsHeader"), actions: [] },
@@ -465,13 +464,17 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
             downtime: [],
         };
 
+        const actor = this.actor;
+        const elementalBlasts = actor.itemTypes.action.filter((i) => i.slug === "elemental-blast");
+
         for (const item of actor.items) {
             if (!item.isOfType("action") && !(item.isOfType("feat") && item.actionCost)) {
                 continue;
             }
 
             // KINETICIST HARD CODE: Show elemental blasts alongside strikes instead of among other actions
-            if (item.slug === "elemental-blast" && this.actor.flags.pf2e.kineticist) {
+            // If the user added additional blasts manually, show the duplicates normally
+            if (actor.flags.pf2e.kineticist && item === elementalBlasts[0]) {
                 continue;
             }
 
@@ -650,11 +653,6 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
 
         // ACTIONS
         const actionsPanel = htmlQuery(html, ".tab[data-tab=actions]");
-
-        // Filter strikes
-        htmlQuery(actionsPanel, ".toggle-unready-strikes")?.addEventListener("click", () => {
-            this.actor.setFlag("pf2e", "showUnreadyStrikes", !this.actor.flags.pf2e.showUnreadyStrikes);
-        });
 
         for (const strikeElem of htmlQueryAll(actionsPanel, "ol[data-strikes] > li")) {
             // Auxiliary actions
@@ -884,6 +882,10 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
         };
 
         // ACTIONS
+
+        handlers["toggle-hide-stowed"] = () => {
+            this.actor.update({ "flags.pf2e.hideStowed": !this.actor.flags.pf2e.hideStowed });
+        };
 
         // Toggle certain weapon traits: currently Double Barrel or Versatile
         handlers["toggle-weapon-trait"] = async (_, button) => {
@@ -1436,7 +1438,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
 
     override async _onDrop(event: DragEvent): Promise<boolean | void> {
         const dropData = TextEditor.getDragEventData(event);
-        if (R.isObject(dropData.pf2e) && dropData.pf2e.type === "CraftingFormula") {
+        if (R.isPlainObject(dropData.pf2e) && dropData.pf2e.type === "CraftingFormula") {
             const dropEntrySelector = typeof dropData.entrySelector === "string" ? dropData.entrySelector : null;
             if (!dropEntrySelector) {
                 // Prepare formula if dropped on a crafting entry.

@@ -2,7 +2,8 @@ import { EffectPF2e } from "@item";
 import type { UserPF2e } from "@module/user/document.ts";
 import type { TokenDocumentPF2e } from "@scene";
 import * as R from "remeda";
-import { measureDistanceCuboid, type CanvasPF2e } from "../index.ts";
+import type { CanvasPF2e, TokenLayerPF2e } from "../index.ts";
+import { RulerPF2e, measureDistanceCuboid, squareAtPoint } from "../index.ts";
 import { AuraRenderers } from "./aura/index.ts";
 import { FlankingHighlightRenderer } from "./flanking-highlight/renderer.ts";
 
@@ -19,6 +20,57 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
         this.auras = new AuraRenderers(this);
         Object.defineProperty(this, "auras", { configurable: false, writable: false }); // It's ours, Kim!
         this.flankingHighlight = new FlankingHighlightRenderer(this);
+    }
+
+    get isTiny(): boolean {
+        return this.document.height < 1 || this.document.width < 1;
+    }
+
+    /** This token's shape at its canvas position */
+    get localShape(): TokenShape {
+        switch (this.shape.type) {
+            case PIXI.SHAPES.RECT:
+                return this.bounds;
+            case PIXI.SHAPES.POLY: {
+                const shape = this.shape.clone();
+                const bounds = this.bounds;
+                shape.points = shape.points.map((c, i) => (i % 2 === 0 ? c + bounds.x : c + bounds.y));
+                return shape;
+            }
+            case PIXI.SHAPES.CIRC: {
+                const shape = this.shape.clone();
+                const center = this.center;
+                shape.x = center.x;
+                shape.y = center.y;
+                return shape;
+            }
+        }
+    }
+
+    /** The grid offsets representing this token's shape */
+    get footprint(): GridOffset[] {
+        const shape = this.isTiny ? this.mechanicalBounds : this.localShape;
+        const seen = new Set<number>();
+        const offsets: GridOffset[] = [];
+        const [i0, j0, i1, j1] = canvas.grid.getOffsetRange(this.mechanicalBounds);
+        for (let i = i0; i < i1; i++) {
+            for (let j = j0; j < j1; j++) {
+                const offset = { i, j };
+                const packed = (offset.i << 16) + offset.j;
+                if (seen.has(packed)) continue;
+                seen.add(packed);
+                const point = canvas.grid.getCenterPoint(offset);
+                if (shape.contains(point.x, point.y)) {
+                    offsets.push(offset);
+                }
+            }
+        }
+        return offsets.sort((a, b) => a.j - b.j).sort((a, b) => a.i - b.i);
+    }
+
+    get #isDragMeasuring(): boolean {
+        const ruler = canvas.controls.ruler;
+        return ruler.dragMeasurement && ruler.isMeasuring && ruler.token === this;
     }
 
     /** Increase center-to-center point tolerance to be more compliant with 2e rules */
@@ -71,11 +123,8 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
     /** Bounds used for mechanics, such as flanking and drawing auras */
     get mechanicalBounds(): PIXI.Rectangle {
         const bounds = super.bounds;
-        if (this.document.width < 1) {
-            const position = canvas.grid.getTopLeftPoint({
-                x: bounds.x + bounds.width / 2,
-                y: bounds.y + bounds.height / 2,
-            });
+        if (this.isTiny) {
+            const position = canvas.grid.getTopLeftPoint(bounds);
             return new PIXI.Rectangle(
                 position.x,
                 position.y,
@@ -89,6 +138,11 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
 
     isAdjacentTo(token: TokenPF2e): boolean {
         return this.distanceTo(token) === 5;
+    }
+
+    /** Publicly expose `Token#_canControl` for use in `TokenLayerPF2e`. */
+    canControl(user: UserPF2e, event: PIXI.FederatedPointerEvent): boolean {
+        return this._canControl(user, event);
     }
 
     /**
@@ -412,11 +466,11 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
     }
 
     /**
-     * Measure the distance between this token and another object, in grid distance. We measure between the
+     * Measure the distance between this token and another object or point, in grid distance. We measure between the
      * centre of squares, and if either covers more than one square, we want the minimum distance between
      * any two of the squares.
      */
-    distanceTo(target: TokenPF2e, { reach = null }: { reach?: number | null } = {}): number {
+    distanceTo(target: TokenOrPoint, { reach = null }: { reach?: number | null } = {}): number {
         if (!canvas.ready) return NaN;
 
         if (this === target) return 0;
@@ -430,16 +484,13 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
         }
 
         const selfElevation = this.document.elevation;
-        const targetElevation = target.document.elevation;
-        if (selfElevation === targetElevation || !this.actor || !target.actor) {
-            return measureDistanceCuboid(this.bounds, target.bounds, { reach });
+        const targetElevation = target.document?.elevation ?? selfElevation;
+        const targetBounds = target.bounds ?? squareAtPoint(target);
+        if (selfElevation === targetElevation || !this.actor || !target.bounds || !target.actor) {
+            return measureDistanceCuboid(this.bounds, targetBounds, { reach });
         }
 
-        return measureDistanceCuboid(this.bounds, target.bounds, {
-            reach,
-            token: this,
-            target,
-        });
+        return measureDistanceCuboid(this.bounds, targetBounds, { reach, token: this, target });
     }
 
     override async animate(updateData: Record<string, unknown>, options?: TokenAnimationOptionsPF2e): Promise<void> {
@@ -503,6 +554,12 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
         return super._canView(user, event) || !!this.actor?.isLootableBy(user);
     }
 
+    protected override _canDrag(user: UserPF2e, event?: TokenPointerEvent<this>): boolean {
+        if (super._canDrag(user, event)) return true;
+        const setting = game.pf2e.settings.dragMeasurement;
+        return this.controlled && (setting === "always" || (setting === "encounters" && !!game.combat?.active));
+    }
+
     /** Prevent players from controlling an NPC when it's lootable */
     protected override _canControl(user: UserPF2e, event?: PIXI.FederatedPointerEvent): boolean {
         if (!this.observer && this.actor?.isOfType("npc") && this.actor.isLootableBy(user)) return false;
@@ -521,6 +578,48 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
         return super._onRelease(options);
     }
 
+    /** Initiate token drag measurement unless using the ruler tool. */
+    protected override _onDragLeftStart(event: TokenPointerEvent<this>): void {
+        event.interactionData.clones ??= [];
+        const hasModuleConflict = RulerPF2e.hasModuleConflict;
+        if (game.activeTool !== "ruler" || hasModuleConflict) {
+            if (!hasModuleConflict) canvas.controls.ruler.startDragMeasurement(event);
+            return super._onDragLeftStart(event);
+        }
+    }
+
+    protected override _onDragLeftMove(event: TokenPointerEvent<this>): void {
+        if (this.#isDragMeasuring) {
+            canvas.controls.ruler.onDragMeasureMove(event);
+        }
+        return super._onDragLeftMove(event);
+    }
+
+    protected override async _onDragLeftDrop(event: TokenPointerEvent<this>): Promise<void | TDocument[]> {
+        if (this.#isDragMeasuring) {
+            // Pass along exact destination coordinates if this token is tiny
+            const destination =
+                this.isTiny && event.interactionData.clones?.length
+                    ? R.pick(event.interactionData.clones[0], ["x", "y"])
+                    : null;
+            canvas.controls.ruler.finishDragMeasurement(event, destination);
+            this.layer.clearPreviewContainer();
+        } else {
+            super._onDragLeftDrop(event);
+        }
+    }
+
+    protected override _onDragLeftCancel(event: TokenPointerEvent<this>): void {
+        if (this.#isDragMeasuring) {
+            canvas.controls.ruler.onDragLeftCancel(event);
+            if (!this.#isDragMeasuring) {
+                super._onDragLeftCancel(event);
+            }
+        } else {
+            super._onDragLeftCancel(event);
+        }
+    }
+
     /** Handle system-specific status effects (upstream handles invisible and blinded) */
     override _onApplyStatusEffect(statusId: string, active: boolean): void {
         super._onApplyStatusEffect(statusId, active);
@@ -533,7 +632,7 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
     /** Reset aura renders when token size changes. */
     override _onUpdate(
         changed: DeepPartial<TDocument["_source"]>,
-        operation: DatabaseUpdateOperation<TDocument["parent"]>,
+        operation: TokenUpdateOperation<TDocument["parent"]>,
         userId: string,
     ): void {
         super._onUpdate(changed, operation, userId);
@@ -551,7 +650,7 @@ class TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends
 }
 
 interface TokenPF2e<TDocument extends TokenDocumentPF2e = TokenDocumentPF2e> extends Token<TDocument> {
-    get layer(): TokenLayer<this>;
+    get layer(): TokenLayerPF2e<this>;
 }
 
 type NumericFloatyEffect = { name: string; value?: number | null };
@@ -564,6 +663,14 @@ type ShowFloatyEffectParams =
 interface TokenAnimationOptionsPF2e extends TokenAnimationOptions {
     spin?: boolean;
 }
+
+type TokenOrPoint =
+    | TokenPF2e
+    | (Point & {
+          actor?: never;
+          document?: never;
+          bounds?: never;
+      });
 
 export { TokenPF2e };
 export type { ShowFloatyEffectParams, TokenAnimationOptionsPF2e };

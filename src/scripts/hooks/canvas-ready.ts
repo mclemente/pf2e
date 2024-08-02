@@ -11,6 +11,15 @@ export const CanvasReady = {
                     game.pf2e.effectTracker.register(effect);
                 }
             }
+
+            // Work around `MouseInteractionManager` preventing right-click propagation to ruler
+            document.body.addEventListener("contextmenu", (event) => {
+                const ruler = canvas.controls.ruler;
+                if (canvas.ready && game.activeTool === "ruler" && ruler.dragMeasurement && ruler.isMeasuring) {
+                    event.preventDefault();
+                    canvas.controls.ruler.onDragLeftCancel();
+                }
+            });
         });
 
         Hooks.on("canvasReady", () => {
@@ -20,7 +29,7 @@ export const CanvasReady = {
 
             if (game.ready) canvas.scene.reset();
             // Accomodate hex grid play with a usable default cone angle
-            CONFIG.MeasuredTemplate.defaults.angle = canvas.scene.hasHexGrid ? 60 : 90;
+            CONFIG.MeasuredTemplate.defaults.angle = canvas.grid.isHexagonal ? 60 : 90;
 
             const hasSceneTerrains = !!canvas.scene.flags.pf2e.environmentTypes?.length;
             for (const token of canvas.tokens.placeables) {

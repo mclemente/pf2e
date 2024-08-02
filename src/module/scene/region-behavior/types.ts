@@ -1,6 +1,11 @@
 import type { UserPF2e } from "@module/user/document.ts";
-import type { RegionBehaviorPF2e, RegionDocumentPF2e } from "@scene";
-import type { EnvironmentBehaviorTypePF2e } from "./environment.ts";
+import type {
+    EnvironmentBehaviorType,
+    EnvironmentFeatureBehaviorType,
+    RegionBehaviorPF2e,
+    RegionDocumentPF2e,
+} from "@scene";
+import type { DIFFICULT_TERRAIN_GRADES } from "./values.ts";
 import coreBehaviors = foundry.data.regionBehaviors;
 
 type RegionEventPF2e = RegionEvent<RegionDocumentPF2e, UserPF2e>;
@@ -50,7 +55,13 @@ interface ToggleBehaviorRegionBehavior<TParent extends RegionDocumentPF2e | null
 interface EnvironmentRegionBehavior<TParent extends RegionDocumentPF2e | null = RegionDocumentPF2e | null>
     extends RegionBehaviorPF2e<TParent> {
     type: "environment";
-    system: EnvironmentBehaviorTypePF2e;
+    system: EnvironmentBehaviorType;
+}
+
+interface EnvironmentFeatureRegionBehavior<TParent extends RegionDocumentPF2e | null = RegionDocumentPF2e | null>
+    extends RegionBehaviorPF2e<TParent> {
+    type: "environmentFeature";
+    system: EnvironmentFeatureBehaviorType;
 }
 
 type SpecificRegionBehavior<TParent extends RegionDocumentPF2e | null = RegionDocumentPF2e | null> =
@@ -61,6 +72,15 @@ type SpecificRegionBehavior<TParent extends RegionDocumentPF2e | null = RegionDo
     | SuppressWeatherRegionBehavior<TParent>
     | TeleportTokenRegionBehavior<TParent>
     | ToggleBehaviorRegionBehavior<TParent>
-    | EnvironmentRegionBehavior<TParent>;
+    | EnvironmentRegionBehavior<TParent>
+    | EnvironmentFeatureRegionBehavior<TParent>;
 
-export type { EnvironmentRegionBehavior, RegionEventPF2e, SpecificRegionBehavior };
+type DifficultTerrainGrade = (typeof DIFFICULT_TERRAIN_GRADES)[keyof typeof DIFFICULT_TERRAIN_GRADES];
+
+export type {
+    DifficultTerrainGrade,
+    EnvironmentFeatureRegionBehavior,
+    EnvironmentRegionBehavior,
+    RegionEventPF2e,
+    SpecificRegionBehavior,
+};

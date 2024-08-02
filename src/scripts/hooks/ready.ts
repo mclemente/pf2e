@@ -9,7 +9,6 @@ import { SetGamePF2e } from "@scripts/set-game-pf2e.ts";
 import { activateSocketListener } from "@scripts/socket.ts";
 import { storeInitialWorldVersions } from "@scripts/store-versions.ts";
 import { extendDragData } from "@scripts/system/dragstart-handler.ts";
-import * as R from "remeda";
 
 export const Ready = {
     listen: (): void => {
@@ -83,7 +82,7 @@ export const Ready = {
                 const abandonedModules = new Set(["pf2e-rules-based-npc-vision"]);
 
                 // Nag the GM for running unmaintained modules
-                const subV10Modules = game.modules.filter(
+                const subV11Modules = game.modules.filter(
                     (m) =>
                         m.active &&
                         (m.esmodules.size > 0 || m.scripts.size > 0) &&
@@ -94,7 +93,7 @@ export const Ready = {
                         (abandonedModules.has(m.id) || !fu.isNewerVersion(m.compatibility.verified, "10.312")),
                 );
 
-                for (const badModule of subV10Modules) {
+                for (const badModule of subV11Modules) {
                     const message = game.i18n.format("PF2E.ErrorMessage.SubV9Module", { module: badModule.title });
                     ui.notifications.warn(message);
                 }
@@ -133,28 +132,25 @@ export const Ready = {
 
             // Now that all game data is available, Determine what actors we need to reprepare.
             // Add actors currently in an encounter, then in a party, then all familiars, then parties, then in terrains
-            const inTerrains: ActorPF2e[] = [];
-            const hasSceneTerrains = !!canvas.scene?.flags.pf2e.environmentTypes?.length;
-            for (const token of canvas.scene?.tokens ?? []) {
-                if (!token.actor) continue;
-                if (hasSceneTerrains) {
-                    inTerrains.push(token.actor);
-                } else if ((token.regions ?? []).some((r) => r.behaviors.some((b) => b.type === "environment"))) {
-                    inTerrains.push(token.actor);
+            const inEnvironments: ActorPF2e[] = [];
+            const hasSceneEnvironments = !!game.scenes.viewed?.flags.pf2e.environmentTypes?.length;
+            for (const token of game.scenes.active?.tokens ?? []) {
+                const inEnvironmentRegion = !!token.regions?.some((r) =>
+                    r.behaviors.some((b) => ["environment", "environmentFeature"].includes(b.type)),
+                );
+                if (token.actor && (hasSceneEnvironments || inEnvironmentRegion)) {
+                    inEnvironments.push(token.actor);
                 }
             }
             const parties = game.actors.filter((a): a is PartyPF2e<null> => a.isOfType("party"));
-            const actorsToReprepare = R.filter(
-                [
-                    ...game.combats.contents.flatMap((e) => e.combatants.contents).map((c) => c.actor),
-                    ...parties.flatMap((p) => p.members).filter((a) => !a.isOfType("familiar")),
-                    ...inTerrains.filter((a) => !a.isOfType("familiar", "party")),
-                    ...game.actors.filter((a) => a.type === "familiar"),
-                    ...parties,
-                ],
-                R.isTruthy,
-            );
-            resetActors(new Set(actorsToReprepare), { sheets: false, tokens: inTerrains.length > 0 });
+            const actorsToReprepare: Set<ActorPF2e> = new Set([
+                ...game.combats.contents.flatMap((e) => e.combatants.contents).flatMap((c) => c.actor ?? []),
+                ...parties.flatMap((p) => p.members).filter((a) => !a.isOfType("familiar")),
+                ...inEnvironments.filter((a) => !a.isOfType("familiar", "hazard", "loot", "party")),
+                ...game.actors.filter((a) => a.type === "familiar"),
+                ...parties,
+            ]);
+            resetActors(actorsToReprepare, { sheets: false, tokens: inEnvironments.length > 0 });
             ui.actors.render();
 
             // Show the GM the Remaster changes journal entry if they haven't seen it already.

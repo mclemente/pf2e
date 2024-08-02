@@ -1,12 +1,12 @@
 import type { ActorPF2e, ActorType, CharacterPF2e, NPCPF2e } from "@actor";
 import { WeaponPF2e } from "@item";
 import type { NPCAttackTrait } from "@item/melee/types.ts";
+import { BaseShieldType } from "@item/shield/types.ts";
 import type { WeaponRuneSource, WeaponSource } from "@item/weapon/data.ts";
 import type {
     BaseWeaponType,
     OtherWeaponTag,
     WeaponCategory,
-    WeaponGroup,
     WeaponRangeIncrement,
     WeaponTrait,
 } from "@item/weapon/types.ts";
@@ -53,6 +53,7 @@ class StrikeRuleElement extends RuleElementPF2e<StrikeSchema> {
 
     static override defineSchema(): StrikeSchema {
         const fields = foundry.data.fields;
+        const baseTypeChoices: Record<NonShieldWeaponType, string> = CONFIG.PF2E.baseWeaponTypes;
 
         return {
             ...super.defineSchema(),
@@ -66,14 +67,13 @@ class StrikeRuleElement extends RuleElementPF2e<StrikeSchema> {
                 required: true,
                 nullable: true,
                 blank: false,
-                choices: CONFIG.PF2E.weaponGroups,
                 initial: null,
             }),
             baseType: new fields.StringField({
                 required: true,
                 nullable: true,
                 blank: false,
-                choices: CONFIG.PF2E.baseWeaponTypes,
+                choices: baseTypeChoices,
                 initial: null,
             }),
             traits: new fields.ArrayField(
@@ -250,6 +250,12 @@ class StrikeRuleElement extends RuleElementPF2e<StrikeSchema> {
             return null;
         }
 
+        const group = this.resolveInjectedProperties(this.group);
+        if (group !== null && !objectHasKey(CONFIG.PF2E.weaponGroups, group)) {
+            this.failValidation(`Unrecognized weapon group: ${group}`);
+            return null;
+        }
+
         const actorIsNPC = actor.isOfType("npc");
         const source: PreCreate<WeaponSource> = fu.deepClone({
             _id: this.fist ? "xxxxxxFISTxxxxxx" : this.item.id,
@@ -266,7 +272,7 @@ class StrikeRuleElement extends RuleElementPF2e<StrikeSchema> {
                 slug,
                 description: { value: "" },
                 category: this.category,
-                group: this.group,
+                group,
                 baseItem: this.baseType,
                 attribute,
                 bonus: {
@@ -329,13 +335,14 @@ interface StrikeRuleElement extends RuleElementPF2e<StrikeSchema>, ModelPropsFro
     get actor(): CharacterPF2e | NPCPF2e;
 }
 
+type NonShieldWeaponType = Exclude<BaseWeaponType, BaseShieldType>;
 type StrikeSchema = RuleElementSchema & {
     /** A weapon category */
     category: StringField<WeaponCategory, WeaponCategory, true, false, true>;
     /** A weapon group */
-    group: StringField<WeaponGroup, WeaponGroup, true, true, true>;
+    group: StringField<string, string, true, true, true>;
     /** A weapon base type */
-    baseType: StringField<BaseWeaponType, BaseWeaponType, true, true, true>;
+    baseType: StringField<NonShieldWeaponType, NonShieldWeaponType, true, true, true>;
     /** Permit NPC attack traits to sneak in for battle forms */
     traits: ArrayField<StringField<NPCAttackTrait, NPCAttackTrait, true, false, false>>;
     traitToggles: SchemaField<

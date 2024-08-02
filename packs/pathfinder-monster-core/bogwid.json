@@ -171,7 +171,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p>The larvae launched from the bogwid attach themselves to the target and begin to feed. Once a larva is attached, the target becomes @UUID[Compendium.pf2e.conditionitems.Item.Drained]{Drained 1}. While the larva remains attached, the target cannot recover from persistent bleed. To remove the larva, the target can attempt a DC 21 @UUID[Compendium.pf2e.actionspf2e.Item.Escape] check. Additionally, any area damage dealt to the target destroys all attached larvae.</p>\n<hr />\n<p>@UUID[Compendium.pf2e.bestiary-effects.Item.Effect: Ravenous Young]</p>"
+                    "value": "<p>The larvae launched from the bogwid attach themselves to the target and begin to feed. Once a larva is attached, the target becomes @UUID[Compendium.pf2e.conditionitems.Item.Drained]{Drained 1}. While the larva remains attached, the target cannot recover from persistent bleed. To remove the larva, the target can attempt to [[/act escape dc=21]]. Additionally, any area damage dealt to the target destroys all attached larvae.</p>\n<hr />\n<p>@UUID[Compendium.pf2e.bestiary-effects.Item.Effect: Ravenous Young]</p>"
                 },
                 "publication": {
                     "license": "ORC",
@@ -185,84 +185,6 @@
                 }
             },
             "type": "action"
-        },
-        {
-            "_id": "f8YwWcMKOYx2QBAz",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Athletics",
-            "sort": 600000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 13
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "ORC",
-                    "remaster": true,
-                    "title": "Pathfinder Monster Core"
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "GYKE0QneiqNhsvU3",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Intimidation",
-            "sort": 700000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 11
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "ORC",
-                    "remaster": true,
-                    "title": "Pathfinder Monster Core"
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
-        },
-        {
-            "_id": "y2ImoMtLDYkE63w3",
-            "img": "systems/pf2e/icons/default-icons/lore.svg",
-            "name": "Stealth",
-            "sort": 800000,
-            "system": {
-                "description": {
-                    "value": ""
-                },
-                "mod": {
-                    "value": 10
-                },
-                "proficient": {
-                    "value": 0
-                },
-                "publication": {
-                    "license": "ORC",
-                    "remaster": true,
-                    "title": "Pathfinder Monster Core"
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {}
-            },
-            "type": "lore"
         }
     ],
     "name": "Bogwid",
@@ -364,6 +286,17 @@
             "will": {
                 "saveDetail": "",
                 "value": 8
+            }
+        },
+        "skills": {
+            "athletics": {
+                "base": 13
+            },
+            "intimidation": {
+                "base": 11
+            },
+            "stealth": {
+                "base": 10
             }
         },
         "traits": {
