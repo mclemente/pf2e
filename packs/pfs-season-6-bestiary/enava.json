@@ -772,15 +772,7 @@
                     {
                         "key": "FlatModifier",
                         "predicate": [
-                            {
-                                "or": [
-                                    "magical",
-                                    "arcane",
-                                    "divine",
-                                    "primal",
-                                    "occult"
-                                ]
-                            }
+                            "item:magical"
                         ],
                         "selector": "saving-throw",
                         "type": "status",
@@ -1000,7 +992,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p><strong>Frequency</strong> once per round</p>\n<hr />\n<p><strong>Effect</strong> The succubus engages a creature they have @UUID[Compendium.pf2e.conditionitems.Item.Grabbed] or @UUID[Compendium.pf2e.conditionitems.Item.Restrained] in an embrace or other act of passion to drain its vital essence.</p>\n<p>The kiss makes the creature @UUID[Compendium.pf2e.conditionitems.Item.Drained]{Drained 1} or increases its drained value by 1, to a maximum of 4. The creature takes @Damage[3d6[void]] damage and the succubus regains Hit Points equal to the damage dealt. The target must succeed at a @Check[type:will|dc:26] save or be affected by a @UUID[Compendium.pf2e.spells-srd.Item.Suggestion] to submit to more actions of passion rather than trying to @UUID[Compendium.pf2e.actionspf2e.Item.Escape].</p>"
+                    "value": "<p><strong>Frequency</strong> once per round</p>\n<hr />\n<p><strong>Effect</strong> The succubus engages a creature they have @UUID[Compendium.pf2e.conditionitems.Item.Grabbed] or @UUID[Compendium.pf2e.conditionitems.Item.Restrained] in an embrace or other act of passion to drain its vital essence.</p>\n<p>The kiss makes the creature @UUID[Compendium.pf2e.conditionitems.Item.Drained]{Drained 1} or increases its drained value by 1, to a maximum of 4. The creature takes @Damage[3d6[void]] damage and the succubus regains Hit Points equal to the damage dealt. The target must succeed at a @Check[will|dc:26] save or be affected by a @UUID[Compendium.pf2e.spells-srd.Item.Suggestion] to submit to more actions of passion rather than trying to @UUID[Compendium.pf2e.actionspf2e.Item.Escape].</p>"
                 },
                 "frequency": {
                     "max": 1,
@@ -1041,7 +1033,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p><strong>Frequency</strong> once per day</p>\n<hr />\n<p><strong>Effect</strong> The succubus gives a willing humanoid a profane gift. That creature gains a +1 status bonus to attack rolls, skill checks, and saving throws. As long as the gift persists, the succubus can communicate telepathically with the target at any distance, see through the creature's senses, and target the creature with suggestion through the telepathic link. In addition, the creature uses an outcome one degree of success worse than it rolls on saving throws against the succubus's @UUID[Compendium.pf2e.spells-srd.Item.Suggestion] spells.</p>\n<p>A humanoid can't have more than one profane gift at a time, and a succubus can't grant more than one profane gift at a time. Removing the gift requires an atone ritual. The succubus can remove the gift as a free action to give the recipient a curse, making them @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 3} with an unlimited duration.</p>\n<p>A summoned succubus can't grant a profane gift.</p>\n<p>@UUID[Compendium.pf2e.bestiary-effects.Item.Effect: Profane Gift]</p>"
+                    "value": "<p><strong>Frequency</strong> once per day</p><hr /><p><strong>Effect</strong> The succubus gives a willing humanoid a profane gift. That creature gains a +1 status bonus to attack rolls, skill checks, and saving throws. As long as the gift persists, the succubus can communicate telepathically with the target at any distance, see through the creature's senses, and target the creature with suggestion through the telepathic link. In addition, the creature uses an outcome one degree of success worse than it rolls on saving throws against the succubus's @UUID[Compendium.pf2e.spells-srd.Item.Suggestion] spells.</p>\n<p>A humanoid can't have more than one profane gift at a time, and a succubus can't grant more than one profane gift at a time. Removing the gift requires an atone ritual. The succubus can remove the gift as a free action to give the recipient a curse, making them @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 3} with an unlimited duration.</p>\n<p>A summoned succubus can't grant a profane gift.</p><hr /><p>@UUID[Compendium.pf2e.bestiary-effects.Item.Effect: Profane Gift]</p>"
                 },
                 "frequency": {
                     "max": 1,
@@ -1123,14 +1115,17 @@
             ]
         },
         "details": {
-            "blurb": "",
+            "blurb": "Succubus ",
             "languages": {
-                "details": "three additional mortal languages, Telepathy 100 feet, Truespeech",
+                "details": "Telepathy 100 feet, Truespeech",
                 "value": [
                     "chthonian",
                     "common",
                     "draconic",
-                    "empyrean"
+                    "empyrean",
+                    "kelish",
+                    "mwangi",
+                    "osiriani"
                 ]
             },
             "level": {

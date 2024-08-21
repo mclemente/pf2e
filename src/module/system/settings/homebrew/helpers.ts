@@ -8,7 +8,7 @@ import { ErrorPF2e, setHasElement, tupleHasValue } from "@util";
 import * as R from "remeda";
 import {
     CustomDamageData,
-    HOMEBREW_TRAIT_KEYS,
+    HOMEBREW_ELEMENT_KEYS,
     HomebrewTag,
     HomebrewTraitKey,
     ModuleHomebrewData,
@@ -45,7 +45,7 @@ interface LabelAndDescription {
     description: string;
 }
 
-function isSkillData(obj: unknown): obj is { additional: ModuleHomebrewData["additionalSkills"] } {
+function isSkillData(obj: unknown): obj is { additional: ModuleHomebrewData["skills"] } {
     return (
         R.isPlainObject(obj) &&
         R.isPlainObject(obj.additional) &&
@@ -79,6 +79,10 @@ function prepareReservedTerms(): ReservedTermsRecord {
     ]);
 
     return {
+        armorGroups: new Set([...Object.keys(CONFIG.PF2E.armorGroups), ...universalReservedTerms]),
+        baseArmors: new Set([...Object.keys(CONFIG.PF2E.baseArmorTypes), ...universalReservedTerms]),
+        weaponCategories: new Set([...Object.keys(CONFIG.PF2E.weaponCategories), ...universalReservedTerms]),
+        weaponGroups: new Set([...Object.keys(CONFIG.PF2E.weaponGroups), ...universalReservedTerms]),
         baseWeapons: new Set([...Object.keys(CONFIG.PF2E.baseWeaponTypes), ...universalReservedTerms]),
         creatureTraits: new Set([...Object.keys(CONFIG.PF2E.creatureTraits), ...universalReservedTerms]),
         damageTypes: universalReservedTerms,
@@ -92,10 +96,7 @@ function prepareReservedTerms(): ReservedTermsRecord {
         shieldTraits: new Set([...Object.keys(CONFIG.PF2E.shieldTraits), ...universalReservedTerms]),
         spellTraits: new Set([...Object.keys(CONFIG.PF2E.spellTraits), ...universalReservedTerms]),
         skills: universalReservedTerms,
-        weaponCategories: new Set([...Object.keys(CONFIG.PF2E.weaponCategories), ...universalReservedTerms]),
-        weaponGroups: new Set([...Object.keys(CONFIG.PF2E.weaponGroups), ...universalReservedTerms]),
         weaponTraits: new Set([...Object.keys(CONFIG.PF2E.weaponTraits), ...universalReservedTerms]),
-        environmentTypes: new Set([...Object.keys(CONFIG.PF2E.environmentTypes), ...universalReservedTerms]),
     };
 }
 
@@ -104,9 +105,9 @@ type ReservedTermsRecord = Record<HomebrewTraitKey | "damageTypes" | "skills", S
 /** Reads homebrew settings from all modules */
 function readModuleHomebrewSettings(): ModuleHomebrewData {
     const results: ModuleHomebrewData = {
-        additionalSkills: {},
+        skills: {},
         damageTypes: {},
-        traits: R.mapToObj(HOMEBREW_TRAIT_KEYS, (k) => [k, []]),
+        traits: R.mapToObj(HOMEBREW_ELEMENT_KEYS, (k) => [k, []]),
         traitDescriptions: {},
     };
 
@@ -130,7 +131,7 @@ function readModuleHomebrewSettings(): ModuleHomebrewData {
                                 .message,
                         );
                     } else {
-                        results.additionalSkills[slug] = data;
+                        results.skills[slug] = data;
                     }
                 }
             } else if (recordKey === "damageTypes") {
@@ -150,7 +151,7 @@ function readModuleHomebrewSettings(): ModuleHomebrewData {
                         results.damageTypes[slug] = value;
                     }
                 }
-            } else if (tupleHasValue(HOMEBREW_TRAIT_KEYS, recordKey)) {
+            } else if (tupleHasValue(HOMEBREW_ELEMENT_KEYS, recordKey)) {
                 if (!R.isPlainObject(elements) || !isHomebrewFlagCategory(elements)) {
                     console.warn(ErrorPF2e(`Homebrew record ${recordKey} is malformed in module ${key}`).message);
                     continue;

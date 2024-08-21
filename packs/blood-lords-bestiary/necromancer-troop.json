@@ -153,7 +153,7 @@
             "system": {
                 "area": {
                     "type": "burst",
-                    "value": 65
+                    "value": 60
                 },
                 "cost": {
                     "value": ""
@@ -257,7 +257,7 @@
             "system": {
                 "area": {
                     "type": "burst",
-                    "value": 65
+                    "value": 60
                 },
                 "cost": {
                     "value": ""
@@ -361,7 +361,7 @@
             "system": {
                 "area": {
                     "type": "line",
-                    "value": 40
+                    "value": 30
                 },
                 "cost": {
                     "value": ""
@@ -437,7 +437,7 @@
             "system": {
                 "area": {
                     "type": "burst",
-                    "value": 15
+                    "value": 10
                 },
                 "cost": {
                     "value": ""
@@ -526,7 +526,7 @@
             "system": {
                 "area": {
                     "type": "cone",
-                    "value": 20
+                    "value": 15
                 },
                 "cost": {
                     "value": ""
@@ -868,7 +868,7 @@
             "system": {
                 "area": {
                     "type": "line",
-                    "value": 40
+                    "value": 30
                 },
                 "cost": {
                     "value": ""
@@ -1116,7 +1116,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p><span class=\"action-glyph\">1</span> to <span class=\"action-glyph\">3</span></p>\n<p><strong>Frequency</strong> once per round</p>\n<hr />\n<p><strong>Effect</strong> The members of the mob wildly swing their textbooks and supplies—primarily spellbooks and staves—in a chaotic attack at each enemy adjacent to the troop (@Check[type:reflex|dc:41|basic:true]). The damage depends on the number of actions.</p>\n<p><span class=\"action-glyph\">1</span> @Damage[(2d12+14)[bludgeoning]] damage</p>\n<p><span class=\"action-glyph\">2</span> @Damage[(3d12+14)[bludgeoning]] damage</p>\n<p><span class=\"action-glyph\">3</span> @Damage[(4d12+14)[bludgeoning]] damage</p>"
+                    "value": "<p><span class=\"action-glyph\">1</span> to <span class=\"action-glyph\">3</span></p>\n<p><strong>Frequency</strong> once per round</p>\n<hr />\n<p><strong>Effect</strong> The members of the mob wildly swing their textbooks and supplies—primarily spellbooks and staves—in a chaotic attack at each enemy adjacent to the troop (@Check[reflex|dc:41|basic]). The damage depends on the number of actions.</p>\n<p><span class=\"action-glyph\">1</span> @Damage[(2d12+14)[bludgeoning]] damage</p>\n<p><span class=\"action-glyph\">2</span> @Damage[(3d12+14)[bludgeoning]] damage</p>\n<p><span class=\"action-glyph\">3</span> @Damage[(4d12+14)[bludgeoning]] damage</p>"
                 },
                 "frequency": {
                     "max": 1,
@@ -1188,7 +1188,71 @@
                     "remaster": false,
                     "title": ""
                 },
-                "rules": [],
+                "rules": [
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:area:type:burst",
+                            "item:duration:0",
+                            {
+                                "gte": [
+                                    "item:area:size",
+                                    10
+                                ]
+                            }
+                        ],
+                        "property": "area-size",
+                        "value": 5
+                    },
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:duration:0",
+                            {
+                                "or": [
+                                    "item:area:type:cone",
+                                    "item:area:type:line"
+                                ]
+                            },
+                            {
+                                "lte": [
+                                    "item:area:size",
+                                    15
+                                ]
+                            }
+                        ],
+                        "priority": 110,
+                        "property": "area-size",
+                        "value": 5
+                    },
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:duration:0",
+                            {
+                                "or": [
+                                    "item:area:type:cone",
+                                    "item:area:type:line"
+                                ]
+                            },
+                            {
+                                "gt": [
+                                    "item:area:size",
+                                    15
+                                ]
+                            }
+                        ],
+                        "priority": 100,
+                        "property": "area-size",
+                        "value": 10
+                    }
+                ],
                 "slug": null,
                 "traits": {
                     "rarity": "common",

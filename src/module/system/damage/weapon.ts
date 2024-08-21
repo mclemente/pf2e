@@ -101,7 +101,7 @@ class WeaponDamagePF2e {
     }: WeaponDamageCalculateParams): Promise<WeaponDamageTemplate | null> {
         const unprocessedBaseDamage = weapon.baseDamage;
         const { domains, options } = context;
-        if (unprocessedBaseDamage.die === null && unprocessedBaseDamage.modifier > 0) {
+        if (unprocessedBaseDamage.die === null && unprocessedBaseDamage.modifier !== 0) {
             unprocessedBaseDamage.dice = 0;
         } else if (!weapon.dealsDamage) {
             return null;
@@ -146,7 +146,12 @@ class WeaponDamagePF2e {
             rule.beforeRoll?.(domains, options);
         }
 
-        const baseDamage = WeaponDamagePF2e.#processBaseDamage(unprocessedBaseDamage, { actor, item: weapon, domains });
+        const baseDamage = WeaponDamagePF2e.#processBaseDamage(unprocessedBaseDamage, {
+            actor,
+            item: weapon,
+            domains,
+            options,
+        });
 
         // Splash damage
         const hasScatterTrait = weaponTraits.some((t) => t.startsWith("scatter-"));
@@ -414,7 +419,7 @@ class WeaponDamagePF2e {
 
         const baseUncategorized = ((): WeaponBaseDamageData | null => {
             const diceNumber = baseDamage.die ? baseDamage.dice : 0;
-            return diceNumber > 0 || baseDamage.modifier > 0
+            return diceNumber > 0 || baseDamage.modifier !== 0
                 ? {
                       diceNumber,
                       dieSize: baseDamage.die,
@@ -539,7 +544,12 @@ class WeaponDamagePF2e {
     /** Apply damage alterations to weapon base damage. */
     static #processBaseDamage(
         unprocessed: ConvertedNPCDamage | WeaponDamage,
-        { actor, item, domains }: { actor: ActorPF2e; item: ItemPF2e<ActorPF2e>; domains: string[] },
+        {
+            actor,
+            item,
+            domains,
+            options,
+        }: { actor: ActorPF2e; item: ItemPF2e<ActorPF2e>; domains: string[]; options: string[] | Set<string> },
     ): ConvertedNPCDamage | WeaponDamage {
         const damageCategory = "category" in unprocessed ? unprocessed.category : null;
         const dice =
@@ -554,7 +564,7 @@ class WeaponDamagePF2e {
                   })
                 : null;
         const modifier =
-            unprocessed.modifier > 0
+            unprocessed.modifier !== 0
                 ? new ModifierPF2e({
                       slug: "base",
                       label: "Base",
@@ -583,9 +593,9 @@ class WeaponDamagePF2e {
             : null;
         const alterations = extractDamageAlterations(actor.synthetics.damageAlterations, domains, "base");
         for (const alteration of alterations) {
-            if (dice) alteration.applyTo(dice, { item, test: domains });
-            if (modifier) alteration.applyTo(modifier, { item, test: domains });
-            if (persistent) alteration.applyTo(persistent, { item, test: domains });
+            if (dice) alteration.applyTo(dice, { item, test: options });
+            if (modifier) alteration.applyTo(modifier, { item, test: options });
+            if (persistent) alteration.applyTo(persistent, { item, test: options });
         }
 
         return {

@@ -121,7 +121,7 @@
             "system": {
                 "area": {
                     "type": "burst",
-                    "value": 65
+                    "value": 60
                 },
                 "cost": {
                     "value": ""
@@ -275,7 +275,7 @@
             "system": {
                 "area": {
                     "type": "burst",
-                    "value": 25
+                    "value": 20
                 },
                 "cost": {
                     "value": ""
@@ -377,7 +377,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You swing a weapon you're holding, and the weapon magically multiplies into duplicates that swipe at all creatures in either a cone or an emanation. This flurry deals four dice of damage to creatures in the area. This damage has the same type as the weapon and uses the same die size. Determine the die size as if you were attacking with the weapon; for instance, if you were wielding a two-hand weapon in both hands, you'd use its two-hand damage die.</p>\n<hr />\n<p><strong>Critical Success</strong> The creature is unaffected.</p>\n<p><strong>Success</strong> The target takes half damage.</p>\n<p><strong>Failure</strong> The target takes full damage.</p>\n<p><strong>Critical Failure</strong> The target takes double damage and is subject to the weapon's critical specialization effect.</p>\n<hr />\n<p><strong>Heightened (+1)</strong> Add another damage die.</p>"
+                    "value": "<p><strong>Area</strong> 30-foot cone or 10-foot emanation</p><hr /><p>You swing a weapon you're holding, and the weapon magically multiplies into duplicates that swipe at all creatures in either a cone or an emanation. This flurry deals four dice of damage to creatures in the area. This damage has the same type as the weapon and uses the same die size. Determine the die size as if you were attacking with the weapon; for instance, if you were wielding a two-hand weapon in both hands, you'd use its two-hand damage die.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p>\n<p><strong>Success</strong> The target takes half damage.</p>\n<p><strong>Failure</strong> The target takes full damage.</p>\n<p><strong>Critical Failure</strong> The target takes double damage and is subject to the weapon's critical specialization effect.</p><hr /><p><strong>Heightened (+1)</strong> Add another damage die.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -392,7 +392,7 @@
                 },
                 "overlays": {
                     "9Ly51UbFomNFSkwE": {
-                        "name": "Weapon Storm (10-foot emanation)",
+                        "name": "Weapon Storm (Emanation)",
                         "overlayType": "override",
                         "sort": 2,
                         "system": {
@@ -403,13 +403,13 @@
                         }
                     },
                     "mAZRhujP3gA9tb4m": {
-                        "name": "Weapon Storm (40-foot cone)",
+                        "name": "Weapon Storm (Cone)",
                         "overlayType": "override",
                         "sort": 1,
                         "system": {
                             "area": {
                                 "type": "cone",
-                                "value": 40
+                                "value": 30
                             }
                         }
                     }
@@ -596,7 +596,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p><strong>Frequency</strong> once per round</p><hr /><p><strong>Effect</strong> The tempest attacks with their electrified spears, targeting all adjacent enemies (@Check[type:reflex|dc:38|basic:true] save). The damage depends on the number of actions.</p>\n<p><span class=\"action-glyph\">1</span> @Damage[(1d6+10)[piercing],(1d12)[electricity]]{1d6+10 piercing damage plus 1d12 electricity}</p>\n<p><span class=\"action-glyph\">2</span> @Damage[(2d6+10)[piercing],(2d12)[electricity]]{2d6+10 piercing damage plus 2d12 electricity}</p>\n<p><span class=\"action-glyph\">3</span> @Damage[(3d6+10)[piercing],(3d12)[electricity]]{3d6+10 piercing damage plus 3d12 electricity}</p>"
+                    "value": "<p><strong>Frequency</strong> once per round</p><hr /><p><strong>Effect</strong> The tempest attacks with their electrified spears, targeting all adjacent enemies (@Check[reflex|dc:38|basic] save). The damage depends on the number of actions.</p>\n<p><span class=\"action-glyph\">1</span> @Damage[(1d6+10)[piercing],(1d12)[electricity]]{1d6+10 piercing damage plus 1d12 electricity}</p>\n<p><span class=\"action-glyph\">2</span> @Damage[(2d6+10)[piercing],(2d12)[electricity]]{2d6+10 piercing damage plus 2d12 electricity}</p>\n<p><span class=\"action-glyph\">3</span> @Damage[(3d6+10)[piercing],(3d12)[electricity]]{3d6+10 piercing damage plus 3d12 electricity}</p>"
                 },
                 "publication": {
                     "license": "OGL",
@@ -625,7 +625,7 @@
                 },
                 "category": "offensive",
                 "description": {
-                    "value": "<p><strong>Frequency</strong> once per day</p><hr /><p><strong>Effect</strong> The tempest calls down a massive lightning storm in a @Template[type:emanation|distance:60]. Spears of lightning rain down upon enemies in the area, dealing @Damage[10d12[electricity]] damage (@Check[type:reflex|dc:38|basic:true] save).</p>"
+                    "value": "<p><strong>Frequency</strong> once per day</p><hr /><p><strong>Effect</strong> The tempest calls down a massive lightning storm in a @Template[emanation|distance:60]. Spears of lightning rain down upon enemies in the area, dealing @Damage[10d12[electricity]] damage (@Check[reflex|dc:38|basic] save).</p>"
                 },
                 "frequency": {
                     "max": 1,
@@ -697,7 +697,71 @@
                     "remaster": false,
                     "title": ""
                 },
-                "rules": [],
+                "rules": [
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:area:type:burst",
+                            "item:duration:0",
+                            {
+                                "gte": [
+                                    "item:area:size",
+                                    10
+                                ]
+                            }
+                        ],
+                        "property": "area-size",
+                        "value": 5
+                    },
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:duration:0",
+                            {
+                                "or": [
+                                    "item:area:type:cone",
+                                    "item:area:type:line"
+                                ]
+                            },
+                            {
+                                "lte": [
+                                    "item:area:size",
+                                    15
+                                ]
+                            }
+                        ],
+                        "priority": 110,
+                        "property": "area-size",
+                        "value": 5
+                    },
+                    {
+                        "itemType": "spell",
+                        "key": "ItemAlteration",
+                        "mode": "add",
+                        "predicate": [
+                            "item:duration:0",
+                            {
+                                "or": [
+                                    "item:area:type:cone",
+                                    "item:area:type:line"
+                                ]
+                            },
+                            {
+                                "gt": [
+                                    "item:area:size",
+                                    15
+                                ]
+                            }
+                        ],
+                        "priority": 100,
+                        "property": "area-size",
+                        "value": 10
+                    }
+                ],
                 "slug": null,
                 "traits": {
                     "value": []
