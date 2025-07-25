@@ -26,11 +26,11 @@ function TokenConfigMixinPF2e<TBase extends ReturnType<typeof TokenApplicationMi
             },
         };
 
-        static override PARTS = (() => {
+        static override get PARTS() {
             const parts = { ...super.PARTS };
             parts["appearance"].template = "systems/pf2e/templates/scene/token/appearance.hbs";
             return parts;
-        })();
+        }
 
         get linkToActorSize(): boolean {
             return !!this.token.flags.pf2e.linkToActorSize;
