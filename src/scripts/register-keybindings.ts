@@ -41,6 +41,25 @@ export function registerKeybindings(): void {
         },
     });
 
+    game.keybindings.register("pf2e", "open-compendium-browser", {
+        name: "PF2E.Keybinding.OpenCompendiumBrowser.Label",
+        hint: "PF2E.Keybinding.OpenCompendiumBrowser.Hint",
+        editable: [],
+        onDown: (): boolean => {
+            const cb = game.pf2e.compendiumBrowser;
+            if (cb.rendered) {
+                if (cb.minimized) {
+                    cb.maximize();
+                } else {
+                    cb.close();
+                }
+            } else {
+                cb.render({ force: true });
+            }
+            return true;
+        },
+    });
+
     // Defer to the GM Vision module if enabled
     if (!game.modules.get("gm-vision")?.active) {
         game.keybindings.register("pf2e", "gmVision", {
