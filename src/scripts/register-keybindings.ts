@@ -41,6 +41,8 @@ export function registerKeybindings(): void {
         },
     });
 
+    // Record the last tab that was open
+    let previousCompendiumBrowserTab = "";
     game.keybindings.register("pf2e", "open-compendium-browser", {
         name: "PF2E.Keybinding.OpenCompendiumBrowser.Label",
         hint: "PF2E.Keybinding.OpenCompendiumBrowser.Hint",
@@ -51,8 +53,11 @@ export function registerKeybindings(): void {
                 if (cb.minimized) {
                     cb.maximize();
                 } else {
+                    previousCompendiumBrowserTab = cb.element.querySelector("nav .active")?.dataset.tabName ?? "";
                     cb.close();
                 }
+            } else if (previousCompendiumBrowserTab) {
+                cb.tabs[previousCompendiumBrowserTab].open();
             } else {
                 cb.render({ force: true });
             }
