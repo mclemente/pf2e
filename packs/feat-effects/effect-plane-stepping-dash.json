@@ -1,16 +1,16 @@
 {
-    "_id": "JUo3BTRaRHkL9ZBC",
-    "img": "icons/equipment/feet/boots-galosh-white.webp",
-    "name": "Effect: Hasty Traps",
+    "_id": "3KhE0e2CWU7F27bJ",
+    "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+    "name": "Effect: Plane-Stepping Dash",
     "system": {
         "description": {
-            "value": "<p>You take a –5-foot status penalty to your Speeds as long you take persistent bleed damage.</p>"
+            "value": "<p>Granted by @UUID[Compendium.pf2e.feats-srd.Item.Plane-Stepping Dash]</p>\n<p>You gain a +5-foot status bonus to your Speed.</p>"
         },
         "duration": {
-            "expiry": null,
+            "expiry": "turn-start",
             "sustained": false,
-            "unit": "unlimited",
-            "value": -1
+            "unit": "rounds",
+            "value": 1
         },
         "fromSpell": false,
         "level": {
@@ -24,12 +24,9 @@
         "rules": [
             {
                 "key": "FlatModifier",
-                "predicate": [
-                    "self:condition:persistent-damage:bleed"
-                ],
-                "selector": "speed",
+                "selector": "land-speed",
                 "type": "status",
-                "value": -5
+                "value": 5
             }
         ],
         "start": {
